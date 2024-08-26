@@ -1,0 +1,54 @@
+.rate {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+fieldset,
+label {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rating {
+    border: none;
+}
+
+.rating > input {
+    display: none;
+}
+.rating > label:before {
+    margin-right: 5px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > label {
+    color: grey;
+    float: right;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #ffad58;
+}
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+    color: #ffad58;
+}
+
+.book-voters {
+    color: #fff;
+    vertical-align: sub;
+    font-size: 13px;
+    margin-left: 7px;
+    white-space: nowrap;
+    margin-top: 7px;
+}

@@ -1,1 +1,75 @@
-/* You can add global styles to this file, and also import other style files */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+@font-face {
+  font-family: "Hurme";
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/HurmeGeometricSans2-Bold.woff2")
+      format("woff2"),
+    url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/HurmeGeometricSans2-Bold.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: #fff;
+  background: transparent;
+  border: none;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(to right, #737dfe, #ffcac9);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Hurme", sans-serif !important;
+  font-style: normal;
+  font-weight: normal;
+  overflow: hidden;
+}
+.flickity-prev-next-button .arrow {
+    fill: #d6d6d6;
+}
+
+.flickity-prev-next-button svg {
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+}
+
+.flickity-prev-next-button {
+    &.previous {
+        left: 15px;
+    }
+    &.next {
+        right: 15px;
+    }
+}
+
+.flickity-viewport {
+    overflow: visible;
+}
+
+.flickity-page-dots {
+    display: none !important;
+}
+
+.buttons {
+  border: 1px solid #3900a6;
+  transition: 0.3s ease;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.text-small {
+    font-size: 15px;
+}
