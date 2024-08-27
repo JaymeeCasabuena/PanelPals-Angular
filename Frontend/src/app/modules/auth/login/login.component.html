@@ -1,0 +1,52 @@
+<div class="logoText p-2">
+  <div class="">Book</div>
+  <div class="logo">Lovers</div>
+</div>
+
+<div class="cont overflow-hidden position-relative" [ngClass]="{'s--signup': isSignUpActive}">
+  <div class="form position-relative h-100 pt-5 mt-5 sign-in">
+    <h2>Welcome Back</h2>
+    <label>
+      <span>Email</span>
+      <input type="email" />
+    </label>
+    <label>
+      <span>Password</span>
+      <input type="password" />
+    </label>
+    <p class="forgot-pass">Forgot password?</p>
+    <button clas="d-block rounded cursor-pointer border-0 bg-transparent" type="button" class="submit">Sign In</button>
+  </div>
+  <div class="sub-cont position-absolute overflow-hidden">
+    <div class="img h-100 position-absolute overflow-hidden">
+      <div class="img__text m--up mt-4 w-100 px-2 text-center text-white">
+        <h2>New here?</h2>
+        <p>Sign up and discover great amount of new opportunities!</p>
+      </div>
+      <div class="img__text m--in mt-2 w-100 px-2 text-center text-white">
+        <h2>One of us?</h2>
+        <p>If you already has an account, just sign in. We've missed you!</p>
+      </div>
+      <div class="img__btn overflow-hidden position-relative text-white bg-transparent text-uppercase cursor-pointer" (click)="toggleSignup()">
+        <span class="m--up">Sign Up</span>
+        <span class="m--in">Sign In</span>
+      </div>
+    </div>
+    <div class="form sign-up h-100 pt-5 mt-2">
+      <h2>Let's get you started</h2>
+      <label>
+        <span>Name</span>
+        <input clas="border-0 bg-transparent" type="text" />
+      </label>
+      <label>
+        <span>Email</span>
+        <input clas="border-0 bg-transparent" type="email" />
+      </label>
+      <label>
+        <span>Password</span>
+        <input clas="border-0 bg-transparent" type="password" />
+      </label>
+      <button clas="d-block rounded cursor-pointer border-0 bg-transparent" type="button" class="submit">Sign Up</button>
+    </div>
+  </div>
+</div>

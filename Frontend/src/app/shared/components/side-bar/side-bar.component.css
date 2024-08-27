@@ -2,26 +2,6 @@
     height: 90vh;
 }
 
-.logoText {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    color: wheat;
-}
-
-.logoText div {
-    margin: 0;
-    font-size: 22px;
-    color: #000;
-}
-
-.logo {
-    background: #ffcac9;
-    color: wheat;
-    width: 68px;
-    text-align: center;
-}
-
 .nav-link {
     border-radius: 10px;
     transition: box-shadow 0.3s ease-in-out;

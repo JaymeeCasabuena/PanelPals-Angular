@@ -34,6 +34,27 @@ body {
   font-weight: normal;
   overflow: hidden;
 }
+
+.logoText {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  color: wheat;
+}
+
+.logoText div {
+  margin: 0;
+  font-size: 22px;
+  color: #000;
+}
+
+.logo {
+  background: #ffcac9;
+  color: wheat;
+  width: 68px;
+  text-align: center;
+}
+
 .flickity-prev-next-button .arrow {
     fill: #d6d6d6;
 }
