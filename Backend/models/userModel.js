@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const registerUser = (username, email, password, birthday, role, callback) => {
+const registerUser = (username, email, password, callback) => {
   const sql = "SELECT * FROM Users Where Email = ?";
   db.get(sql, [email], (err, user) => {
     if (err) {
@@ -19,10 +19,10 @@ const registerUser = (username, email, password, birthday, role, callback) => {
         return callback(err.message);
       }
 
-      const createUserQuery = `INSERT INTO Users (Username, Email, Password, Birthday, Role) VALUES (?, ?, ?, ?, ?)`;
+      const createUserQuery = `INSERT INTO Users (Username, Email, Password) VALUES (?, ?, ?)`;
       db.run(
         createUserQuery,
-        [username, email, hashedPassword, birthday, role || "user"],
+        [username, email, hashedPassword || "user"],
         (err) => {
           if (err) {
             return callback(err.message);

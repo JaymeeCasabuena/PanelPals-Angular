@@ -2,27 +2,20 @@ const userModel = require("../models/userModel");
 
 // Controller function to handle user registration
 const registerUser = (req, res) => {
-  const { username, email, password, birthday, role } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!username || !email || !password || !birthday) {
+  if (!username || !email || !password) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  userModel.registerUser(
-    username,
-    email,
-    password,
-    birthday,
-    role,
-    (err, result) => {
-      if (err) {
-        return res.status(500).json({ error: err });
-      }
-      res
-        .status(201)
-        .json({ message: "User registered successfully.", data: result });
+  userModel.registerUser(username, email, password, (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err });
     }
-  );
+    res
+      .status(201)
+      .json({ message: "User registered successfully.", data: result });
+  });
 };
 
 // Controller function to handle user login
