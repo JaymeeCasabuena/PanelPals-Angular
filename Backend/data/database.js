@@ -31,9 +31,11 @@ let db = new sqlite3.Database(dbName, (err) => {
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           Title TEXT NOT NULL,
           ISBN TEXT NOT NULL UNIQUE,
-          YearPublished INTEGER,
-          Genre TEXT,
-          AuthorId INTEGER,
+          YearPublished INTEGER NOT NULL,
+          Genre TEXT NOT NULL,
+          Summary TEXT NOT NULL,
+          AuthorId INTEGER NOT NULL,
+          BookImg TEXT NOT NULL,
           IsApproved INTEGER DEFAULT 0,
           FOREIGN KEY (AuthorId) REFERENCES Authors(Id)
         );
