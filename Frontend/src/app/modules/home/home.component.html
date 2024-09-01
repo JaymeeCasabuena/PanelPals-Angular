@@ -1,4 +1,5 @@
 <app-side-bar></app-side-bar>
+<app-search-bar></app-search-bar>
 <div
   id="container"
   class="d-sm-flex h-75 flex-column col-11 col-sm-9 col-md-9 col-lg-9 align-items-center mt-0 mt-sm-4"
@@ -6,7 +7,7 @@
   <div class="w-100">
     <div #flickityContainer class="js-flickity">
       <div
-        *ngFor="let book of books"
+        *ngFor="let book of popularBooks"
         class="book-cell bg-transparent d-flex p-3"
       >
         <div class="flex-shrink-0">
@@ -22,7 +23,9 @@
             by {{ book.author }}
           </div>
           <app-star-rating></app-star-rating>
-          <div class="book-sum h-25 mt-3 overflow-hidden">{{ book.summary }}</div>
+          <div class="book-sum h-25 mt-3 overflow-hidden">
+            {{ book.summary }}
+          </div>
           <button
             class="buttons btn btn-sm p-2 text-white rounded-1 text-nowrap mt-3"
             type="submit"
@@ -36,7 +39,7 @@
 
   <div class="container-fluid d-flex row mt-2">
     <div class="d-flex flex-column w-25 mt-4 allow-scroll">
-      <div class="fw-bold fs-6">Top Rated Authors</div>
+      <div class="fw-bold fs-6 border-bottom pb-3">Top Rated Authors</div>
       <div *ngFor="let author of authors">
         <div class="p-2">
           <div class="text-small">{{ author.name }}</div>
@@ -78,26 +81,26 @@
           </div>
         </div>
         <div class="row row-cols-1 row-cols-md-2 gx-2 gy-3 pt-4 allow-scroll">
-          <div *ngFor="let popular of popularBooks" class="col h-75">
+          <div *ngFor="let book of books" class="col">
             <div
-              class="bg-white shadow-sm rounded d-flex flex-column cursor-pointer py-3 ps-3 pe-0 mt-2 h-75"
+              class="bg-white shadow-sm rounded d-flex flex-column cursor-pointer py-3 ps-3 pe-0 mt-2"
             >
               <div class="content-wrapper d-flex position-relative">
-                <img [src]="popular.imageUrl" class="book-card-img" />
+                <img [src]="book.BookImg" class="book-card-img" />
                 <div class="position-relative overflow-hidden text-dark p-2">
                   <div
                     class="text-truncate text-nowrap overflow-hidden text-dark fw-bolder"
                   >
-                    {{ popular.title }}
+                    {{ book.Title }}
                   </div>
                   <div
                     class="book-by text-truncate text-nowrap overflow-hidden"
                   >
-                    by {{ popular.author }}
+                    by {{ book.AuthorName }}
                   </div>
                   <app-star-rating></app-star-rating>
                   <div class="avg-reviews mt-2 text-dark overflow-hidden">
-                    {{ popular.genre }}
+                    {{ book.Genre }}
                   </div>
                   <button
                     class="btn btn-link text-dark p-0 mt-1 me-auto review-button"

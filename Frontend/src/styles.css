@@ -1,14 +1,6 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-@font-face {
-  font-family: "Hurme";
-  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/HurmeGeometricSans2-Bold.woff2")
-      format("woff2"),
-    url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/HurmeGeometricSans2-Bold.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+@import url(https://fonts.googleapis.com/css?family=Raleway);
 
 * {
   margin: 0;
@@ -24,12 +16,16 @@
 
 body {
   height: 100vh;
-  background: linear-gradient(to right, #737dfe, #ffcac9);
+  background: radial-gradient(
+    circle,
+    rgba(83, 83, 83, 1) 54%,
+    rgba(65, 65, 65, 1) 100%
+  );
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: "Hurme", sans-serif !important;
+  font-family: "Raleway", sans-serif !important;
   font-style: normal;
   font-weight: normal;
   overflow: hidden;
@@ -45,42 +41,43 @@ body {
 .logoText div {
   margin: 0;
   font-size: 22px;
-  color: #000;
+  color: whitesmoke;
+  font-weight: bold;
 }
 
 .logo {
-  background: #ffcac9;
+  background: black;
   color: wheat;
   width: 68px;
   text-align: center;
 }
 
 .flickity-prev-next-button .arrow {
-    fill: #d6d6d6;
+  fill: #d6d6d6;
 }
 
 .flickity-prev-next-button svg {
-    left: 25%;
-    top: 25%;
-    width: 50%;
-    height: 50%;
+  left: 25%;
+  top: 25%;
+  width: 50%;
+  height: 50%;
 }
 
 .flickity-prev-next-button {
-    &.previous {
-        left: 15px;
-    }
-    &.next {
-        right: 15px;
-    }
+  &.previous {
+    left: 15px;
+  }
+  &.next {
+    right: 15px;
+  }
 }
 
 .flickity-viewport {
-    overflow: visible;
+  overflow: visible;
 }
 
 .flickity-page-dots {
-    display: none !important;
+  display: none !important;
 }
 
 .buttons {
@@ -92,5 +89,5 @@ body {
 }
 
 .text-small {
-    font-size: 15px;
+  font-size: 15px;
 }

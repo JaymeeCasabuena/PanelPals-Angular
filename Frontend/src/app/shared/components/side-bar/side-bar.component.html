@@ -11,7 +11,8 @@
   <ul class="nav nav-flush flex-column text-center mt-auto">
     <li class="nav-item">
       <a
-        href=""
+        [routerLink]="['/home']"
+        [ngClass]="{ active: currentRoute === '/home' }"
         class="nav-link py-3"
         aria-current="page"
         title="Book-list"
@@ -19,10 +20,11 @@
         data-bs-placement="right"
       >
         <svg
+          [ngStyle]="{ fill: currentRoute === '/home' ? 'white' : 'black' }"
           xmlns="http://www.w3.org/2000/svg"
           width="23"
           height="24"
-          fill="black"
+          fill="none"
           class="bi bi-book-half"
           viewBox="0 0 16 16"
         >

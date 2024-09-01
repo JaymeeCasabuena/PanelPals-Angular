@@ -1,0 +1,8 @@
+.search {
+  background-color: transparent;
+  width: 200px;
+}
+
+.search::placeholder {
+  color: white;
+}
