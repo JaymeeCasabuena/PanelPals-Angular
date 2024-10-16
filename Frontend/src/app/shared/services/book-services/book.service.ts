@@ -16,6 +16,7 @@ export class BookService {
     isbn: string;
     yearPublished: number;
     genre: string;
+    summary: string;
     authorId: number;
     bookImg: string;
   }): Observable<Book[]> {
