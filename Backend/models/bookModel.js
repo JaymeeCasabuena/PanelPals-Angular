@@ -24,7 +24,7 @@ const addBook = (
   });
 
   const insertBookQuery = `
-      INSERT INTO Books (Title, ISBN, YearPublished, Genre, AuthorId, BookImg, IsApproved) 
+      INSERT INTO Books (Title, ISBN, YearPublished, Genre, AuthorId, Summary, BookImg, IsApproved) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `;
 

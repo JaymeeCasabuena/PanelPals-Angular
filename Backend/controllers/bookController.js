@@ -4,7 +4,15 @@ const addBook = (req, res) => {
   const { title, isbn, yearPublished, genre, summary, authorId, bookImg } =
     req.body;
 
-  if (!title || !isbn || !yearPublished || !genre || !authorId || !bookImg) {
+  if (
+    !title ||
+    !isbn ||
+    !yearPublished ||
+    !genre ||
+    !summary ||
+    !authorId ||
+    !bookImg
+  ) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
