@@ -1,115 +1,73 @@
-<app-side-bar></app-side-bar>
-<app-search-bar></app-search-bar>
-<div
-  id="container"
-  class="d-sm-flex h-75 flex-column col-11 col-sm-9 col-md-9 col-lg-9 align-items-center mt-0 mt-sm-4"
->
-  <div class="w-100">
-    <div #flickityContainer class="js-flickity">
-      <div
-        *ngFor="let book of popularBooks"
-        class="book-cell bg-transparent d-flex p-3"
-      >
-        <div class="flex-shrink-0">
-          <img [src]="book.imageUrl" alt="" class="book-photo flex-shrink-0" />
-        </div>
-        <div class="p-3 overflow-hidden">
-          <div
-            class="text-white fs-5 fw-bold text-truncate text-nowrap overflow-hidden"
-          >
-            {{ book.title }}
-          </div>
-          <div class="mt-2 fs-6 text-truncate text-nowrap overflow-hidden">
-            by {{ book.author }}
-          </div>
-          <app-star-rating></app-star-rating>
-          <div class="book-sum h-25 mt-3 overflow-hidden">
-            {{ book.summary }}
-          </div>
-          <button
-            class="buttons btn btn-sm p-2 text-white rounded-1 text-nowrap mt-3"
-            type="submit"
-          >
-            Leave a review
-          </button>
-        </div>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-1">
+      <app-side-bar></app-side-bar>
     </div>
-  </div>
 
-  <div class="container-fluid d-flex row mt-2">
-    <div class="d-flex flex-column w-25 mt-4 allow-scroll">
-      <div class="fw-bold fs-6 border-bottom pb-3">Top Rated Authors</div>
-      <div *ngFor="let author of authors">
-        <div class="p-2">
-          <div class="text-small">{{ author.name }}</div>
-          <div class="text-small">Books: {{ author.totalBooksPublished }}</div>
-          <div class="text-small">
-            Average Rating: {{ author.averageRating }}
+    <!-- Main Content -->
+    <div class="col-6">
+      <div class="d-flex flex-column mt-5 justify-content-center">
+        <div class="row">
+          <div class="col-1">
+            <app-search-bar></app-search-bar>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="d-flex w-75 mt-4">
-      <div class="all-books">
-        <div
-          class="main-menu d-flex nowrap pb-3 border-bottom sticky-top bg-transparent"
-        >
-          <div class="fw-bold fs-6">Popular Books</div>
-          <div class="book-types ms-auto">
-            <a
-              href="#"
-              class="text-white text-decoration-none fs-6 book-type active"
+
+        <div class="row align-items-center mt-5">
+          <div class="col-6">
+            <h1 class="welcome-text text-black">Happy Reading,</h1>
+            <h1 class="text-black">Name</h1>
+            <p class="subtext text-black mt-4">
+              Discover your next favorite book and share your thoughts with
+              fellow readers
+            </p>
+            <button
+              type="button"
+              class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 me-auto"
             >
-              All Genres</a
-            >
-            <a href="#" class="text-white text-decoration-none fs-6 book-type">
-              Business</a
-            >
-            <a href="#" class="text-white text-decoration-none fs-6 book-type">
-              Science</a
-            >
-            <a href="#" class="text-white text-decoration-none fs-6 book-type">
-              Fiction</a
-            >
-            <a href="#" class="text-white text-decoration-none fs-6 book-type">
-              Philosophy</a
-            >
-            <a href="#" class="text-white text-decoration-none fs-6 book-type">
-              Biography</a
-            >
+              Explore ↗
+            </button>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 gx-2 gy-3 pt-4 allow-scroll">
-          <div *ngFor="let book of books" class="col">
-            <div
-              class="bg-white shadow-sm rounded d-flex flex-column cursor-pointer py-3 ps-3 pe-0 mt-2"
-            >
-              <div class="content-wrapper d-flex position-relative">
-                <img [src]="book.BookImg" class="book-card-img" />
-                <div class="position-relative overflow-hidden text-dark p-2">
-                  <div
-                    class="text-truncate text-nowrap overflow-hidden text-dark fw-bolder"
+
+        <!-- Popular Books -->
+        <div class="row mt-5 mb-5">
+          <div class="col-12">
+            <h5 class="welcome-text text-black">Popular Now</h5>
+            <div #flickityContainer class="js-flickity mb-3">
+              <div
+                *ngFor="let book of popularBooks"
+                class="book-cell bg-transparent d-flex flex-column p-3"
+              >
+                <div class="flex-shrink-0">
+                  <img
+                    [src]="book.imageUrl"
+                    alt="Book Image"
+                    class="book-photo flex-shrink-0"
+                  />
+                </div>
+                <div class="mt-4 overflow-hidden">
+                  <p
+                    class="text-black fw-semi-bold text-truncate text-nowrap overflow-hidden"
                   >
-                    {{ book.Title }}
-                  </div>
-                  <div
-                    class="book-by text-truncate text-nowrap overflow-hidden"
+                    {{ book.title }}
+                  </p>
+                  <p
+                    class="text-black text-truncate text-nowrap overflow-hidden"
                   >
-                    by {{ book.AuthorName }}
-                  </div>
-                  <app-star-rating></app-star-rating>
-                  <div class="avg-reviews mt-2 text-dark overflow-hidden">
-                    {{ book.Genre }}
-                  </div>
-                  <button
-                    class="btn btn-link text-dark p-0 mt-1 me-auto review-button"
-                  >
-                    Leave a Review
-                  </button>
+                    by {{ book.author }}
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Add New Form -->
+        <div class="row mt-5">
+          <div class="col-12">
+            <app-add-new-form></app-add-new-form>
           </div>
         </div>
       </div>

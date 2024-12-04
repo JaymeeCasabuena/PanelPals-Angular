@@ -1,8 +1,12 @@
+.container {
+  left: 10rem;
+}
+
 .search {
   background-color: transparent;
   width: 200px;
 }
 
 .search::placeholder {
-  color: white;
+  color: gray;
 }

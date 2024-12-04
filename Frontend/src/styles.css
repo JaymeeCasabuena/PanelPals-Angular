@@ -1,6 +1,6 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -14,46 +14,42 @@
   border: none;
 }
 
+html,
 body {
   height: 100vh;
-  background: radial-gradient(
-    circle,
-    rgba(83, 83, 83, 1) 54%,
-    rgba(65, 65, 65, 1) 100%
-  );
+  background: #f2f3d9;
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: "Raleway", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-style: normal;
   font-weight: normal;
   overflow: hidden;
 }
 
-.logoText {
-  display: flex;
-  align-items: center;
-  margin: 10px;
-  color: wheat;
+::-webkit-scrollbar {
+  width: 0.5em;
+  cursor: pointer;
 }
 
-.logoText div {
-  margin: 0;
-  font-size: 22px;
-  color: whitesmoke;
-  font-weight: bold;
+::-webkit-scrollbar-track {
+  background-color: var(--bodyBackground);
+  border-radius: 0.1em;
+  box-shadow: inset 0px 0px 10px #cd908b;
 }
 
-.logo {
-  background: black;
-  color: wheat;
-  width: 68px;
-  text-align: center;
+::-webkit-scrollbar-thumb {
+  background-color: #3f4159;
+  border-radius: 0.1em;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 3em;
 }
 
 .flickity-prev-next-button .arrow {
-  fill: #d6d6d6;
+  fill: #b2b2b2;
 }
 
 .flickity-prev-next-button svg {
@@ -65,29 +61,15 @@ body {
 
 .flickity-prev-next-button {
   &.previous {
-    left: 15px;
+    left: 10px;
   }
   &.next {
-    right: 15px;
+    right: 10px;
   }
 }
 
 .flickity-viewport {
-  overflow: visible;
-}
-
-.flickity-page-dots {
-  display: none !important;
-}
-
-.buttons {
-  border: 1px solid #3900a6;
-  transition: 0.3s ease;
-  &:hover {
-    transform: scale(1.03);
-  }
-}
-
-.text-small {
-  font-size: 15px;
+  overflow: hidden;
+  margin-bottom: 0;
+  border-radius: 10px;
 }

@@ -1,0 +1,125 @@
+<div
+  class="modal fade position-absolute"
+  id="addBookModal"
+  tabindex="-1"
+  aria-labelledby="addBookModalLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog d-sm-flex h-75 flex-column col-11 col-sm-9 col-md-9 col-lg-9 align-items-center mt-0 mt-sm-4"
+  >
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-header border-0">
+        <h5 class="text-dark ms-4" id="addBookModalLabel">Add New Book</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        [formGroup]="bookForm"
+        (ngSubmit)="onSubmit()"
+        class="d-flex flex-column"
+      >
+        <div class="mb-3 d-flex">
+          <label for="title" class="form-label text-dark ms-5 mt-4"
+            >Title</label
+          >
+          <input
+            type="text"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="title"
+            formControlName="title"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="isbn" class="form-label text-dark ms-5 mt-4">ISBN</label>
+          <input
+            type="text"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="isbn"
+            formControlName="isbn"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="yearPublished" class="form-label text-dark ms-5 mt-4"
+            >Year Published</label
+          >
+          <input
+            type="number"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="yearPublished"
+            formControlName="yearPublished"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="genre" class="form-label text-dark ms-5 mt-4"
+            >Genre</label
+          >
+          <input
+            type="text"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="genre"
+            formControlName="genre"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="summary" class="form-label text-dark ms-5 mt-4"
+            >Summary</label
+          >
+          <textarea
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="summary"
+            formControlName="summary"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="authorId" class="form-label text-dark ms-5 mt-4"
+            >Author ID</label
+          >
+          <input
+            type="number"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="authorId"
+            formControlName="authorId"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="bookImg" class="form-label text-dark ms-5 mt-4"
+            >Book Image URL</label
+          >
+          <input
+            type="text"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="bookImg"
+            formControlName="bookImg"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-3 mt-5"
+        >
+          Add Book ＋
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<button
+  class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
+  title="Add new book"
+  data-bs-placement="right"
+  data-bs-toggle="modal"
+  data-bs-target="#addBookModal"
+>
+  Add new book to review ＋
+</button>

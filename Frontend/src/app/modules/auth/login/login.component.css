@@ -34,14 +34,7 @@ body {
 .btn {
   display: block;
   margin: 0 auto;
-  width: 260px;
-  height: 36px;
   font-size: 15px;
-  border: 1px solid #3900a6;
-  transition: 0.3s ease;
-  &:hover {
-    transform: scale(1.03);
-  }
 }
 
 .img {

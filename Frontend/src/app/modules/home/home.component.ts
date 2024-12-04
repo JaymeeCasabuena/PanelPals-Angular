@@ -12,6 +12,7 @@ import { SideBarComponent } from '../../shared/components/side-bar/side-bar.comp
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { BookService } from '../../shared/services/book-services/book.service';
 import { Book } from '../../shared/interfaces/book';
+import { AddNewFormComponent } from '../books/add-new-book/add-new-form/add-new-form.component';
 
 interface PopularBooks {
   title: string;
@@ -34,6 +35,7 @@ interface Author {
     StarRatingComponent,
     SideBarComponent,
     SearchBarComponent,
+    AddNewFormComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
