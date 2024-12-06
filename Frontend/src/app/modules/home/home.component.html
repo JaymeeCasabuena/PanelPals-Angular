@@ -37,12 +37,13 @@
             <h5 class="welcome-text text-black">Popular Now</h5>
             <div #flickityContainer class="js-flickity mb-3">
               <div
-                *ngFor="let book of popularBooks"
-                class="book-cell bg-transparent d-flex flex-column p-3"
+                *ngFor="let book of books"
+                class="book-cell bg-transparent p-3"
+                (click)="navigateToDetails(book.Id)"
               >
                 <div class="flex-shrink-0">
                   <img
-                    [src]="book.imageUrl"
+                    [src]="book.BookImg"
                     alt="Book Image"
                     class="book-photo flex-shrink-0"
                   />
@@ -51,12 +52,12 @@
                   <p
                     class="text-black fw-semi-bold text-truncate text-nowrap overflow-hidden"
                   >
-                    {{ book.title }}
+                    {{ book.Title }}
                   </p>
                   <p
                     class="text-black text-truncate text-nowrap overflow-hidden"
                   >
-                    by {{ book.author }}
+                    by {{ book.AuthorName }}
                   </p>
                 </div>
               </div>
