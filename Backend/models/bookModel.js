@@ -65,4 +65,26 @@ const getAllBooks = (callback) => {
   });
 };
 
-module.exports = { addBook, getAllBooks };
+const getBookById = (id, callback) => {
+  const selectBookByIdQuery = `      SELECT 
+        Books.Id, 
+        Books.Title, 
+        Books.ISBN, 
+        Books.YearPublished, 
+        Books.Genre, 
+        Books.Summary,
+        Authors.Name AS AuthorName,
+        Books.BookImg,
+        Books.IsApproved
+      FROM Books
+      JOIN Authors ON Books.AuthorId = Authors.Id
+      WHERE Books.Id = ?`;
+  db.get(selectBookByIdQuery, [id], (err, row) => {
+    if (err) {
+      return callback(err.message);
+    }
+    callback(null, row);
+  });
+};
+
+module.exports = { addBook, getAllBooks, getBookById };

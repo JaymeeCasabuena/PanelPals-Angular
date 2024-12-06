@@ -21,12 +21,16 @@ export class BookService {
     bookImg: string;
   }): Observable<Book[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Book[]>(`${this.apiUrl}/addBook`, bookData, {
+    return this.http.post<Book[]>(`${this.apiUrl}/books/addBook`, bookData, {
       headers,
     });
   }
 
   getAllBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.apiUrl}/books/getAllBooks`);
+  }
+
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<Book>(`${this.apiUrl}/books/getBookById/${id}`);
   }
 }
