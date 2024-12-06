@@ -1,15 +1,13 @@
-<div class="rate">
-    <fieldset class="rating">
-        <input type="checkbox" id="star5" name="rating" value="5" />
-        <label class="full" for="star5"></label>
-        <input type="checkbox" id="star4" name="rating" value="4" />
-        <label class="full" for="star4"></label>
-        <input type="checkbox" id="star3" name="rating" value="3" />
-        <label class="full" for="star3"></label>
-        <input type="checkbox" id="star2" name="rating" value="2" />
-        <label class="full" for="star2"></label>
-        <input type="checkbox" id="star1" name="rating" value="1" />
-        <label class="full" for="star1"></label>
-    </fieldset>
-    <span class="book-voters">{{ bookRatings }} reviews</span>
+<div class="star-rating d-flex justify-content-center">
+  <ng-container *ngFor="let filled of stars; let i = index">
+    <span
+      class="star"
+      [class.filled]="filled"
+      (click)="onStarClick(i)"
+      [style.cursor]="readOnly ? 'default' : 'pointer'"
+    >
+      ★
+    </span>
+  </ng-container>
+  <button class="text-muted ms-3" (click)="clearRating()">Clear</button>
 </div>
