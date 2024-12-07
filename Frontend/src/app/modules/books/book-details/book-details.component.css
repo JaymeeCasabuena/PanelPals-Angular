@@ -42,14 +42,28 @@ img {
   min-height: 40vh;
   z-index: 0;
 }
+
 .book-details {
   min-height: 25vh;
 }
+
 .sub-details {
   position: relative;
-  height: 30vh;
+  height: 40vh;
   z-index: 0;
 }
+
+.reviews {
+  height: 35vh;
+  overflow-y: auto;
+  direction: rtl;
+  text-align: left;
+}
+
+.rating {
+  direction: ltr;
+}
+
 .highlight {
   position: absolute;
   width: 80%;
@@ -57,7 +71,7 @@ img {
   top: 14rem;
   left: 50%;
   background-color: white;
-  transform: translateX(-60%);
+  transform: translateX(-50%);
   z-index: -1;
 }
 

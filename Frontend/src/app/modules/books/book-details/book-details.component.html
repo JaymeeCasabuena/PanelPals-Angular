@@ -1,12 +1,12 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-lg-2 col-md-3 col-sm-4">
+    <div class="col-lg-1 col-md-3 col-sm-4">
       <app-side-bar></app-side-bar>
     </div>
 
     <!-- Main Content -->
-    <div class="col-lg-10 col-md-9 col-sm-8">
+    <div class="col-lg-11 col-md-9 col-sm-8">
       <div class="row mt-3">
         <!-- Search Bar -->
         <div class="col-12">
@@ -101,22 +101,38 @@
               </div>
             </div>
           </div>
-          <div class="sub-details ms-5">
+          <div class="sub-details mb-5 w-100">
             <div class="d-flex justify-content-center align-items-start">
               <div class="w-50 ms-5">
                 <p class="text-dark fw-bold">Summary</p>
                 <p class="text-dark w-75">{{ book?.Summary }}</p>
               </div>
-              <div class="w-50">
+              <div class="w-25">
                 <p class="text-dark fw-bold">Read On</p>
                 <p class="text-dark"></p>
               </div>
             </div>
-            <div class="d-flex justify-content-center align-items-start">
-              <div class="w-50 ms-5">
-                <p class="text-dark fw-bold">Reviews</p>
+            <div class="d-flex justify-content-center align-items-start mt-4">
+              <div class="reviews w-50 ms-5">
+                <p class="text-dark fw-bold ms-3">Reviews</p>
+                <div
+                  *ngFor="let review of reviews"
+                  class="d-flex align-items justify-content-end ms-4"
+                >
+                  <div class="rating ms-5">
+                    <app-star-rating
+                      [rating]="review.Rating"
+                      [maxStars]="5"
+                      [readOnly]="true"
+                      (ratingChange)="onRatingChange($event)"
+                    ></app-star-rating>
+                  </div>
+                  <p class="text-dark fst-italic w-50 mt-3">
+                    {{ review.ReviewText }}
+                  </p>
+                </div>
               </div>
-              <div class="w-50">
+              <div class="w-25">
                 <p class="text-dark fw-bold">Write a review</p>
                 <div class="d-flex align-items-center">
                   <app-star-rating
@@ -126,7 +142,7 @@
                   ></app-star-rating>
                 </div>
                 <!-- Text Editor -->
-                <div class="form-group w-50">
+                <div class="form-group w-100">
                   <textarea
                     class="form-control"
                     rows="3"

@@ -9,5 +9,7 @@
       ★
     </span>
   </ng-container>
-  <button class="text-muted ms-3" (click)="clearRating()">Clear</button>
+  <button *ngIf="!readOnly" class="text-muted ms-3" (click)="clearRating()">
+    Clear
+  </button>
 </div>
