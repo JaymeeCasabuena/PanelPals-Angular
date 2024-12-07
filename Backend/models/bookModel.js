@@ -1,48 +1,56 @@
 const db = require("../data/database");
 
-// Function to add a new book
-const addBook = (
-  title,
-  isbn,
-  yearPublished,
-  genre,
-  summary,
-  authorId,
-  bookImg,
-  isApproved = 0,
-  callback
-) => {
-  const checkQuery = "SELECT * FROM Books Where ISBN = ?";
-  db.get(checkQuery, [isbn], (err, book) => {
-    if (err) {
-      return callback(err.message);
-    }
-
-    if (book) {
-      return callback("Book already exists with the same ISBN.");
-    }
-  });
-
-  const insertBookQuery = `
-      INSERT INTO Books (Title, ISBN, YearPublished, Genre, AuthorId, Summary, BookImg, IsApproved) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-    `;
-
-  db.run(
-    insertBookQuery,
-    [title, isbn, yearPublished, genre, summary, authorId, bookImg, isApproved],
-    function (err) {
+const bookModel = {
+  addBook: (
+    title,
+    isbn,
+    yearPublished,
+    genre,
+    summary,
+    authorId,
+    bookImg,
+    isApproved = 0,
+    callback
+  ) => {
+    const checkQuery = "SELECT * FROM Books WHERE ISBN = ?";
+    db.get(checkQuery, [isbn], (err, book) => {
       if (err) {
         return callback(err.message);
       }
-      callback(null, { bookId: this.lastID });
-    }
-  );
-};
 
-// Function to get all books with author's full name
-const getAllBooks = (callback) => {
-  const selectBooksQuery = `
+      if (book) {
+        return callback("Book already exists with the same ISBN.");
+      }
+
+      const insertBookQuery = `
+        INSERT INTO Books (Title, ISBN, YearPublished, Genre, AuthorId, Summary, BookImg, IsApproved) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+      `;
+
+      db.run(
+        insertBookQuery,
+        [
+          title,
+          isbn,
+          yearPublished,
+          genre,
+          summary,
+          authorId,
+          bookImg,
+          isApproved,
+        ],
+        function (err) {
+          if (err) {
+            return callback(err.message);
+          }
+          callback(null, { bookId: this.lastID });
+        }
+      );
+    });
+  },
+
+  getAllBooks: (callback) => {
+    const selectBooksQuery = `
       SELECT 
         Books.Id, 
         Books.Title, 
@@ -57,16 +65,17 @@ const getAllBooks = (callback) => {
       JOIN Authors ON Books.AuthorId = Authors.Id;
     `;
 
-  db.all(selectBooksQuery, [], (err, rows) => {
-    if (err) {
-      return callback(err.message);
-    }
-    callback(null, rows);
-  });
-};
+    db.all(selectBooksQuery, [], (err, rows) => {
+      if (err) {
+        return callback(err.message);
+      }
+      callback(null, rows);
+    });
+  },
 
-const getBookById = (id, callback) => {
-  const selectBookByIdQuery = `      SELECT 
+  getBookById: (id, callback) => {
+    const selectBookByIdQuery = `
+      SELECT 
         Books.Id, 
         Books.Title, 
         Books.ISBN, 
@@ -78,13 +87,15 @@ const getBookById = (id, callback) => {
         Books.IsApproved
       FROM Books
       JOIN Authors ON Books.AuthorId = Authors.Id
-      WHERE Books.Id = ?`;
-  db.get(selectBookByIdQuery, [id], (err, row) => {
-    if (err) {
-      return callback(err.message);
-    }
-    callback(null, row);
-  });
+      WHERE Books.Id = ?;
+    `;
+    db.get(selectBookByIdQuery, [id], (err, row) => {
+      if (err) {
+        return callback(err.message);
+      }
+      callback(null, row);
+    });
+  },
 };
 
-module.exports = { addBook, getAllBooks, getBookById };
+module.exports = bookModel;
