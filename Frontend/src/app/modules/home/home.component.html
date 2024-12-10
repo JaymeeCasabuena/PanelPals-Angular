@@ -6,18 +6,28 @@
     </div>
 
     <!-- Main Content -->
-    <div class="col-6">
-      <div class="d-flex flex-column mt-5 justify-content-center">
-        <div class="row">
-          <div class="col-1">
+    <div class="col-11">
+      <div class="row">
+        <div class="d-flex align-items-center justify-content-between mt-2 w-100">
+          <!-- Centered search bar -->
+          <div class="d-flex justify-content-center flex-grow-1">
             <app-search-bar></app-search-bar>
           </div>
+          <!-- Avatar aligned to the far right -->
+          <p-avatar
+            class="align-self-end"
+            image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
+            size="large"
+            shape="circle"
+          ></p-avatar>
         </div>
+      </div>
 
-        <div class="row align-items-center mt-5">
+      <div class="d-flex justify-content-center ms-5">
+        <div class="row align-items-center mt-3">
           <div class="col-6">
             <h1 class="welcome-text text-black">Happy Reading,</h1>
-            <h1 class="text-black">Name</h1>
+            <h1 class="text-black">{{ currentUser?.Username }}</h1>
             <p class="subtext text-black mt-4">
               Discover your next favorite book and share your thoughts with
               fellow readers
@@ -29,47 +39,119 @@
               Explore ↗
             </button>
           </div>
-        </div>
 
-        <!-- Popular Books -->
-        <div class="row mt-5 mb-5">
-          <div class="col-12">
-            <h5 class="welcome-text text-black">Popular Now</h5>
-            <div #flickityContainer class="js-flickity mb-3">
-              <div
-                *ngFor="let book of books"
-                class="book-cell bg-transparent p-3"
-                (click)="navigateToDetails(book.Id)"
+          <!-- Popular Books -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <h5 class="welcome-text text-black">Popular Now</h5>
+              <p-carousel
+                [value]="books"
+                [numVisible]="4"
+                [numScroll]="3"
+                autoplayInterval="3000"
               >
-                <div class="flex-shrink-0">
-                  <img
-                    [src]="book.BookImg"
-                    alt="Book Image"
-                    class="book-photo flex-shrink-0"
-                  />
-                </div>
-                <div class="mt-4 overflow-hidden">
-                  <p
-                    class="text-black fw-semi-bold text-truncate text-nowrap overflow-hidden"
-                  >
-                    {{ book.Title }}
-                  </p>
-                  <p
-                    class="text-black text-truncate text-nowrap overflow-hidden"
-                  >
-                    by {{ book.AuthorName }}
-                  </p>
-                </div>
-              </div>
+                <ng-template let-book #item>
+                  <div class="book-card">
+                    <div
+                      class="book-cell bg-transparent p-3 mt-5"
+                      (click)="navigateToDetails(book.Id)"
+                    >
+                      <img [src]="book.BookImg" class="book-photo" />
+                    </div>
+                    <div class="mt-4 overflow-hidden">
+                      <p class="text-black fw-semi-bold text-truncate">
+                        {{ book.Title }}
+                      </p>
+                      <p class="text-black text-truncate">
+                        by {{ book.AuthorName }}
+                      </p>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </div>
+
+          <!-- Add New Form -->
+          <div class="row mt-5">
+            <div class="col-6">
+              <app-add-new-form></app-add-new-form>
             </div>
           </div>
         </div>
 
-        <!-- Add New Form -->
-        <div class="row mt-5">
-          <div class="col-12">
-            <app-add-new-form></app-add-new-form>
-          </div>
+        <div class="col-lg-5 mt-5 ms-5">
+          <h4 class="welcome-text text-black mt-5 pt-5">Discussions</h4>
+          <p class="subtext text-black mt-4">
+            Engage with the community and find trending or new topics to
+            discuss.
+          </p>
+          <button
+            type="button"
+            class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1"
+          >
+            View More ↗
+          </button>
+
+          <p-tabs class="mt-4" value="0">
+            <p-tablist>
+              <p-tab value="0">New Discussions</p-tab>
+              <p-tab value="1">Trending Discussions</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+              <!-- New Discussions Tab -->
+              <p-tabpanel value="0">
+                <div
+                  *ngFor="let discussion of newDiscussions"
+                  class="p-1 border-bottom"
+                >
+                  <div class="d-flex align-items-center">
+                    <img
+                      [src]="'https://via.placeholder.com/150'"
+                      alt="Avatar"
+                      class="discussion-avatar"
+                    />
+                    <div class="ms-3">
+                      <h5 class="text-dark fs-5">
+                        <a (click)="openDiscussion(discussion.id)">
+                          {{ discussion.title }}
+                        </a>
+                      </h5>
+                      <p class="text-muted">
+                        {{ discussion.responses }} responses
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </p-tabpanel>
+
+              <!-- Trending Discussions Tab -->
+              <p-tabpanel value="1">
+                <div
+                  *ngFor="let discussion of trendingDiscussions"
+                  class="p-1 border-bottom"
+                >
+                  <div class="d-flex align-items-center">
+                    <img
+                      [src]="'https://via.placeholder.com/150'"
+                      alt="Avatar"
+                      class="discussion-avatar"
+                    />
+                    <div class="ms-3">
+                      <h5 class="text-dark fs-5">
+                        <a (click)="openDiscussion(discussion.id)">
+                          {{ discussion.title }}
+                        </a>
+                      </h5>
+                      <p class="text-muted">
+                        {{ discussion.responses }} responses
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </p-tabpanel>
+            </p-tabpanels>
+          </p-tabs>
         </div>
       </div>
     </div>

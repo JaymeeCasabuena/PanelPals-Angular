@@ -48,28 +48,33 @@ body {
   height: 3em;
 }
 
-.flickity-prev-next-button .arrow {
-  fill: #b2b2b2;
+.p-carousel-item-list {
+  width: 1000px !important;
 }
 
-.flickity-prev-next-button svg {
-  left: 25%;
-  top: 25%;
-  width: 50%;
-  height: 50%;
+.p-tablist-tab-list,
+.p-tabpanels {
+  background: transparent !important;
 }
 
-.flickity-prev-next-button {
-  &.previous {
-    left: 10px;
-  }
-  &.next {
-    right: 10px;
-  }
+.p-tab-active,
+.p-button-text {
+  color: #cd908b !important;
 }
 
-.flickity-viewport {
-  overflow: hidden;
-  margin-bottom: 0;
-  border-radius: 10px;
+.p-tablist-active-bar,
+.p-carousel-indicator-active .p-carousel-indicator-button {
+  background: #cd908b !important;
+}
+
+.p-tablist-tab-list {
+  width: 500px !important;
+}
+
+.p-tab {
+  width: 250px !important;
+}
+
+.p-tabpanels {
+  width: 530px !important;
 }
