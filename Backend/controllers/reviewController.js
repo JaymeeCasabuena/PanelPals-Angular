@@ -2,7 +2,6 @@ const reviewModel = require("../models/reviewModel");
 
 const reviewController = {
   createReview: (req, res) => {
-    console.log(req.body, "HELLO");
     const { BookId, UserId, ReviewText, Rating } = req.body;
     if (!BookId || !UserId || !ReviewText || !Rating) {
       return res.status(400).json({ error: "All fields are required" });

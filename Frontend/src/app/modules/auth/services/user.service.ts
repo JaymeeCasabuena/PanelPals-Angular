@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 interface UserResponse {
   message: string;
@@ -28,6 +28,27 @@ export class UserService {
 
   loginUser(email: string, password: string): Observable<UserResponse> {
     const body = { email, password };
-    return this.http.post<UserResponse>(`${this.apiUrl}/users/login`, body);
+    return this.http
+      .post<UserResponse>(`${this.apiUrl}/users/login`, body)
+      .pipe(
+        tap((response) => {
+          if (response.token) {
+            localStorage.setItem('auth_token', response.token);
+          }
+        })
+      );
+  }
+
+  getCurrentUser(): Observable<UserResponse> {
+    const token = localStorage.getItem('auth_token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<UserResponse>(`${this.apiUrl}/users/current`, {
+      headers,
+    });
+  }
+
+  signOut(): void {
+    localStorage.removeItem('auth_token');
   }
 }
