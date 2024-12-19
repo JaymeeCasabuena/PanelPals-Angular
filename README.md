@@ -1,6 +1,6 @@
-# BookLovers: A Book Review and Forum Website
+# Panel Pals: A Comic Review and Forum Website
 
-Welcome to **BookLovers**, the perfect place to share your thoughts on the latest books you've read and engage in insightful conversations with fellow book enthusiasts!
+Welcome to **Panel Pals**, the perfect place to share your thoughts on the latest manhwa/manga/webtoon you've read and engage in insightful conversations with fellow enthusiasts!
 
 
 ## Table of Contents
@@ -14,11 +14,11 @@ Welcome to **BookLovers**, the perfect place to share your thoughts on the lates
 
 ## Features
 
-- **User Registration and Authentication**: Easily create an account to start reviewing books and participating in discussions.
-- **Book Management**: Add new books to the website. Submissions will be reviewed and approved by moderators before they go live.
+- **User Registration and Authentication**: Easily create an account to start reviewing comics and participating in discussions.
+- **Comic Management**: Add new comics to the website. Submissions will be reviewed and approved by moderators before they go live.
 - **Profile Customization**: Personalize your profile with a bio, avatar, and favorite genres.
 - **Engage with the Community**: Write reviews, create posts, and comment on any conversation. Share your insights and learn from others.
-- **Moderation Tools**: Special features for moderators to approve new books and manage community content.
+- **Moderation Tools**: Special features for moderators to approve new comics and manage community content.
 
 ## Installation
 
@@ -27,8 +27,8 @@ To get a local copy up and running, follow these simple steps:
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/JaymeeCasabuena/BookLovers-Angular.git
-    cd BookLovers
+    git clone https://github.com/JaymeeCasabuena/PanelPals-Angular.git
+    cd PanelPals-Angular
     ```
 
 2. **Install dependencies**:
@@ -56,12 +56,12 @@ To get a local copy up and running, follow these simple steps:
 ## Usage
 
 - **Register or Log in** to access all features.
-- **Browse books** and read reviews by other users.
+- **Browse comics** and read reviews by other users.
 - **Add your own reviews** and contribute to discussions on the forum.
 
 ## Contributing
 
-We welcome contributions to **BookLovers**! To contribute, please:
+We welcome contributions to **Panel Pals**! To contribute, please:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
