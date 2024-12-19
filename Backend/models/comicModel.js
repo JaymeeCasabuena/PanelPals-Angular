@@ -93,7 +93,7 @@ const comicModel = {
         Authors.Name AS AuthorName,
         Comics.Cover,
         Comics.IsApproved,
-        GROUP_CONCAT(Genres.Name) AS Genres
+        GROUP_CONCAT(Genres.Name, ', ') AS Genres
       FROM Comics
       JOIN Authors ON Comics.AuthorId = Authors.Id
       LEFT JOIN BookGenres ON Comics.Id = BookGenres.ComicId
