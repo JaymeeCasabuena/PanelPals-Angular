@@ -1,5 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
-const dbName = "BookLovers.db";
+const dbName = "PanelPals.db";
 
 let db = new sqlite3.Database(dbName, (err) => {
   if (err) {
@@ -24,25 +24,25 @@ let db = new sqlite3.Database(dbName, (err) => {
         }
       );
 
-      // Create Books table
+      // Create Comics table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Books (
+        CREATE TABLE IF NOT EXISTS Comics (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           Title TEXT NOT NULL,
-          ISBN TEXT NOT NULL UNIQUE,
           YearPublished INTEGER NOT NULL,
-          Genre TEXT NOT NULL,
+          Status INTEGER NOT NULL,
+          Link TEXT,
           Summary TEXT NOT NULL,
           AuthorId INTEGER NOT NULL,
-          BookImg TEXT NOT NULL,
-          IsApproved INTEGER DEFAULT 0,
+          Cover TEXT NOT NULL,
+          IsApproved INTEGER DEFAULT 1,
           FOREIGN KEY (AuthorId) REFERENCES Authors(Id)
         );
       `,
         (err) => {
           if (err) {
-            console.error("Error creating Books table:", err.message);
+            console.error("Error creating Comics table:", err.message);
           }
         }
       );
@@ -55,6 +55,7 @@ let db = new sqlite3.Database(dbName, (err) => {
           Username TEXT NOT NULL UNIQUE,
           Email TEXT NOT NULL UNIQUE,
           Password TEXT NOT NULL,
+          Avatar TEXT,
           Birthday DATE,
           Role TEXT CHECK (Role IN ('user', 'moderator')) NOT NULL DEFAULT 'user'
         );
@@ -71,12 +72,12 @@ let db = new sqlite3.Database(dbName, (err) => {
         `
         CREATE TABLE IF NOT EXISTS Reviews (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
-          BookId INTEGER NOT NULL,
+          ComicId INTEGER NOT NULL,
           UserId INTEGER NOT NULL,
           ReviewText TEXT NOT NULL,
           Rating INTEGER CHECK(Rating BETWEEN 1 AND 5),
           DateCreated DATE DEFAULT CURRENT_DATE,
-          FOREIGN KEY (BookId) REFERENCES Books(Id),
+          FOREIGN KEY (ComicId) REFERENCES Comics(Id),
           FOREIGN KEY (UserId) REFERENCES Users(Id)
         );
       `,
@@ -123,6 +124,53 @@ let db = new sqlite3.Database(dbName, (err) => {
         (err) => {
           if (err) {
             console.error("Error creating Comments table:", err.message);
+          }
+        }
+      );
+
+      // Create Images table for both posts and comments
+      db.run(
+        `
+        CREATE TABLE IF NOT EXISTS Images (
+          Id INTEGER PRIMARY KEY AUTOINCREMENT,
+          PostId INTEGER NOT NULL,
+          CommentId INTEGER NOT NULL,
+          ImageUrl TEXT NOT NULL,
+          FOREIGN KEY (PostId) REFERENCES Posts(Id)
+          FOREIGN KEY (CommentId) REFERENCES Comments(Id)
+        );`,
+        (err) => {
+          if (err) {
+            console.error("Error creating Posts table:", err.message);
+          }
+        }
+      );
+
+      // Create Genres table
+      db.run(
+        `
+        CREATE TABLE IF NOT EXISTS Genres (
+          Id INTEGER PRIMARY KEY AUTOINCREMENT,
+          Name TEXT NOT NULL
+        );`,
+        (err) => {
+          if (err) {
+            console.error("Error creating Genres table:", err.message);
+          }
+        }
+      );
+
+      db.run(
+        `
+        CREATE TABLE IF NOT EXISTS BookGenres (
+          ComicId INTEGER NOT NULL,
+          GenreId INTEGER NOT NULL,
+          FOREIGN KEY (ComicId) REFERENCES Comics(Id),
+          FOREIGN KEY (GenreId) REFERENCES Genres(Id) 
+        );`,
+        (err) => {
+          if (err) {
+            console.error("Error creating BookGenres table:", err.message);
           }
         }
       );

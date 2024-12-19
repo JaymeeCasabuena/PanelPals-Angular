@@ -1,6 +1,6 @@
 const express = require("express");
 const userRoutes = require("./routes/userRoutes");
-const bookRoutes = require("./routes/bookRoutes");
+const comicRoutes = require("./routes/comicRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const app = express();
 const cors = require("cors");
@@ -14,7 +14,7 @@ app.use(
 );
 
 app.use("/users", userRoutes);
-app.use("/books", bookRoutes);
+app.use("/comics", comicRoutes);
 app.use("/reviews", reviewRoutes);
 
 const PORT = process.env.PORT || 3000;
