@@ -1,11 +1,11 @@
-export interface Book {
+export interface Comic {
   Id: number;
   Title: string;
-  ISBN: string;
   YearPublished: number;
-  Genre: string;
+  Status: number;
+  Link: string;
+  Genres: [number];
   Summary: string;
   AuthorName: string;
-  BookImg: string;
-  IsApproved: number;
+  Cover: string;
 }

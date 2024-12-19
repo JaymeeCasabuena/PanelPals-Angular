@@ -5,8 +5,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { BookService } from '../../../../shared/services/book-services/book.service';
-import { Book } from '../../../../shared/interfaces/book';
+import { ComicService } from '../../../../shared/services/comic-services/comic.service';
+import { Comic } from '../../../../shared/interfaces/comic';
 
 @Component({
   selector: 'app-add-new-form',
@@ -16,10 +16,10 @@ import { Book } from '../../../../shared/interfaces/book';
   styleUrl: './add-new-form.component.css',
 })
 export class AddNewFormComponent {
-  bookForm: FormGroup;
+  comicForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private bookService: BookService) {
-    this.bookForm = this.fb.group({
+  constructor(private fb: FormBuilder, private comicService: ComicService) {
+    this.comicForm = this.fb.group({
       title: ['', Validators.required],
       isbn: ['', Validators.required],
       yearPublished: ['', Validators.required],

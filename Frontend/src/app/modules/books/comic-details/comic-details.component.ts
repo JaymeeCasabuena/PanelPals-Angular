@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { BookService } from '../../../shared/services/book-services/book.service';
+import { ComicService } from '../../../shared/services/comic-services/comic.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
@@ -19,34 +19,34 @@ import { Review } from '../interfaces/review';
     StarRatingComponent,
     FormsModule,
   ],
-  templateUrl: './book-details.component.html',
-  styleUrl: './book-details.component.css',
+  templateUrl: './comic-details.component.html',
+  styleUrl: './comic-details.component.css',
 })
-export class BookDetailsComponent {
-  book: any;
+export class ComicDetailsComponent {
+  comic: any;
   reviewText: string = '';
   rating: number = 0;
   reviews: Review[] = [];
 
   constructor(
-    private bookService: BookService,
+    private comicService: ComicService,
     private route: ActivatedRoute,
     private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
-    const bookId = this.route.snapshot.paramMap.get('id');
-    if (bookId) {
-      this.fetchBookById(Number(bookId));
-      this.fetchReviewsByBookId(Number(bookId));
+    const comicId = this.route.snapshot.paramMap.get('id');
+    if (comicId) {
+      this.fetchComicById(Number(comicId));
+      this.fetchReviewsByBookId(Number(comicId));
     }
   }
 
-  fetchBookById(id: number): void {
-    this.bookService.getBookById(id).subscribe({
-      next: (response) => (this.book = response),
-      error: (error) => console.error('Error fetching book', error),
-      complete: () => console.log('Fetching book complete'),
+  fetchComicById(id: number): void {
+    this.comicService.getComicById(id).subscribe({
+      next: (response) => (this.comic = response),
+      error: (error) => console.error('Error fetching comic', error),
+      complete: () => console.log('Fetching comic complete'),
     });
   }
 
@@ -68,7 +68,7 @@ export class BookDetailsComponent {
     }
 
     const newReview: Review = {
-      BookId: this.book.Id,
+      BookId: this.comic.Id,
       UserId: 1,
       ReviewText: this.reviewText,
       Rating: this.rating,
@@ -77,7 +77,7 @@ export class BookDetailsComponent {
     this.reviewService.addReview(newReview).subscribe({
       next: (response) => {
         console.log('Review submitted successfully', response);
-        this.fetchReviewsByBookId(this.book.Id);
+        this.fetchReviewsByBookId(this.comic.Id);
         this.reviewText = '';
         this.rating = 0;
       },
