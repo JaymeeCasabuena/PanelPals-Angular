@@ -8,7 +8,9 @@
     <!-- Main Content -->
     <div class="col-11">
       <div class="row">
-        <div class="d-flex align-items-center justify-content-between mt-2 w-100">
+        <div
+          class="d-flex align-items-center justify-content-between mt-2 w-100"
+        >
           <!-- Centered search bar -->
           <div class="d-flex justify-content-center flex-grow-1">
             <app-search-bar></app-search-bar>
@@ -29,8 +31,8 @@
             <h1 class="welcome-text text-black">Happy Reading,</h1>
             <h1 class="text-black">{{ currentUser?.Username }}</h1>
             <p class="subtext text-black mt-4">
-              Discover your next favorite book and share your thoughts with
-              fellow readers
+              Discover your next favorite manga/manhwa/webtoon and share your
+              thoughts with fellow readers
             </p>
             <button
               type="button"
@@ -45,25 +47,25 @@
             <div class="col-12">
               <h5 class="welcome-text text-black">Popular Now</h5>
               <p-carousel
-                [value]="books"
+                [value]="comics"
                 [numVisible]="4"
                 [numScroll]="3"
                 autoplayInterval="3000"
               >
-                <ng-template let-book #item>
+                <ng-template let-comic #item>
                   <div class="book-card">
                     <div
                       class="book-cell bg-transparent p-3 mt-5"
-                      (click)="navigateToDetails(book.Id)"
+                      (click)="navigateToDetails(comic?.Id)"
                     >
-                      <img [src]="book.BookImg" class="book-photo" />
+                      <img [src]="comic?.Cover" class="book-photo" />
                     </div>
                     <div class="mt-4 overflow-hidden">
                       <p class="text-black fw-semi-bold text-truncate">
-                        {{ book.Title }}
+                        {{ comic?.Title }}
                       </p>
                       <p class="text-black text-truncate">
-                        by {{ book.AuthorName }}
+                        by {{ comic?.AuthorName }}
                       </p>
                     </div>
                   </div>
