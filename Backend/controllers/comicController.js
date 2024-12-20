@@ -55,6 +55,15 @@ const comicController = {
     });
   },
 
+  getAllGenres: (req, res) => {
+    comicModel.getAllGenres((err, genres) => {
+      if (err) {
+        return res.status(500).json({ error: err });
+      }
+      res.status(200).json(genres);
+    });
+  },
+
   getComicById: (req, res) => {
     const id = req.params.id;
 

@@ -137,6 +137,18 @@ const comicModel = {
       callback(null, row);
     });
   },
+
+  getAllGenres: (callback) => {
+    const getGenresQuery = `
+      SELECT * FROM Genres;
+    `;
+    db.all(getGenresQuery, [], (err, rows) => {
+      if (err) {
+        return callback(err.message);
+      }
+      callback(null, rows);
+    });
+  },
 };
 
 module.exports = comicModel;
