@@ -1,4 +1,5 @@
 const db = require("../data/database");
+const dbHelpers = require("../utils/dbHelper");
 
 const comicModel = {
   addComic: (
@@ -10,75 +11,58 @@ const comicModel = {
     summary,
     authorName,
     cover,
-    isApproved = 1,
-    callback
+    isApproved = 1
   ) => {
-    const checkQuery = "SELECT * FROM Comics WHERE Title = ?";
-    db.get(checkQuery, [title], (err, book) => {
-      if (err) {
-        return callback(err.message);
-      }
+    const getAuthorId = async (authorName) => {
+      const author = await dbHelpers.getQuery(
+        "SELECT Id FROM Authors WHERE Name = ?",
+        [authorName]
+      );
+      if (author) return author.Id;
 
-      if (book) {
-        return callback("Comic already exists.");
-      }
+      const result = await dbHelpers.runQuery(
+        "INSERT INTO Authors (Name) VALUES (?)",
+        [authorName]
+      );
+      return result.lastID;
+    };
 
-      const getAuthorQuery = "SELECT id FROM Author WHERE Name = ?";
-      db.get(getAuthorQuery, [authorName], (err, author) => {
-        if (err) {
-          return callback(err.message);
-        }
+    const insertComic = async (authorId) => {
+      const insertComicQuery = `
+        INSERT INTO Comics (Title, YearPublished, Status, Link, AuthorId, Summary, Cover, IsApproved)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+      `;
+      const result = await dbHelpers.runQuery(insertComicQuery, [
+        title,
+        yearPublished,
+        status,
+        link,
+        authorId,
+        summary,
+        cover,
+        isApproved,
+      ]);
+      return result.lastID;
+    };
 
-        if (!author) {
-          return callback("Author not found.");
-        }
+    const insertGenres = async (comicId) => {
+      if (!genres || genres.length === 0) return;
+      const insertGenresQuery = `INSERT INTO BookGenres (ComicId, GenreId) VALUES (?, ?)`;
+      await Promise.all(
+        genres.map((genreId) =>
+          dbHelpers.runQuery(insertGenresQuery, [comicId, genreId])
+        )
+      );
+    };
 
-        const authorId = author.id;
-
-        const insertComicQuery = `
-          INSERT INTO Comics (Title, YearPublished, Status, Link, AuthorId, Summary, Cover, IsApproved) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-        `;
-
-        db.run(
-          insertComicQuery,
-          [
-            title,
-            yearPublished,
-            status,
-            link,
-            authorId,
-            summary,
-            cover,
-            isApproved,
-          ],
-          function (err) {
-            if (err) {
-              return callback(err.message);
-            }
-
-            const comicId = this.lastID;
-
-            if (genres && genres.length > 0) {
-              const insertGenresQuery = `
-                INSERT INTO BookGenres (BookId, GenreId)
-                VALUES (?, ?);
-              `;
-
-              genres.forEach((genreId) => {
-                db.run(insertGenresQuery, [comicId, genreId], (err) => {
-                  if (err) {
-                    return callback(err.message);
-                  }
-                });
-              });
-            }
-
-            callback(null, { comicId });
-          }
-        );
+    return getAuthorId(authorName)
+      .then(insertComic)
+      .then(insertGenres)
+      .then((comicId) => ({ comicId }))
+      .catch((err) => {
+        console.error("Error occurred:", err);
+        throw new Error(err);
       });
-    });
   },
 
   getAllComics: (callback) => {

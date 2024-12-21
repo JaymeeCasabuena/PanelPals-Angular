@@ -14,14 +14,14 @@ const comicController = {
     } = req.body;
 
     if (
-      !title ||
-      !yearPublished ||
-      !genres ||
-      !status ||
-      !link ||
-      !summary ||
-      !authorName ||
-      !cover
+      title == null ||
+      yearPublished == null ||
+      genres == null ||
+      status == null ||
+      link == null ||
+      summary == null ||
+      authorName == null ||
+      cover == null
     ) {
       return res.status(400).json({ error: "All fields are required" });
     }
