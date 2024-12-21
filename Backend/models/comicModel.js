@@ -15,13 +15,13 @@ const comicModel = {
   ) => {
     const getAuthorId = async (authorName) => {
       const author = await dbHelpers.getQuery(
-        "SELECT Id FROM Authors WHERE Name = ?",
+        "SELECT Id FROM Author WHERE Name = ?",
         [authorName]
       );
       if (author) return author.Id;
 
       const result = await dbHelpers.runQuery(
-        "INSERT INTO Authors (Name) VALUES (?)",
+        "INSERT INTO Author (Name) VALUES (?)",
         [authorName]
       );
       return result.lastID;
@@ -29,7 +29,7 @@ const comicModel = {
 
     const insertComic = async (authorId) => {
       const insertComicQuery = `
-        INSERT INTO Comics (Title, YearPublished, Status, Link, AuthorId, Summary, Cover, IsApproved)
+        INSERT INTO Comic (Title, YearPublished, Status, Link, AuthorId, Summary, Cover, IsApproved)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       `;
       const result = await dbHelpers.runQuery(insertComicQuery, [
@@ -47,7 +47,7 @@ const comicModel = {
 
     const insertGenres = async (comicId) => {
       if (!genres || genres.length === 0) return;
-      const insertGenresQuery = `INSERT INTO BookGenres (ComicId, GenreId) VALUES (?, ?)`;
+      const insertGenresQuery = `INSERT INTO ComicGenre (ComicId, GenreId) VALUES (?, ?)`;
       await Promise.all(
         genres.map((genreId) =>
           dbHelpers.runQuery(insertGenresQuery, [comicId, genreId])
@@ -68,21 +68,21 @@ const comicModel = {
   getAllComics: (callback) => {
     const selectComicsQuery = `
       SELECT 
-        Comics.Id, 
-        Comics.Title, 
-        Comics.YearPublished,
-        Comics.Status, 
-        Comics.Link, 
-        Comics.Summary,
-        Authors.Name AS AuthorName,
-        Comics.Cover,
-        Comics.IsApproved,
-        GROUP_CONCAT(Genres.Name, ', ') AS Genres
-      FROM Comics
-      JOIN Authors ON Comics.AuthorId = Authors.Id
-      LEFT JOIN BookGenres ON Comics.Id = BookGenres.ComicId
-      LEFT JOIN Genres ON BookGenres.GenreId = Genres.Id
-      GROUP BY Comics.Id;
+        Comic.Id, 
+        Comic.Title, 
+        Comic.YearPublished,
+        Comic.Status, 
+        Comic.Link, 
+        Comic.Summary,
+        Author.Name AS AuthorName,
+        Comic.Cover,
+        Comic.IsApproved,
+        GROUP_CONCAT(Genre.Name, ', ') AS Genres
+      FROM Comic
+      JOIN Author ON Comic.AuthorId = Author.Id
+      LEFT JOIN ComicGenre ON Comic.Id = ComicGenre.ComicId
+      LEFT JOIN Genre ON ComicGenre.GenreId = Genre.Id
+      GROUP BY Comic.Id;
     `;
 
     db.all(selectComicsQuery, [], (err, rows) => {
@@ -96,22 +96,22 @@ const comicModel = {
   getComicById: (id, callback) => {
     const selectComicByIdQuery = `
       SELECT 
-        Comics.Id, 
-        Comics.Title, 
-        Comics.YearPublished, 
-        Comics.Status, 
-        Comics.Link, 
-        Comics.Summary,
-        Authors.Name AS AuthorName,
-        Comics.Cover,
-        Comics.IsApproved,
-        GROUP_CONCAT(Genres.Name) AS Genres
-      FROM Comics
-      JOIN Authors ON Comics.AuthorId = Authors.Id
-      LEFT JOIN BookGenres ON Comics.Id = BookGenres.ComicId
-      LEFT JOIN Genres ON BookGenres.GenreId = Genres.Id
-      WHERE Comics.Id = ?
-      GROUP BY Comics.Id;
+        Comic.Id, 
+        Comic.Title, 
+        Comic.YearPublished, 
+        Comic.Status, 
+        Comic.Link, 
+        Comic.Summary,
+        Author.Name AS AuthorName,
+        Comic.Cover,
+        Comic.IsApproved,
+        GROUP_CONCAT(Genre.Name) AS Genres
+      FROM Comic
+      JOIN Author ON Comic.AuthorId = Author.Id
+      LEFT JOIN ComicGenre ON Comic.Id = ComicGenre.ComicId
+      LEFT JOIN Genre ON ComicGenre.GenreId = Genre.Id
+      WHERE Comic.Id = ?
+      GROUP BY Comic.Id;
     `;
 
     db.get(selectComicByIdQuery, [id], (err, row) => {
@@ -124,7 +124,7 @@ const comicModel = {
 
   getAllGenres: (callback) => {
     const getGenresQuery = `
-      SELECT * FROM Genres;
+      SELECT * FROM Genre;
     `;
     db.all(getGenresQuery, [], (err, rows) => {
       if (err) {

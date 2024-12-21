@@ -2,12 +2,12 @@ const db = require("../data/database");
 
 const reviewModel = {
   createReview: (review, callback) => {
-    const { BookId, UserId, ReviewText, Rating } = review;
+    const { ComicId, UserId, ReviewText, Rating } = review;
     const sql = `
-        INSERT INTO Reviews (BookId, UserId, ReviewText, Rating)
+        INSERT INTO Review (ComicId, UserId, ReviewText, Rating)
         VALUES (?, ?, ?, ?)
       `;
-    db.run(sql, [BookId, UserId, ReviewText, Rating], function (err) {
+    db.run(sql, [ComicId, UserId, ReviewText, Rating], function (err) {
       if (err) return callback(err);
       callback(null, { Id: this.lastID, ...review });
     });
@@ -16,7 +16,7 @@ const reviewModel = {
   editReview: (id, review, callback) => {
     const { ReviewText, Rating } = review;
     const sql = `
-        UPDATE Reviews
+        UPDATE Review
         SET ReviewText = ?, Rating = ?
         WHERE Id = ?
       `;
@@ -27,23 +27,23 @@ const reviewModel = {
   },
 
   deleteReview: (id, callback) => {
-    const sql = `DELETE FROM Reviews WHERE Id = ?`;
+    const sql = `DELETE FROM Review WHERE Id = ?`;
     db.run(sql, [id], function (err) {
       if (err) return callback(err);
       callback(null, { deletedId: id });
     });
   },
 
-  getAllReviewsByBookId: (BookId, callback) => {
-    const sql = `SELECT * FROM Reviews WHERE BookId = ?`;
-    db.all(sql, [BookId], (err, rows) => {
+  getAllReviewsByComicId: (ComicId, callback) => {
+    const sql = `SELECT * FROM Review WHERE ComicId = ?`;
+    db.all(sql, [ComicId], (err, rows) => {
       if (err) return callback(err);
       callback(null, rows);
     });
   },
 
   getAllReviewsByUserId: (UserId, callback) => {
-    const sql = `SELECT * FROM Reviews WHERE UserId = ?`;
+    const sql = `SELECT * FROM Review WHERE UserId = ?`;
     db.all(sql, [UserId], (err, rows) => {
       if (err) return callback(err);
       callback(null, rows);

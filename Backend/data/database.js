@@ -12,14 +12,14 @@ let db = new sqlite3.Database(dbName, (err) => {
       // Create Authors table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Authors (
+        CREATE TABLE IF NOT EXISTS Author (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           Name TEXT NOT NULL
         );
       `,
         (err) => {
           if (err) {
-            console.error("Error creating Authors table:", err.message);
+            console.error("Error creating Author table:", err.message);
           }
         }
       );
@@ -27,7 +27,7 @@ let db = new sqlite3.Database(dbName, (err) => {
       // Create Comics table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Comics (
+        CREATE TABLE IF NOT EXISTS Comic (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           Title TEXT NOT NULL,
           YearPublished INTEGER NOT NULL,
@@ -37,12 +37,12 @@ let db = new sqlite3.Database(dbName, (err) => {
           AuthorId INTEGER NOT NULL,
           Cover TEXT NOT NULL,
           IsApproved INTEGER DEFAULT 1,
-          FOREIGN KEY (AuthorId) REFERENCES Authors(Id)
+          FOREIGN KEY (AuthorId) REFERENCES Author(Id)
         );
       `,
         (err) => {
           if (err) {
-            console.error("Error creating Comics table:", err.message);
+            console.error("Error creating Comic table:", err.message);
           }
         }
       );
@@ -50,7 +50,7 @@ let db = new sqlite3.Database(dbName, (err) => {
       // Create Users table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Users (
+        CREATE TABLE IF NOT EXISTS User (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           Username TEXT NOT NULL UNIQUE,
           Email TEXT NOT NULL UNIQUE,
@@ -62,7 +62,7 @@ let db = new sqlite3.Database(dbName, (err) => {
       `,
         (err) => {
           if (err) {
-            console.error("Error creating Users table:", err.message);
+            console.error("Error creating User table:", err.message);
           }
         }
       );
@@ -70,38 +70,39 @@ let db = new sqlite3.Database(dbName, (err) => {
       // Create Reviews table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Reviews (
+        CREATE TABLE IF NOT EXISTS Review (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           ComicId INTEGER NOT NULL,
           UserId INTEGER NOT NULL,
           ReviewText TEXT NOT NULL,
           Rating INTEGER CHECK(Rating BETWEEN 1 AND 5),
           DateCreated DATE DEFAULT CURRENT_DATE,
-          FOREIGN KEY (ComicId) REFERENCES Comics(Id),
-          FOREIGN KEY (UserId) REFERENCES Users(Id)
+          FOREIGN KEY (ComicId) REFERENCES Comic(Id),
+          FOREIGN KEY (UserId) REFERENCES User(Id)
         );
       `,
         (err) => {
           if (err) {
-            console.error("Error creating Reviews table:", err.message);
+            console.error("Error creating Review table:", err.message);
           }
         }
       );
 
-      // Create Posts table
+      // Create Discussion table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Posts (
+        CREATE TABLE IF NOT EXISTS Discussion (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           UserId INTEGER NOT NULL,
-          PostText TEXT NOT NULL,
+          Title TEXT NOT NULL,
+          Content TEXT NOT NULL,
           DateCreated DATE DEFAULT CURRENT_DATE,
-          FOREIGN KEY (UserId) REFERENCES Users(Id)
+          FOREIGN KEY (UserId) REFERENCES User(Id)
         );
       `,
         (err) => {
           if (err) {
-            console.error("Error creating Posts table:", err.message);
+            console.error("Error creating Discussion table:", err.message);
           }
         }
       );
@@ -109,16 +110,16 @@ let db = new sqlite3.Database(dbName, (err) => {
       // Create Comments table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Comments (
+        CREATE TABLE IF NOT EXISTS Comment (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           ReviewId INTEGER,
-          PostId INTEGER,
+          DiscussionId INTEGER,
           UserId INTEGER NOT NULL,
           CommentText TEXT NOT NULL,
           CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (ReviewId) REFERENCES Reviews(Id),
-          FOREIGN KEY (PostId) REFERENCES Posts(Id),
-          FOREIGN KEY (UserId) REFERENCES Users(Id)
+          FOREIGN KEY (ReviewId) REFERENCES Review(Id),
+          FOREIGN KEY (DiscussionId) REFERENCES Discussion(Id),
+          FOREIGN KEY (UserId) REFERENCES User(Id)
         );
       `,
         (err) => {
@@ -128,49 +129,31 @@ let db = new sqlite3.Database(dbName, (err) => {
         }
       );
 
-      // Create Images table for both posts and comments
-      db.run(
-        `
-        CREATE TABLE IF NOT EXISTS Images (
-          Id INTEGER PRIMARY KEY AUTOINCREMENT,
-          PostId INTEGER NOT NULL,
-          CommentId INTEGER NOT NULL,
-          ImageUrl TEXT NOT NULL,
-          FOREIGN KEY (PostId) REFERENCES Posts(Id)
-          FOREIGN KEY (CommentId) REFERENCES Comments(Id)
-        );`,
-        (err) => {
-          if (err) {
-            console.error("Error creating Posts table:", err.message);
-          }
-        }
-      );
-
       // Create Genres table
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS Genres (
+        CREATE TABLE IF NOT EXISTS Genre (
           Id INTEGER PRIMARY KEY AUTOINCREMENT,
           Name TEXT NOT NULL
         );`,
         (err) => {
           if (err) {
-            console.error("Error creating Genres table:", err.message);
+            console.error("Error creating Genre table:", err.message);
           }
         }
       );
 
       db.run(
         `
-        CREATE TABLE IF NOT EXISTS BookGenres (
+        CREATE TABLE IF NOT EXISTS ComicGenre (
           ComicId INTEGER NOT NULL,
           GenreId INTEGER NOT NULL,
-          FOREIGN KEY (ComicId) REFERENCES Comics(Id),
-          FOREIGN KEY (GenreId) REFERENCES Genres(Id) 
+          FOREIGN KEY (ComicId) REFERENCES Comic(Id),
+          FOREIGN KEY (GenreId) REFERENCES Genre(Id) 
         );`,
         (err) => {
           if (err) {
-            console.error("Error creating BookGenres table:", err.message);
+            console.error("Error creating ComicGenre table:", err.message);
           }
         }
       );

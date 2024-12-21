@@ -6,7 +6,7 @@ require("dotenv").config();
 const UserModel = {
   // Register a new user
   registerUser: (username, email, password, callback) => {
-    const sql = "SELECT * FROM Users WHERE Email = ?";
+    const sql = "SELECT * FROM User WHERE Email = ?";
     db.get(sql, [email], (err, user) => {
       if (err) {
         return callback(err.message);
@@ -21,7 +21,7 @@ const UserModel = {
           return callback(err.message);
         }
 
-        const createUserQuery = `INSERT INTO Users (Username, Email, Password) VALUES (?, ?, ?)`;
+        const createUserQuery = `INSERT INTO User (Username, Email, Password) VALUES (?, ?, ?)`;
         db.run(createUserQuery, [username, email, hashedPassword], (err) => {
           if (err) {
             return callback(err.message);
@@ -34,7 +34,7 @@ const UserModel = {
 
   // User login
   loginUser: (email, password, callback) => {
-    const query = `SELECT * FROM Users WHERE Email = ?`;
+    const query = `SELECT * FROM User WHERE Email = ?`;
     db.get(query, [email], (err, user) => {
       if (err) {
         return callback(err.message);
@@ -63,7 +63,7 @@ const UserModel = {
 
   // Delete a user
   deleteUser: (userId, callback) => {
-    const query = `DELETE FROM Users WHERE Id = ?`;
+    const query = `DELETE FROM User WHERE Id = ?`;
     db.run(query, [userId], function (err) {
       if (err) {
         return callback(err.message);
@@ -75,7 +75,7 @@ const UserModel = {
   // Edit user details
   editUserDetails: (userId, updateData, callback) => {
     const { username, email, password, birthday } = updateData;
-    let query = `UPDATE Users SET `;
+    let query = `UPDATE User SET `;
     let params = [];
 
     if (username) {
@@ -122,7 +122,7 @@ const UserModel = {
     }
   },
   getUserById: (userId, callback) => {
-    const query = `SELECT * FROM Users WHERE Id = ?`;
+    const query = `SELECT * FROM User WHERE Id = ?`;
     console.log(userId, "ID");
     console.log("Querying user with ID:", userId);
 

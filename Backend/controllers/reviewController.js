@@ -2,13 +2,13 @@ const reviewModel = require("../models/reviewModel");
 
 const reviewController = {
   createReview: (req, res) => {
-    const { BookId, UserId, ReviewText, Rating } = req.body;
-    if (!BookId || !UserId || !ReviewText || !Rating) {
+    const { ComicId, UserId, ReviewText, Rating } = req.body;
+    if (!ComicId || !UserId || !ReviewText || !Rating) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     reviewModel.createReview(
-      { BookId, UserId, ReviewText, Rating },
+      { ComicId, UserId, ReviewText, Rating },
       (err, review) => {
         if (err) return res.status(500).json({ error: err.message });
         res.status(201).json(review);
@@ -41,10 +41,10 @@ const reviewController = {
     });
   },
 
-  getAllReviewsByBookId: (req, res) => {
-    const { BookId } = req.params;
+  getAllReviewsByComicId: (req, res) => {
+    const { ComicId } = req.params;
 
-    reviewModel.getAllReviewsByBookId(BookId, (err, reviews) => {
+    reviewModel.getAllReviewsByComicId(ComicId, (err, reviews) => {
       if (err) return res.status(500).json({ error: err.message });
       res.status(200).json(reviews);
     });
