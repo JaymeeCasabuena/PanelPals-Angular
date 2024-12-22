@@ -87,7 +87,6 @@ const comicModel = {
     `;
     try {
       const rows = await dbHelpers.getAllQuery(selectComicsQuery, []);
-      console.log(rows, "Query result rows");
       return rows;
     } catch (err) {
       throw new Error("An error occurred while fetching comics.");
