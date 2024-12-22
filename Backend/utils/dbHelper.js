@@ -16,6 +16,15 @@ const dbHelpers = {
         resolve(row);
       });
     }),
+  getAllQuery: (query, params) =>
+    new Promise((resolve, reject) => {
+      db.all(query, params, (err, rows) => {
+        if (err) {
+          return reject(`Error executing query: ${err.message}`);
+        }
+        resolve(rows);
+      });
+    }),
 };
 
 module.exports = dbHelpers;
