@@ -1,140 +1,119 @@
-const db = require("../data/database");
+const dbHelpers = require("../utils/dbHelper");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const UserModel = {
-  // Register a new user
-  registerUser: (username, email, password, callback) => {
-    const sql = "SELECT * FROM User WHERE Email = ?";
-    db.get(sql, [email], (err, user) => {
-      if (err) {
-        return callback(err.message);
-      }
+  registerUser: async (username, email, password) => {
+    try {
+      const sql = "SELECT * FROM User WHERE Email = ?";
+      const user = await dbHelpers.getQuery(sql, [email]);
 
       if (user) {
-        return callback("User already exists with this email.");
+        throw new Error("User already exists with this email.");
       }
 
-      bcrypt.hash(password, 10, (err, hashedPassword) => {
-        if (err) {
-          return callback(err.message);
-        }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const createUserQuery = `INSERT INTO User (Username, Email, Password) VALUES (?, ?, ?)`;
+      const result = await dbHelpers.runQuery(createUserQuery, [
+        username,
+        email,
+        hashedPassword,
+      ]);
 
-        const createUserQuery = `INSERT INTO User (Username, Email, Password) VALUES (?, ?, ?)`;
-        db.run(createUserQuery, [username, email, hashedPassword], (err) => {
-          if (err) {
-            return callback(err.message);
-          }
-          callback(null, { userId: this.lastID });
-        });
-      });
-    });
+      return { userId: result.lastID };
+    } catch (err) {
+      throw new Error(err.message);
+    }
   },
 
-  // User login
-  loginUser: (email, password, callback) => {
-    const query = `SELECT * FROM User WHERE Email = ?`;
-    db.get(query, [email], (err, user) => {
-      if (err) {
-        return callback(err.message);
-      }
+  loginUser: async (email, password) => {
+    try {
+      const query = `SELECT * FROM User WHERE Email = ?`;
+      const user = await dbHelpers.getQuery(query, [email]);
+
       if (!user) {
-        return callback("User not found");
+        throw new Error("User not found");
       }
 
-      bcrypt.compare(password, user.Password, (err, result) => {
-        if (err) {
-          return callback(err.message);
-        }
-        if (!result) {
-          return callback("Incorrect password");
-        }
-
-        const token = jwt.sign(
-          { userId: user.Id, role: user.Role },
-          process.env.JWT_SECRET_KEY,
-          { expiresIn: "1h" }
-        );
-        callback(null, { token, user });
-      });
-    });
-  },
-
-  // Delete a user
-  deleteUser: (userId, callback) => {
-    const query = `DELETE FROM User WHERE Id = ?`;
-    db.run(query, [userId], function (err) {
-      if (err) {
-        return callback(err.message);
+      const isPasswordValid = await bcrypt.compare(password, user.Password);
+      if (!isPasswordValid) {
+        throw new Error("Incorrect password");
       }
-      callback(null, { message: "User deleted successfully" });
-    });
+
+      const token = jwt.sign(
+        { userId: user.Id, role: user.Role },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1h" }
+      );
+
+      return { token, user };
+    } catch (err) {
+      throw new Error(err.message);
+    }
   },
 
-  // Edit user details
-  editUserDetails: (userId, updateData, callback) => {
-    const { username, email, password, birthday } = updateData;
-    let query = `UPDATE User SET `;
-    let params = [];
+  deleteUser: async (userId) => {
+    try {
+      const query = `DELETE FROM User WHERE Id = ?`;
+      await dbHelpers.runQuery(query, [userId]);
+      return { message: "User deleted successfully" };
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
 
-    if (username) {
-      query += `Username = ?, `;
-      params.push(username);
-    }
-    if (email) {
-      query += `Email = ?, `;
-      params.push(email);
-    }
-    if (birthday) {
-      query += `Birthday = ?, `;
-      params.push(birthday);
-    }
-    if (password) {
-      bcrypt.hash(password, 10, (err, hashedPassword) => {
-        if (err) {
-          return callback(err.message);
-        }
+  editUserDetails: async (userId, updateData) => {
+    try {
+      const { username, email, password, birthday, avatar } = updateData;
+      let query = `UPDATE User SET `;
+      let params = [];
+
+      if (username) {
+        query += `Username = ?, `;
+        params.push(username);
+      }
+      if (email) {
+        query += `Email = ?, `;
+        params.push(email);
+      }
+      if (birthday) {
+        query += `Birthday = ?, `;
+        params.push(birthday);
+      }
+      if (avatar) {
+        query += `Birthday = ?, `;
+        params.push(birthday);
+      }
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 10);
         query += `Password = ? `;
         params.push(hashedPassword);
+      }
 
-        query += `WHERE Id = ?`;
-        params.push(userId);
-
-        db.run(query, params, function (err) {
-          if (err) {
-            return callback(err.message);
-          }
-          callback(null, { message: "User updated successfully" });
-        });
-      });
-    } else {
       query = query.slice(0, -2);
       query += ` WHERE Id = ?`;
       params.push(userId);
 
-      db.run(query, params, function (err) {
-        if (err) {
-          return callback(err.message);
-        }
-        callback(null, { message: "User updated successfully" });
-      });
+      await dbHelpers.runQuery(query, params);
+      return { message: "User updated successfully" };
+    } catch (err) {
+      throw new Error(err.message);
     }
   },
-  getUserById: (userId, callback) => {
-    const query = `SELECT * FROM User WHERE Id = ?`;
-    console.log(userId, "ID");
-    console.log("Querying user with ID:", userId);
 
-    db.get(query, [userId], (err, user) => {
-      if (err) {
-        return callback(err.message);
-      }
+  getUserById: async (userId) => {
+    try {
+      const query = `SELECT * FROM User WHERE Id = ?`;
+      const user = await dbHelpers.getQuery(query, [userId]);
+
       if (!user) {
-        return callback("User not found");
+        throw new Error("User not found");
       }
-      callback(null, user);
-    });
+      return user;
+    } catch (err) {
+      throw new Error(err.message);
+    }
   },
 };
 module.exports = UserModel;
