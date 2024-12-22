@@ -1,53 +1,111 @@
-const db = require("../data/database");
+const dbHelpers = require("../utils/dbHelper");
 
 const reviewModel = {
-  createReview: (review, callback) => {
-    const { ComicId, UserId, ReviewText, Rating } = review;
-    const sql = `
+  createReview: async (review) => {
+    try {
+      const { ComicId, UserId, ReviewText, Rating } = review;
+      const sql = `
         INSERT INTO Review (ComicId, UserId, ReviewText, Rating)
         VALUES (?, ?, ?, ?)
       `;
-    db.run(sql, [ComicId, UserId, ReviewText, Rating], function (err) {
-      if (err) return callback(err);
-      callback(null, { Id: this.lastID, ...review });
-    });
+      const result = await dbHelpers.runQuery(sql, [
+        ComicId,
+        UserId,
+        ReviewText,
+        Rating,
+      ]);
+      return { Id: result.lastID, ...review };
+    } catch (err) {
+      console.error("Error creating review:", err.message);
+      throw new Error("An error occurred while creating the review.");
+    }
   },
 
-  editReview: (id, review, callback) => {
-    const { ReviewText, Rating } = review;
-    const sql = `
+  editReview: async (userId, id, review) => {
+    try {
+      const { reviewText, rating } = review;
+      const sql = `
         UPDATE Review
         SET ReviewText = ?, Rating = ?
-        WHERE Id = ?
+        WHERE Id = ? AND UserId = ?;
       `;
-    db.run(sql, [ReviewText, Rating, id], function (err) {
-      if (err) return callback(err);
-      callback(null, { Id: id, ...review });
-    });
+      const result = await dbHelpers.runQuery(sql, [
+        reviewText,
+        rating,
+        id,
+        userId,
+      ]);
+      if (result.changes === 0) {
+        throw new Error("Unauthorized or no changes made.");
+      }
+      return { Id: id, ...review };
+    } catch (err) {
+      console.error("Error editing review:", err.message);
+      throw new Error("An error occurred while editing the review.");
+    }
   },
 
-  deleteReview: (id, callback) => {
-    const sql = `DELETE FROM Review WHERE Id = ?`;
-    db.run(sql, [id], function (err) {
-      if (err) return callback(err);
-      callback(null, { deletedId: id });
-    });
+  deleteReview: async (userId, id) => {
+    try {
+      const sql = `DELETE FROM Review WHERE Id = ? AND UserId = ?`;
+      const result = await dbHelpers.runQuery(sql, [id, userId]);
+      return result.changes > 0 ? { success: true } : { success: false };
+    } catch (err) {
+      console.error("Error deleting review:", err.message);
+      throw new Error("An error occurred while deleting the review.");
+    }
   },
 
-  getAllReviewsByComicId: (ComicId, callback) => {
-    const sql = `SELECT * FROM Review WHERE ComicId = ?`;
-    db.all(sql, [ComicId], (err, rows) => {
-      if (err) return callback(err);
-      callback(null, rows);
-    });
+  getAllReviewsByComicId: async (ComicId) => {
+    try {
+      const sql = `
+        SELECT Review.Id, Review.ReviewText, Review.Rating, Review.DateCreated, 
+              User.Username, COUNT(Comment.Id) AS ResponseCount
+          FROM Review
+          LEFT JOIN User ON Review.UserId = User.Id
+          LEFT JOIN Comment ON Review.Id = Comment.ReviewId
+          WHERE Review.ComicId = ?
+          GROUP BY Review.Id;
+      `;
+      const rows = await dbHelpers.getAllQuery(sql, [ComicId]);
+
+      return rows;
+    } catch (err) {
+      console.error("Error fetching reviews by ComicId:", err.message);
+      throw new Error("An error occurred while fetching reviews.");
+    }
   },
 
-  getAllReviewsByUserId: (UserId, callback) => {
-    const sql = `SELECT * FROM Review WHERE UserId = ?`;
-    db.all(sql, [UserId], (err, rows) => {
-      if (err) return callback(err);
-      callback(null, rows);
-    });
+  getCommentsByReview: async (reviewId) => {
+    try {
+      const commentsQuery = `
+        SELECT Comment.Id, Comment.CommentText, Comment.CreatedAt, 
+               User.Username
+        FROM Comment
+        LEFT JOIN User ON Comment.UserId = User.Id
+        WHERE Comment.ReviewId = ?
+        ORDER BY Comment.CreatedAt;
+      `;
+      const comments = await dbHelpers.getAllQuery(commentsQuery, [reviewId]);
+
+      return { comments };
+    } catch (err) {
+      console.error("Error fetching comments by review ID:", err.message);
+      throw new Error(
+        "An error occurred while fetching comments by review ID."
+      );
+    }
+  },
+
+  getAllReviewsByUserId: async (UserId) => {
+    try {
+      const sql = `SELECT * FROM Review WHERE UserId = ?`;
+      const rows = await dbHelpers.getAllQuery(sql, [UserId]);
+      return rows;
+    } catch (err) {
+      console.error("Error fetching reviews by UserId:", err.message);
+      throw new Error("An error occurred while fetching reviews.");
+    }
   },
 };
 
