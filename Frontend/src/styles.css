@@ -1,6 +1,5 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap");
 
 * {
   margin: 0;
@@ -22,7 +21,7 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Space Grotesk", sans-serif;
   font-style: normal;
   font-weight: normal;
   overflow: hidden;

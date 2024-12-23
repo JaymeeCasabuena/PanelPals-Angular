@@ -10,7 +10,7 @@
   >
     <div class="modal-content bg-transparent border-0">
       <div class="modal-header border-0">
-        <h5 class="text-dark ms-4" id="addBookModalLabel">Add New Book</h5>
+        <h5 class="text-dark ms-4" id="addBookModalLabel">Add New Comic</h5>
         <button
           type="button"
           class="btn-close"
@@ -36,21 +36,12 @@
           />
         </div>
         <div class="mb-3 d-flex">
-          <label for="isbn" class="form-label text-dark ms-5 mt-4">ISBN</label>
-          <input
-            type="text"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="isbn"
-            formControlName="isbn"
-            required
-          />
-        </div>
-        <div class="mb-3 d-flex">
           <label for="yearPublished" class="form-label text-dark ms-5 mt-4"
             >Year Published</label
           >
           <input
             type="number"
+            value="2015"
             class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
             id="yearPublished"
             formControlName="yearPublished"
@@ -58,14 +49,45 @@
           />
         </div>
         <div class="mb-3 d-flex">
-          <label for="genre" class="form-label text-dark ms-5 mt-4"
-            >Genre</label
+          <label for="genres" class="form-label text-dark ms-5 mt-4"
+            >Genres</label
           >
+          <p-multiselect
+            class="ms-4 mt-3"
+            [options]="genres"
+            formControlName="genres"
+            optionLabel="Name"
+            optionValue="Id"
+            placeholder="Click to select genres"
+            styleClass="multiselect w-full md:w-80"
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="status" class="form-label text-dark ms-5 mt-4"
+            >Status</label
+          >
+          <select
+            class="text-dark ms-5 mt-3"
+            name="status"
+            id="status"
+            formControlName="status"
+          >
+            <option class="text-dark" [value]="comicStatus.Ongoing">
+              Ongoing
+            </option>
+            <option class="text-dark" [value]="comicStatus.Completed">
+              Completed
+            </option>
+          </select>
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="link" class="form-label text-dark ms-5 mt-4">Link</label>
           <input
             type="text"
             class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="genre"
-            formControlName="genre"
+            id="link"
+            placeholder="Link to manga reader"
+            formControlName="link"
             required
           />
         </div>
@@ -81,33 +103,34 @@
           ></textarea>
         </div>
         <div class="mb-3 d-flex">
-          <label for="authorId" class="form-label text-dark ms-5 mt-4"
-            >Author ID</label
-          >
-          <input
-            type="number"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="authorId"
-            formControlName="authorId"
-            required
-          />
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="bookImg" class="form-label text-dark ms-5 mt-4"
-            >Book Image URL</label
+          <label for="authorName" class="form-label text-dark ms-5 mt-4"
+            >Author</label
           >
           <input
             type="text"
             class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="bookImg"
-            formControlName="bookImg"
+            id="authorName"
+            formControlName="authorName"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex">
+          <label for="cover" class="form-label text-dark ms-5 mt-4"
+            >Cover Image URL</label
+          >
+          <input
+            type="text"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="cover"
+            formControlName="cover"
           />
         </div>
         <button
           type="button"
-          class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-3 mt-5"
+          class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-3 mt-2"
+          type="submit"
         >
-          Add Book ＋
+          Add Comic ＋
         </button>
       </form>
     </div>
@@ -116,10 +139,10 @@
 
 <button
   class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
-  title="Add new book"
+  title="Add new comic"
   data-bs-placement="right"
   data-bs-toggle="modal"
   data-bs-target="#addBookModal"
 >
-  Add new book to review ＋
+  Add new comic to review ＋
 </button>
