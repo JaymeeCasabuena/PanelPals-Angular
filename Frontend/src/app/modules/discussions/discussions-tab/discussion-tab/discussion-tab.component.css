@@ -1,0 +1,11 @@
+:host ::ng-deep .p-fieldset {
+  background: white !important;
+}
+
+:host ::ng-deep .p-fieldset-legend {
+  background: white !important;
+}
+
+:host ::ng-deep .p-paginator-page-selected {
+  background: #cd908b !important;
+}
