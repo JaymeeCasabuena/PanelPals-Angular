@@ -8,6 +8,7 @@ import { StarRatingComponent } from '../../../shared/components/star-rating/star
 import { FormsModule } from '@angular/forms';
 import { ReviewService } from '../services/review.service';
 import { Review } from '../interfaces/review';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-book-details',
@@ -27,6 +28,7 @@ export class ComicDetailsComponent {
   reviewText: string = '';
   rating: number = 0;
   reviews: Review[] = [];
+  formattedGenres: string = '';
 
   constructor(
     private comicService: ComicService,
@@ -44,7 +46,12 @@ export class ComicDetailsComponent {
 
   fetchComicById(id: number): void {
     this.comicService.getComicById(id).subscribe({
-      next: (response) => (this.comic = response),
+      next: (response) => {
+        this.comic = response;
+        if (this.comic.Genres && this.comic.Genres.length > 0) {
+          this.formattedGenres = this.comic.Genres.split(',').join(', ');
+        }
+      },
       error: (error) => console.error('Error fetching comic', error),
       complete: () => console.log('Fetching comic complete'),
     });
@@ -68,7 +75,7 @@ export class ComicDetailsComponent {
     }
 
     const newReview: Review = {
-      BookId: this.comic.Id,
+      ComicId: this.comic.Id,
       UserId: 1,
       ReviewText: this.reviewText,
       Rating: this.rating,
