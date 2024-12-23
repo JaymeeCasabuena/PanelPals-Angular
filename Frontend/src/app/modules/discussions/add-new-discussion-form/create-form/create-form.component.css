@@ -1,0 +1,12 @@
+.modal-dialog {
+  min-height: 50vh;
+  width: 60em;
+  background: #f2f3d9;
+  border-radius: 10px;
+  top: 6em;
+}
+
+input::placeholder {
+  color: gray;
+  font-size: 14px;
+}

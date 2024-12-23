@@ -1,0 +1,71 @@
+<div
+  class="modal fade position-absolute"
+  id="addDiscussionModal"
+  tabindex="-1"
+  aria-labelledby="addDiscussionModalLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog d-sm-flex h-50 flex-column col-11 col-sm-11 col-md-11 col-lg-11 align-items-center mt-0 mt-sm-4"
+  >
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-header border-0">
+        <h5 class="text-dark ms-4" id="addDiscussionModalLabel">
+          Create New Discussion
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        [formGroup]="discussionForm"
+        (ngSubmit)="onSubmit()"
+        class="d-flex flex-column"
+      >
+        <div class="mb-3 d-flex">
+          <label for="title" class="form-label text-dark ms-5 mt-4"
+            >Title</label
+          >
+          <input
+            type="text"
+            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+            id="title"
+            formControlName="title"
+            required
+          />
+        </div>
+
+        <div class="mb-3 d-flex">
+          <label for="content" class="form-label text-dark ms-5 mt-4"
+            >Content</label
+          >
+          <textarea
+            class="form-control w-75 h-100 bg-transparent border-0 border-bottom ms-3 me-3 mt-2"
+            id="content"
+            formControlName="content"
+            rows="3"
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-4 mt-2"
+          type="submit"
+        >
+          Publish ＋
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<button
+  class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
+  title="Add new discussion"
+  data-bs-placement="right"
+  data-bs-toggle="modal"
+  data-bs-target="#addDiscussionModal"
+>
+  Start a new discussion ＋
+</button>
