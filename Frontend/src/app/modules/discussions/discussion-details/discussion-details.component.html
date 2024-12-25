@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-1">
+      <app-side-bar></app-side-bar>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-11">
+      <!-- Top Bar -->
+      <div class="row">
+        <div
+          class="d-flex align-items-center justify-content-between mt-2 w-100"
+        >
+          <!-- Centered Search Bar -->
+          <div class="d-flex justify-content-center flex-grow-1">
+            <app-search-bar></app-search-bar>
+          </div>
+          <!-- Avatar aligned to the far right -->
+          <p-avatar
+            class="align-self-end"
+            image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
+            size="large"
+            shape="circle"
+          ></p-avatar>
+        </div>
+      </div>
+
+      <!-- Discussions Section -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <!-- Check if there are discussions -->
+          <div class="mb-3">
+            <p-fieldset styleClass="discussion-tab">
+              <ng-template #header>
+                <div class="d-flex gap-2">
+                  <p-avatar
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                    shape="circle"
+                  />
+                  <span class="font-bold text-black fs-5">
+                    {{ discussion.Username }}
+                  </span>
+                </div>
+              </ng-template>
+              <div>
+                <div class="d-flex justify-content-between">
+                  <h5 class="text-black fs-5 ms-3">{{ discussion.Title }}</h5>
+                  <p class="text-black fs-5">
+                    Responses: {{ discussion.ResponseCount }}
+                  </p>
+                </div>
+                <p class="text-black fs-5 ms-3">
+                  {{ discussion.DateCreated }}
+                </p>
+              </div>
+            </p-fieldset>
+          </div>
+          <ng-container
+            *ngIf="comments && comments.length > 0; else emptyState"
+          >
+          </ng-container>
+
+          <!-- Empty State -->
+          <ng-template #emptyState>
+            <p class="text-center text-muted mt-5">No comments yet.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
