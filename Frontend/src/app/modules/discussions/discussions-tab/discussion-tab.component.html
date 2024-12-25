@@ -28,13 +28,16 @@
 
       <!-- Discussions Section -->
       <div class="row mt-5">
-        <div class="col-12">
+        <div class="col-12 discussion-cont overflow-y-scroll">
           <!-- Check if there are discussions -->
           <ng-container
             *ngIf="discussions && discussions?.length > 0; else emptyState"
           >
             <div *ngFor="let discussion of discussions" class="mb-3">
-              <p-fieldset styleClass="discussion-tab">
+              <p-fieldset
+                styleClass="discussion-tab"
+                (click)="navigateToDetails(discussion?.Id)"
+              >
                 <ng-template #header>
                   <div class="d-flex gap-2">
                     <p-avatar
@@ -81,7 +84,7 @@
       </div>
 
       <!-- Add New Form -->
-      <div class="row mt-5">
+      <div class="row mt-1">
         <div class="col-6">
           <app-create-form></app-create-form>
         </div>

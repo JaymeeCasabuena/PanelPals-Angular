@@ -9,3 +9,7 @@
 :host ::ng-deep .p-paginator-page-selected {
   background: #cd908b !important;
 }
+
+.discussion-cont {
+  height: 70vh;
+}
