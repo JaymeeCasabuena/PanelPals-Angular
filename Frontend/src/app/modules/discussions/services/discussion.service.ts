@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Discussion } from '../interfaces/discussion';
+import { DiscussionDetails } from '../interfaces/discussion';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,21 @@ export class DiscussionService {
     );
   }
 
-  getAllDiscussions(): Observable<Discussion[]> {
-    return this.http.get<Discussion[]>(`${this.apiUrl}/discussions/getAll`);
+  getAllDiscussions(): Observable<DiscussionDetails[]> {
+    return this.http.get<DiscussionDetails[]>(
+      `${this.apiUrl}/discussions/getAll`
+    );
+  }
+
+  getDiscussionById(id: number): Observable<DiscussionDetails> {
+    return this.http.get<DiscussionDetails>(`${this.apiUrl}/discussions/${id}`);
+  }
+
+  getTrendingDiscussions(): Observable<Discussion[]> {
+    return this.http.get<Discussion[]>(`${this.apiUrl}/discussions/trending`);
+  }
+
+  getRecentDiscussions(): Observable<Discussion[]> {
+    return this.http.get<Discussion[]>(`${this.apiUrl}/discussions/recent`);
   }
 }
