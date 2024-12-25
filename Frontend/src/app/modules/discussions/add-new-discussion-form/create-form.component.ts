@@ -5,7 +5,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { DiscussionService } from '../../services/discussion.service';
+import { DiscussionService } from '../services/discussion.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
