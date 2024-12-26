@@ -96,7 +96,7 @@ let db = new sqlite3.Database(dbName, (err) => {
           UserId INTEGER NOT NULL,
           Title TEXT NOT NULL,
           Content TEXT NOT NULL,
-          DateCreated DATE DEFAULT CURRENT_DATE,
+          DateCreated DATETIME DEFAULT (datetime('now', 'localtime')),
           FOREIGN KEY (UserId) REFERENCES User(Id)
         );
       `,

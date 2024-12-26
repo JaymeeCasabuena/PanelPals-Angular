@@ -1,4 +1,6 @@
+const { formatDiscussionDates } = require("../utils/dateHelper");
 const discussionModel = require("../models/discussionModel");
+const moment = require("moment");
 
 const discussionController = {
   createDiscussion: async (req, res) => {
@@ -21,7 +23,8 @@ const discussionController = {
   getAllDiscussions: async (req, res) => {
     try {
       const discussions = await discussionModel.getAllDiscussions();
-      res.status(200).json(discussions);
+      const formattedDiscussions = formatDiscussionDates(discussions);
+      res.status(200).json(formattedDiscussions);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -29,8 +32,11 @@ const discussionController = {
 
   getDiscussionById: async (req, res) => {
     try {
-      const { discussionId } = req.params;
+      const discussionId = req.params.id;
       const result = await discussionModel.getDiscussionById(discussionId);
+      result.discussion.DateCreated = moment(
+        result.discussion.DateCreated
+      ).fromNow();
       res.status(200).json(result);
     } catch (err) {
       res.status(500).json({ message: err.message });
