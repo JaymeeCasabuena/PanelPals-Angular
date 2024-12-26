@@ -45,4 +45,17 @@ export class DiscussionService {
   getRecentDiscussions(): Observable<Discussion[]> {
     return this.http.get<Discussion[]>(`${this.apiUrl}/discussions/recent`);
   }
+
+  editDiscussion(
+    discussionId: number,
+    userId: number,
+    content: string
+  ): Observable<any> {
+    const body = { userId, content };
+    return this.http.put(`${this.apiUrl}/discussions/${discussionId}`, body);
+  }
+
+  deleteDiscussion(discussionId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/discussions/${discussionId}`);
+  }
 }
