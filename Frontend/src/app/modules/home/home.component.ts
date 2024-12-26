@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { SideBarComponent } from '../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { ComicService } from '../../shared/services/comic-services/comic.service';
+import { DiscussionService } from '../discussions/services/discussion.service';
 import { UserService } from '../auth/services/user.service';
 import { Comic } from '../../shared/interfaces/comic';
+import { Discussion } from '../discussions/interfaces/discussion';
 import { AddNewFormComponent } from '../books/add-new-book/add-new-form/add-new-form.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Carousel } from 'primeng/carousel';
@@ -39,16 +41,21 @@ export class HomeComponent implements OnInit {
   comics: Comic[] = [];
   comic: any;
   currentUser: any;
+  newDiscussions: any;
+  trendingDiscussions: any;
 
   constructor(
     private comicService: ComicService,
     private userService: UserService,
+    private discussionService: DiscussionService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.fetchAllComics();
     this.getCurrentUser();
+    this.fetchNewDiscussions();
+    this.fetchTrendingDiscussions();
   }
 
   getCurrentUser(): void {
@@ -70,35 +77,28 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  fetchTrendingDiscussions(): void {
+    this.discussionService.getTrendingDiscussions().subscribe({
+      next: (response) => (this.trendingDiscussions = response),
+      error: (error) =>
+        console.error('Error fetching trending discussions', error),
+      complete: () => console.log('Fetching trending discussions complete'),
+    });
+  }
+
+  fetchNewDiscussions(): void {
+    this.discussionService.getRecentDiscussions().subscribe({
+      next: (response) => (this.newDiscussions = response),
+      error: (error) => console.error('Error fetching new discussions', error),
+      complete: () => console.log('Fetching new discussions complete'),
+    });
+  }
+
   navigateToDetails(comicId: number): void {
     this.router.navigate(['/comic-details', comicId]);
   }
 
-  newDiscussions = [
-    {
-      id: 1,
-      title: 'Recommend me a good Rofan?',
-      responses: 5,
-    },
-    {
-      id: 2,
-      title: 'When is the next update of Operation: True Love',
-      responses: 10,
-    },
-  ];
-
-  trendingDiscussions = [
-    {
-      id: 3,
-      title: 'Placeholder',
-      responses: 20,
-    },
-    {
-      id: 4,
-      title: 'Placeholder',
-      responses: 15,
-    },
-  ];
-
-  openDiscussion(id: number): void {}
+  openDiscussion(id: number): void {
+    this.router.navigate(['/discussions', id]);
+  }
 }
