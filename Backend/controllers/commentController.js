@@ -20,7 +20,7 @@ const commentController = {
   },
 
   editComment: async (req, res) => {
-    const { commentId } = req.params;
+    const { commentId } = req.params.id;
     const { userId, commentText } = req.body;
 
     if (!commentText) {
@@ -41,8 +41,12 @@ const commentController = {
   },
 
   deleteComment: async (req, res) => {
-    const { commentId } = req.params;
-    const { userId } = req.body;
+    const { commentId } = req.params.id;
+    const { userId } = req.query.userId;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
 
     try {
       const result = await commentModel.deleteComment(commentId, userId);
