@@ -54,7 +54,6 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    console.log('I WAS CLICKED');
     if (this.signUpForm.valid) {
       const { userName, regEmail, regPassword } = this.signUpForm.value;
       this.userService.registerUser(userName, regEmail, regPassword).subscribe({

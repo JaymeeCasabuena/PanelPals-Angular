@@ -5,7 +5,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { DiscussionService } from '../services/discussion.service';
+import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -28,13 +28,7 @@ export class CreateFormComponent {
     });
   }
 
-  ngOnInit(): void {
-    console.log(this.discussionForm, 'Initialized');
-  }
-
   onSubmit(): void {
-    console.log(this.discussionForm.value, 'test');
-
     if (this.discussionForm.valid) {
       const discussionData = this.discussionForm.value;
       discussionData.userId = 1;

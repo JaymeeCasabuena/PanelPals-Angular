@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { DiscussionService } from '../services/discussion.service';
+import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { CreateFormComponent } from '../add-new-discussion-form/create-form.component';

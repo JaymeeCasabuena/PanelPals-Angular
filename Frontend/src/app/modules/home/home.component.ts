@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SideBarComponent } from '../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { ComicService } from '../../shared/services/comic-services/comic.service';
-import { DiscussionService } from '../discussions/services/discussion.service';
+import { DiscussionService } from '../discussions/services/discussion-service/discussion.service';
 import { UserService } from '../auth/services/user.service';
 import { Comic } from '../../shared/interfaces/comic';
 import { Discussion } from '../discussions/interfaces/discussion';
