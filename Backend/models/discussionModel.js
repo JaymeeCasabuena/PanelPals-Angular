@@ -44,15 +44,15 @@ const discussionModel = {
           WHERE Discussion.Id = ?
           GROUP BY Discussion.Id;
         `;
-      const discussion = await db.get(query, [discussionId]);
+      const discussion = await dbHelpers.getQuery(query, [discussionId]);
 
       const commentsQuery = `
-          SELECT Comment.Id, Comment.CommentText, Comment.CreatedAt, 
+          SELECT Comment.Id, Comment.CommentText, Comment.DateCreated, 
                  User.Username
           FROM Comment
           LEFT JOIN User ON Comment.UserId = User.Id
           WHERE Comment.DiscussionId = ?
-          ORDER BY Comment.CreatedAt;
+          ORDER BY Comment.DateCreated;
         `;
       const comments = await dbHelpers.getAllQuery(commentsQuery, [
         discussionId,

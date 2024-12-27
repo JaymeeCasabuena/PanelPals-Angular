@@ -37,6 +37,7 @@ const discussionController = {
       result.discussion.DateCreated = moment(
         result.discussion.DateCreated
       ).fromNow();
+      result.comments = formatDiscussionDates(result.comments);
       res.status(200).json(result);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -64,8 +65,13 @@ const discussionController = {
 
   deleteDiscussion: async (req, res) => {
     try {
-      const { discussionId } = req.params;
-      const result = await discussionModel.deleteDiscussion(discussionId);
+      const { discussionId } = req.params.id;
+      const { userId } = req.query.userId;
+
+      const result = await discussionModel.deleteDiscussion(
+        userId,
+        discussionId
+      );
       if (result.success) {
         res.status(200).json({ message: "Discussion deleted successfully." });
       } else {

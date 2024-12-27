@@ -116,7 +116,7 @@ let db = new sqlite3.Database(dbName, (err) => {
           DiscussionId INTEGER,
           UserId INTEGER NOT NULL,
           CommentText TEXT NOT NULL,
-          CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          DateCreated DATETIME DEFAULT (datetime('now', 'localtime')),
           FOREIGN KEY (ReviewId) REFERENCES Review(Id),
           FOREIGN KEY (DiscussionId) REFERENCES Discussion(Id),
           FOREIGN KEY (UserId) REFERENCES User(Id)
