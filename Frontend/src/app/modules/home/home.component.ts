@@ -5,7 +5,7 @@ import { SideBarComponent } from '../../shared/components/side-bar/side-bar.comp
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { ComicService } from '../../shared/services/comic-services/comic.service';
 import { DiscussionService } from '../discussions/services/discussion-service/discussion.service';
-import { UserService } from '../auth/services/user.service';
+import { UserService } from '../../shared/services/user-services/user.service';
 import { Comic } from '../../shared/interfaces/comic';
 import { Discussion } from '../discussions/interfaces/discussion';
 import { AddNewFormComponent } from '../books/add-new-book/add-new-form/add-new-form.component';
@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit {
     this.userService.getCurrentUser().subscribe({
       next: (response) => {
         this.currentUser = response.data;
+        this.userService.setUser(this.currentUser);
       },
       error: (error) => {
         console.error('Error fetching current user', error);

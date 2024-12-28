@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +20,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -45,7 +45,7 @@ export class LoginComponent {
   onLogIn(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.userService.loginUser(email, password).subscribe({
+      this.authService.loginUser(email, password).subscribe({
         next: () => this.router.navigate(['home']),
         error: (error) => console.error('Login failed', error),
         complete: () => console.log('Login request complete'),
@@ -56,7 +56,7 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.signUpForm.valid) {
       const { userName, regEmail, regPassword } = this.signUpForm.value;
-      this.userService.registerUser(userName, regEmail, regPassword).subscribe({
+      this.authService.registerUser(userName, regEmail, regPassword).subscribe({
         next: () => this.toggleSignup(),
         error: (error) => console.error('Registration failed', error),
         complete: () => console.log('Registration request complete'),

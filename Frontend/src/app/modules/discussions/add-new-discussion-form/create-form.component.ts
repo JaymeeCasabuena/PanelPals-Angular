@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './create-form.component.css',
 })
 export class CreateFormComponent {
+  @Input() currentUser: any;
   discussionForm: FormGroup;
 
   constructor(
@@ -31,7 +32,7 @@ export class CreateFormComponent {
   onSubmit(): void {
     if (this.discussionForm.valid) {
       const discussionData = this.discussionForm.value;
-      discussionData.userId = 1;
+      discussionData.userId = this.currentUser.Id;
 
       this.discussionService.createDiscussion(discussionData).subscribe({
         next: (response) =>
