@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
@@ -12,10 +13,12 @@ interface UserResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  private apiUrl = 'http://localhost:3000';
+export class AuthService {
 
   constructor(private http: HttpClient) {}
+
+  private apiUrl = environment.apiUrl;
+
 
   registerUser(
     username: string,
