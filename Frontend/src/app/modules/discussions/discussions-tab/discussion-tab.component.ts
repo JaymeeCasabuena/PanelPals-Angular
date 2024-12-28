@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user-services/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
@@ -31,12 +30,18 @@ export class DiscussionTabComponent {
 
   constructor(
     private discussionService: DiscussionService,
-    private userService: UserService,
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.userService.getUser();
+    this.route.data.subscribe({
+      next: (data) => {
+        this.currentUser = data['currentUser']['data'];
+      },
+      error: (error) => console.error('Error resolving current user', error),
+    });
+
     this.fetchAllDiscussions();
   }
 

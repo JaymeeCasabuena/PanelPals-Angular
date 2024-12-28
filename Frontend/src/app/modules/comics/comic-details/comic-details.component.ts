@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ComicService } from '../../../shared/services/comic-services/comic.service';
-import { UserService } from '../../../shared/services/user-services/user.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
@@ -33,13 +32,18 @@ export class ComicDetailsComponent {
 
   constructor(
     private comicService: ComicService,
-    private userService: UserService,
     private route: ActivatedRoute,
     private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.userService.getUser();
+    this.route.data.subscribe({
+      next: (data) => {
+        this.currentUser = data['currentUser']['data'];
+      },
+      error: (error) => console.error('Error resolving current user', error),
+    });
+
     const comicId = this.route.snapshot.paramMap.get('id');
     if (comicId) {
       this.fetchComicById(Number(comicId));
@@ -76,6 +80,8 @@ export class ComicDetailsComponent {
       alert('Please provide a rating and a review.');
       return;
     }
+
+    console.log(this.currentUser);
     const newReview: Review = {
       ComicId: this.comic.Id,
       UserId: this.currentUser.Id,

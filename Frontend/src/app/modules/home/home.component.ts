@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SideBarComponent } from '../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
@@ -7,8 +7,7 @@ import { ComicService } from '../../shared/services/comic-services/comic.service
 import { DiscussionService } from '../discussions/services/discussion-service/discussion.service';
 import { UserService } from '../../shared/services/user-services/user.service';
 import { Comic } from '../../shared/interfaces/comic';
-import { Discussion } from '../discussions/interfaces/discussion';
-import { AddNewFormComponent } from '../books/add-new-book/add-new-form/add-new-form.component';
+import { AddNewFormComponent } from '../comics/add-new-comic/add-new-form/add-new-form.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Carousel } from 'primeng/carousel';
 import { TabsModule } from 'primeng/tabs';
@@ -48,26 +47,22 @@ export class HomeComponent implements OnInit {
     private comicService: ComicService,
     private userService: UserService,
     private discussionService: DiscussionService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.fetchAllComics();
-    this.getCurrentUser();
-    this.fetchNewDiscussions();
-    this.fetchTrendingDiscussions();
-  }
-
-  getCurrentUser(): void {
-    this.userService.getCurrentUser().subscribe({
-      next: (response) => {
-        this.currentUser = response.data;
+    this.route.data.subscribe({
+      next: (data) => {
+        this.currentUser = data['currentUser']['data'];
         this.userService.setUser(this.currentUser);
       },
-      error: (error) => {
-        console.error('Error fetching current user', error);
-      },
+      error: (error) => console.error('Error resolving current user', error),
     });
+
+    this.fetchAllComics();
+    this.fetchNewDiscussions();
+    this.fetchTrendingDiscussions();
   }
 
   fetchAllComics(): void {

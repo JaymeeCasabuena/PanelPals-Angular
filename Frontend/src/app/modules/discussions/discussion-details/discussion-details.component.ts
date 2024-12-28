@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../shared/services/user-services/user.service';
 import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { CommentService } from '../services/comment-service/comment.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
@@ -38,7 +37,6 @@ export class DiscussionDetailsComponent {
   constructor(
     private discussionService: DiscussionService,
     private commentService: CommentService,
-    private userService: UserService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
@@ -48,7 +46,13 @@ export class DiscussionDetailsComponent {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.userService.getUser();
+    this.route.data.subscribe({
+      next: (data) => {
+        this.currentUser = data['currentUser']['data'];
+      },
+      error: (error) => console.error('Error resolving current user', error),
+    });
+
     const discussionId = this.route.snapshot.paramMap.get('id');
     if (discussionId) {
       this.fetchDiscussionById(Number(discussionId));
