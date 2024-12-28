@@ -27,8 +27,8 @@ export class ReviewService {
   }
 
   // Get reviews by BookId
-  getReviewsByBookId(bookId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.apiUrl}/reviews/book/${bookId}`);
+  getReviewsByComicId(comicId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/reviews/comic/${comicId}`);
   }
 
   // Get reviews by UserId
