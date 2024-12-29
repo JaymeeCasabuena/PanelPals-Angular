@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { AuthService } from '../../../modules/auth/services/auth.service';
+import { UserService } from '../../services/user-services/user.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -13,8 +14,12 @@ import { Router, RouterModule, NavigationEnd } from '@angular/router';
 export class SideBarComponent implements OnInit {
   currentRoute: string;
 
-  constructor(private router: Router) {
-    this.currentRoute = this.router.url; // Initialize with current route
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService
+  ) {
+    this.currentRoute = this.router.url;
   }
 
   ngOnInit(): void {
@@ -23,5 +28,11 @@ export class SideBarComponent implements OnInit {
         this.currentRoute = event.urlAfterRedirects;
       }
     });
+  }
+
+  signOut(): void {
+    this.authService.signOut();
+    this.userService.setUser('');
+    this.router.navigate(['/login']);
   }
 }

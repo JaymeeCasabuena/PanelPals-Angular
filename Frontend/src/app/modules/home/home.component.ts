@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SideBarComponent } from '../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
@@ -11,14 +11,7 @@ import { AddNewFormComponent } from '../comics/add-new-comic/add-new-form/add-ne
 import { MatTabsModule } from '@angular/material/tabs';
 import { Carousel } from 'primeng/carousel';
 import { TabsModule } from 'primeng/tabs';
-import { Avatar } from 'primeng/avatar';
-
-interface PopularBooks {
-  title: string;
-  author: string;
-  summary: string;
-  imageUrl: string;
-}
+import { AvatarComponent } from '../../shared/components/avatar/avatar/avatar.component';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +24,8 @@ interface PopularBooks {
     MatTabsModule,
     Carousel,
     TabsModule,
-    Avatar,
+    AvatarComponent,
+    RouterModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

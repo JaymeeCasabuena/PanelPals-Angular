@@ -16,12 +16,7 @@
             <app-search-bar></app-search-bar>
           </div>
           <!-- Avatar aligned to the far right -->
-          <p-avatar
-            class="align-self-end"
-            image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
-            size="large"
-            shape="circle"
-          ></p-avatar>
+          <app-avatar></app-avatar>
         </div>
       </div>
 
@@ -35,6 +30,7 @@
               thoughts with fellow readers
             </p>
             <button
+              [routerLink]="['/explore']"
               type="button"
               class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 me-auto"
             >
@@ -89,6 +85,7 @@
             discuss.
           </p>
           <button
+            [routerLink]="['/discussions']"
             type="button"
             class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1"
           >

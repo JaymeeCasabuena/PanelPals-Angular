@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ComicService } from '../../../shared/services/comic-services/comic.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
@@ -14,6 +14,7 @@ import { Review } from '../interfaces/review';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     SideBarComponent,
     SearchBarComponent,
     StarRatingComponent,
