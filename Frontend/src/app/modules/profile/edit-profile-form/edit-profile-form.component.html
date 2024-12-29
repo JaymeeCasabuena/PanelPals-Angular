@@ -1,0 +1,48 @@
+<div class="modal-header border-0">
+  <h5 class="modal-title text-dark ms-4" id="editProfileModalLabel">
+    Edit Profile
+  </h5>
+  <button
+    type="button"
+    class="btn-close"
+    (click)="closeModal()"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <form
+    [formGroup]="editProfileForm"
+    (ngSubmit)="onSubmit()"
+    class="d-flex flex-column"
+  >
+    <div class="mb-3 d-flex">
+      <label for="title" class="form-label text-dark ms-5 mt-4"
+        >User Name</label
+      >
+      <input
+        type="text"
+        class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+        id="userName"
+        formControlName="userName"
+        required
+      />
+    </div>
+
+    <div class="mb-3 d-flex">
+      <label for="content" class="form-label text-dark ms-5 mt-4">Avatar</label>
+      <input
+        type="text"
+        class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+        id="avatar"
+        formControlName="avatar"
+        required
+      />
+    </div>
+    <button
+      class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-4 mt-2"
+      type="submit"
+    >
+      Save
+    </button>
+  </form>
+</div>
