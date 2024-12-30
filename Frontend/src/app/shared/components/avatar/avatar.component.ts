@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ModalService } from '../../../services/modal-service/modal.service';
-import { EditProfileFormComponent } from '../../../../modules/profile/edit-profile-form/edit-profile-form.component';
+import { ModalService } from '../../services/modal-service/modal.service';
+import { EditProfileFormComponent } from '../../../modules/profile/edit-profile-form/edit-profile-form.component';
 import { Avatar } from 'primeng/avatar';
 
 @Component({
