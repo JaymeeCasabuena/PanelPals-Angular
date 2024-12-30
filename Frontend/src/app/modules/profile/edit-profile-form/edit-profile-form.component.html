@@ -22,8 +22,9 @@
       <input
         type="text"
         class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-        id="userName"
-        formControlName="userName"
+        id="username"
+        [value]="currentUser.Username"
+        formControlName="username"
         required
       />
     </div>
@@ -34,6 +35,7 @@
         type="text"
         class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
         id="avatar"
+        [value]="currentUser.Avatar"
         formControlName="avatar"
         required
       />

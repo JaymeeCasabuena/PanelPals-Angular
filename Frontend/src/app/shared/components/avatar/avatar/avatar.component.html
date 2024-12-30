@@ -1,7 +1,11 @@
 <button class="button" data-hover="Edit Profile" (click)="openModal()">
   <p-avatar
     class="align-self-end avatar"
-    image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
+    [image]="
+      currentUser.Avatar
+        ? currentUser.Avatar
+        : 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'
+    "
     size="xlarge"
     shape="circle"
     ><span></span
