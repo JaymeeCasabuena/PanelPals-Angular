@@ -22,12 +22,12 @@ const commentModel = {
   },
   editComment: async (id, userId, commentText) => {
     try {
-      const sql = `
+      const query = `
         UPDATE Comment
         SET CommentText = ?
         WHERE Id = ? AND UserId = ?;
       `;
-      const result = await dbHelpers.runQuery(sql, [commentText, id, userId]);
+      const result = await dbHelpers.runQuery(query, [commentText, id, userId]);
       if (result.changes === 0) {
         throw new Error("Unauthorized or no changes made.");
       }

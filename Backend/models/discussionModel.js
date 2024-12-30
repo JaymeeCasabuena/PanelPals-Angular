@@ -67,12 +67,12 @@ const discussionModel = {
 
   editDiscussion: async (userId, id, content) => {
     try {
-      const sql = `
+      const query = `
         UPDATE Discussion
         SET Content = ?
         WHERE Id = ? AND UserId = ?;
       `;
-      const result = await dbHelpers.runQuery(sql, [content, id, userId]);
+      const result = await dbHelpers.runQuery(query, [content, id, userId]);
       if (result.changes === 0) {
         throw new Error("Unauthorized or no changes made.");
       }

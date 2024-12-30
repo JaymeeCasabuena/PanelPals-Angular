@@ -4,11 +4,11 @@ const reviewModel = {
   createReview: async (review) => {
     try {
       const { ComicId, UserId, ReviewText, Rating } = review;
-      const sql = `
+      const query = `
         INSERT INTO Review (ComicId, UserId, ReviewText, Rating)
         VALUES (?, ?, ?, ?)
       `;
-      const result = await dbHelpers.runQuery(sql, [
+      const result = await dbHelpers.runQuery(query, [
         ComicId,
         UserId,
         ReviewText,
@@ -24,12 +24,12 @@ const reviewModel = {
   editReview: async (userId, id, review) => {
     try {
       const { reviewText, rating } = review;
-      const sql = `
+      const query = `
         UPDATE Review
         SET ReviewText = ?, Rating = ?
         WHERE Id = ? AND UserId = ?;
       `;
-      const result = await dbHelpers.runQuery(sql, [
+      const result = await dbHelpers.runQuery(query, [
         reviewText,
         rating,
         id,
@@ -47,8 +47,8 @@ const reviewModel = {
 
   deleteReview: async (userId, id) => {
     try {
-      const sql = `DELETE FROM Review WHERE Id = ? AND UserId = ?`;
-      const result = await dbHelpers.runQuery(sql, [id, userId]);
+      const query = `DELETE FROM Review WHERE Id = ? AND UserId = ?`;
+      const result = await dbHelpers.runQuery(query, [id, userId]);
       return result.changes > 0 ? { success: true } : { success: false };
     } catch (err) {
       console.error("Error deleting review:", err.message);
@@ -58,7 +58,7 @@ const reviewModel = {
 
   getAllReviewsByComicId: async (ComicId) => {
     try {
-      const sql = `
+      const query = `
         SELECT Review.Id, Review.ReviewText, Review.Rating, Review.DateCreated, 
               User.Username, COUNT(Comment.Id) AS ResponseCount
           FROM Review
@@ -67,7 +67,7 @@ const reviewModel = {
           WHERE Review.ComicId = ?
           GROUP BY Review.Id;
       `;
-      const rows = await dbHelpers.getAllQuery(sql, [ComicId]);
+      const rows = await dbHelpers.getAllQuery(query, [ComicId]);
 
       return rows;
     } catch (err) {
@@ -99,8 +99,8 @@ const reviewModel = {
 
   getAllReviewsByUserId: async (UserId) => {
     try {
-      const sql = `SELECT * FROM Review WHERE UserId = ?`;
-      const rows = await dbHelpers.getAllQuery(sql, [UserId]);
+      const query = `SELECT * FROM Review WHERE UserId = ?`;
+      const rows = await dbHelpers.getAllQuery(query, [UserId]);
       return rows;
     } catch (err) {
       console.error("Error fetching reviews by UserId:", err.message);
