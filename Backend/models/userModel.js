@@ -6,8 +6,8 @@ require("dotenv").config();
 const UserModel = {
   registerUser: async (username, email, password) => {
     try {
-      const sql = "SELECT * FROM User WHERE Email = ?";
-      const user = await dbHelpers.getQuery(sql, [email]);
+      const query = "SELECT * FROM User WHERE Email = ?";
+      const user = await dbHelpers.getQuery(query, [email]);
 
       if (user) {
         throw new Error("User already exists with this email.");
@@ -65,37 +65,14 @@ const UserModel = {
 
   editUserDetails: async (userId, updateData) => {
     try {
-      const { username, email, password, birthday, avatar } = updateData;
-      let query = `UPDATE User SET `;
-      let params = [];
+      const { username, avatar } = updateData;
+      const query = `
+      UPDATE User
+      SET Username = ?, Avatar = ?
+      WHERE Id = ?;
+    `;
 
-      if (username) {
-        query += `Username = ?, `;
-        params.push(username);
-      }
-      if (email) {
-        query += `Email = ?, `;
-        params.push(email);
-      }
-      if (birthday) {
-        query += `Birthday = ?, `;
-        params.push(birthday);
-      }
-      if (avatar) {
-        query += `Birthday = ?, `;
-        params.push(birthday);
-      }
-      if (password) {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        query += `Password = ? `;
-        params.push(hashedPassword);
-      }
-
-      query = query.slice(0, -2);
-      query += ` WHERE Id = ?`;
-      params.push(userId);
-
-      await dbHelpers.runQuery(query, params);
+      await dbHelpers.runQuery(query, [username, avatar, userId]);
       return { message: "User updated successfully" };
     } catch (err) {
       throw new Error(err.message);
@@ -104,7 +81,7 @@ const UserModel = {
 
   getUserById: async (userId) => {
     try {
-      const query = `SELECT * FROM User WHERE Id = ?`;
+      const query = `SELECT Id, Avatar, Username FROM User WHERE Id = ?`;
       const user = await dbHelpers.getQuery(query, [userId]);
 
       if (!user) {
