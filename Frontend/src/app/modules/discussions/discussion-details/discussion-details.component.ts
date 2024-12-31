@@ -77,8 +77,7 @@ export class DiscussionDetailsComponent {
       commentData.userId = this.currentUser.Id;
 
       this.commentService.addComment(commentData).subscribe({
-        next: (response) =>
-          console.log('Added new comment successfully', response),
+        next: () => this.commentForm.reset(),
         error: (error) => console.error('Error adding comment', error),
       });
     } else {

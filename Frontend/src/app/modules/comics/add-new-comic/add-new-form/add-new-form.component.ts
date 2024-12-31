@@ -9,6 +9,8 @@ import {
 import { ComicService } from '../../../../shared/services/comic-services/comic.service';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ComicStatus } from '../../../../shared/enums/status.enum';
+import { ModalService } from '../../../../shared/services/modal-service/modal.service';
+import { AlertModalComponent } from '../../../../shared/components/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-add-new-form',
@@ -24,7 +26,11 @@ export class AddNewFormComponent {
   comicStatus = ComicStatus;
   status: any;
 
-  constructor(private fb: FormBuilder, private comicService: ComicService) {
+  constructor(
+    private fb: FormBuilder,
+    private comicService: ComicService,
+    private modalService: ModalService
+  ) {
     this.comicForm = this.fb.group({
       title: ['', Validators.required],
       status: [ComicStatus.Ongoing, Validators.required],
@@ -54,11 +60,31 @@ export class AddNewFormComponent {
       const comicData = this.comicForm.value;
 
       this.comicService.addComic(comicData).subscribe({
-        next: (response) => console.log('Comic added successfully', response),
-        error: (error) => console.error('Error adding comic', error),
+        next: () => {
+          this.comicForm.reset(), this.openSuccessModal();
+        },
+        error: (error) => {
+          console.error('Error adding comic', error), this.openErrorModal();
+        },
       });
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  openSuccessModal() {
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Success',
+      message: 'New comic added successfully.',
+    };
+  }
+
+  openErrorModal() {
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Error',
+      message: 'Error adding comic.',
+    };
   }
 }

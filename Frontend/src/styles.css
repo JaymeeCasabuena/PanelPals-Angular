@@ -78,11 +78,6 @@ body {
   width: 530px !important;
 }
 
-.modal-content {
-  background: #f2f3d9;
-  border-radius: 10px;
-}
-
 input::placeholder {
   color: gray;
   font-size: 14px;

@@ -11,7 +11,7 @@ import { AddNewFormComponent } from '../comics/add-new-comic/add-new-form/add-ne
 import { MatTabsModule } from '@angular/material/tabs';
 import { Carousel } from 'primeng/carousel';
 import { TabsModule } from 'primeng/tabs';
-import { AvatarComponent } from '../../shared/components/avatar/avatar/avatar.component';
+import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
 
 @Component({
   selector: 'app-home',

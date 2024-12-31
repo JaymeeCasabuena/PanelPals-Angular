@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../services/profile.service';
+import { ModalService } from '../../../shared/services/modal-service/modal.service';
+import { AlertModalComponent } from '../../../shared/components/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -21,8 +23,9 @@ export class EditProfileFormComponent {
 
   constructor(
     private fb: FormBuilder,
-    public activeModal: NgbActiveModal,
-    private profileService: ProfileService
+    private activeModal: NgbActiveModal,
+    private profileService: ProfileService,
+    private modalService: ModalService
   ) {
     this.editProfileForm = this.fb.group({
       username: ['', Validators.required],
@@ -44,13 +47,32 @@ export class EditProfileFormComponent {
       profileData.userId = this.currentUser.Id;
 
       this.profileService.editProfile(profileData).subscribe({
-        next: (response) =>
-          console.log('Profile updated successfully', response),
-        error: (error) => console.error('Error updating profile', error),
+        next: () => this.openSuccessModal(),
+        error: (error) => {
+          console.error('Error updating profile', error), this.openErrorModal();
+        },
       });
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  openSuccessModal() {
+    this.closeModal();
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Success',
+      message: 'Your profile has been updated successfully.',
+    };
+  }
+
+  openErrorModal() {
+    this.closeModal();
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Error',
+      message: 'Error updating profile.',
+    };
   }
 
   closeModal(): void {
