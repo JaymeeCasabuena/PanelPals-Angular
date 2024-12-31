@@ -5,6 +5,8 @@ import { DiscussionService } from '../services/discussion-service/discussion.ser
 import { CommentService } from '../services/comment-service/comment.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+
 import {
   FormBuilder,
   Validators,
@@ -24,6 +26,7 @@ import { Fieldset } from 'primeng/fieldset';
     Fieldset,
     CommonModule,
     ReactiveFormsModule,
+    AvatarComponent,
   ],
   templateUrl: './discussion-details.component.html',
   styleUrl: './discussion-details.component.css',

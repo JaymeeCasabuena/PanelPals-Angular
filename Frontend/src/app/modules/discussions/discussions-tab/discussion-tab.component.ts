@@ -5,6 +5,7 @@ import { DiscussionService } from '../services/discussion-service/discussion.ser
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { CreateFormComponent } from '../add-new-discussion-form/create-form.component';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { Avatar } from 'primeng/avatar';
 import { Fieldset } from 'primeng/fieldset';
 import { PaginatorModule } from 'primeng/paginator';
@@ -20,6 +21,7 @@ import { PaginatorModule } from 'primeng/paginator';
     PaginatorModule,
     CreateFormComponent,
     CommonModule,
+    AvatarComponent,
   ],
   templateUrl: './discussion-tab.component.html',
   styleUrl: './discussion-tab.component.css',

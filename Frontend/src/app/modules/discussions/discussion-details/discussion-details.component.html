@@ -12,17 +12,12 @@
         <div
           class="d-flex align-items-center justify-content-between mt-2 w-100"
         >
-          <!-- Centered Search Bar -->
+          <!-- Centered search bar -->
           <div class="d-flex justify-content-center flex-grow-1">
             <app-search-bar></app-search-bar>
           </div>
           <!-- Avatar aligned to the far right -->
-          <p-avatar
-            class="align-self-end"
-            image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
-            size="large"
-            shape="circle"
-          ></p-avatar>
+          <app-avatar [currentUser]="currentUser"></app-avatar>
         </div>
       </div>
 

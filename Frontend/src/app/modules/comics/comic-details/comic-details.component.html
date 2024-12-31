@@ -7,10 +7,16 @@
 
     <!-- Main Content -->
     <div class="col-lg-11 col-md-9 col-sm-8">
-      <div class="row mt-3">
-        <!-- Search Bar -->
-        <div class="col-12">
-          <app-search-bar></app-search-bar>
+      <div class="row">
+        <div
+          class="d-flex align-items-center justify-content-between mt-2 w-100"
+        >
+          <!-- Centered search bar -->
+          <div class="d-flex justify-content-center flex-grow-1">
+            <app-search-bar></app-search-bar>
+          </div>
+          <!-- Avatar aligned to the far right -->
+          <app-avatar [currentUser]="currentUser"></app-avatar>
         </div>
       </div>
 

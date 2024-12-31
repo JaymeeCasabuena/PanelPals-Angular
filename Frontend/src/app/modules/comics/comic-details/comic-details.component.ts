@@ -5,6 +5,7 @@ import { ComicService } from '../../../shared/services/comic-services/comic.serv
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
 import { ReviewService } from '../services/review.service';
 import { Review } from '../interfaces/review';
@@ -18,6 +19,7 @@ import { Review } from '../interfaces/review';
     SideBarComponent,
     SearchBarComponent,
     StarRatingComponent,
+    AvatarComponent,
     FormsModule,
   ],
   templateUrl: './comic-details.component.html',
