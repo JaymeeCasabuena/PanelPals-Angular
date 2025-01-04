@@ -1,0 +1,49 @@
+.book-photo {
+  width: 120px;
+  height: 180px;
+  border-radius: 2px;
+  box-shadow: 
+      /* stalked pages */ 1px 0px #b9b9b9, 1px 2px 1px #b9b9b9,
+    2px 1px 1px #b9b9b9, 1px 2px 1px #b9b9b9, 3px 2px 1px #b9b9b9,
+    2px 3px 1px #b9b9b9, 4px 3px 1px #b9b9b9,
+    /* book shadow */ -7px 7px 4px rgba(0, 0, 0, 0.3),
+    -15px 15px 20px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.book-card {
+  width: 150px;
+  height: 150px;
+}
+
+.feature-comic {
+  width: 220px;
+  height: 320px;
+  border-radius: 2px;
+  box-shadow: 
+        /* stalked pages */ 1px 0px #b9b9b9, 1px 2px 1px #b9b9b9,
+    2px 1px 1px #b9b9b9, 1px 2px 1px #b9b9b9, 3px 2px 1px #b9b9b9,
+    2px 3px 1px #b9b9b9, 4px 3px 1px #b9b9b9,
+    /* book shadow */ -7px 7px 4px rgba(0, 0, 0, 0.3),
+    -15px 15px 20px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.comics-container {
+  height: 70vh;
+}
+
+:host ::ng-deep .p-paginator-page-selected {
+  background: #cd908b !important;
+}
+
+:host ::ng-deep .p-paginator {
+  border-radius: 3rem;
+  width: 20em;
+}

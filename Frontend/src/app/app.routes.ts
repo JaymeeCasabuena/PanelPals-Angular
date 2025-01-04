@@ -4,6 +4,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { ComicDetailsComponent } from './modules/comics/comic-details/comic-details.component';
 import { DiscussionTabComponent } from './modules/discussions/discussions-tab/discussion-tab.component';
 import { DiscussionDetailsComponent } from './modules/discussions/discussion-details/discussion-details.component';
+import { ExplorePageComponent } from './modules/comics/explore-page/explore-page.component';
 import { UserResolver } from './shared/resolvers/user-resolver/user-resolver.service';
 
 export const routes: Routes = [
@@ -27,6 +28,11 @@ export const routes: Routes = [
   {
     path: 'discussions/:id',
     component: DiscussionDetailsComponent,
+    resolve: { currentUser: UserResolver },
+  },
+  {
+    path: 'explore',
+    component: ExplorePageComponent,
     resolve: { currentUser: UserResolver },
   },
 ];
