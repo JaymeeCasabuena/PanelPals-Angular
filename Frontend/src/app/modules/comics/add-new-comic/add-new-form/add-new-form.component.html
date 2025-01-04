@@ -6,7 +6,7 @@
   aria-hidden="true"
 >
   <div
-    class="modal-dialog d-sm-flex h-75 flex-column col-11 col-sm-9 col-md-9 col-lg-9 align-items-center mt-0 mt-sm-4"
+    class="modal-dialog overflow-y-scroll d-sm-flex h-75 flex-column col-11 col-sm-9 col-md-9 col-lg-9 align-items-center mt-0 mt-sm-4"
   >
     <div class="modal-content bg-transparent border-0">
       <div class="modal-header border-0">
@@ -18,125 +18,191 @@
           aria-label="Close"
         ></button>
       </div>
-      <form
-        [formGroup]="comicForm"
-        (ngSubmit)="onSubmit()"
-        class="d-flex flex-column"
-      >
-        <div class="mb-3 d-flex">
-          <label for="title" class="form-label text-dark ms-5 mt-4"
-            >Title</label
-          >
-          <input
-            type="text"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="title"
-            formControlName="title"
-            required
-          />
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="yearPublished" class="form-label text-dark ms-5 mt-4"
-            >Year Published</label
-          >
-          <input
-            type="number"
-            value="2015"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="yearPublished"
-            formControlName="yearPublished"
-            required
-          />
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="genres" class="form-label text-dark ms-5 mt-4"
-            >Genres</label
-          >
-          <p-multiselect
-            class="ms-4 mt-3"
-            [options]="genres"
-            formControlName="genres"
-            optionLabel="Name"
-            optionValue="Id"
-            placeholder="Click to select genres"
-            styleClass="multiselect w-full md:w-80"
-          />
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="status" class="form-label text-dark ms-5 mt-4"
-            >Status</label
-          >
-          <select
-            class="text-dark ms-5 mt-3"
-            name="status"
-            id="status"
-            formControlName="status"
-          >
-            <option class="text-dark" [value]="comicStatus.Ongoing">
-              Ongoing
-            </option>
-            <option class="text-dark" [value]="comicStatus.Completed">
-              Completed
-            </option>
-          </select>
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="link" class="form-label text-dark ms-5 mt-4">Link</label>
-          <input
-            type="text"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="link"
-            placeholder="Link to manga reader"
-            formControlName="link"
-            required
-          />
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="summary" class="form-label text-dark ms-5 mt-4"
-            >Summary</label
-          >
-          <textarea
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="summary"
-            formControlName="summary"
-            rows="3"
-          ></textarea>
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="authorName" class="form-label text-dark ms-5 mt-4"
-            >Author</label
-          >
-          <input
-            type="text"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="authorName"
-            formControlName="authorName"
-            required
-          />
-        </div>
-        <div class="mb-3 d-flex">
-          <label for="cover" class="form-label text-dark ms-5 mt-4"
-            >Cover Image URL</label
-          >
-          <input
-            type="text"
-            class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
-            id="cover"
-            formControlName="cover"
-          />
-        </div>
-        <button
-          type="button"
-          class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-3 mt-2"
-          type="submit"
+      <div class="moda-body">
+        <form
+          [formGroup]="comicForm"
+          (ngSubmit)="onSubmit()"
+          class="d-flex flex-column"
         >
-          Add Comic ＋
-        </button>
-      </form>
+          <div class="mb-3 d-flex">
+            <label for="title" class="form-label text-dark ms-5 mt-4"
+              >Title</label
+            >
+            <input
+              type="text"
+              class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+              id="title"
+              formControlName="title"
+              required
+            />
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('title')?.touched &&
+              comicForm.get('title')?.hasError('required')
+            "
+          >
+            Title is required.
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="yearPublished" class="form-label text-dark ms-5 mt-4"
+              >Year Published</label
+            >
+            <input
+              type="number"
+              value="2015"
+              class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+              id="yearPublished"
+              formControlName="yearPublished"
+              required
+            />
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('yearPublished')?.touched &&
+              comicForm.get('yearPublished')?.hasError('required')
+            "
+          >
+            Year Published is required.
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="genres" class="form-label text-dark ms-5 mt-4"
+              >Genres</label
+            >
+            <p-multiselect
+              class="ms-4 mt-3"
+              [options]="genres"
+              formControlName="genres"
+              optionLabel="Name"
+              optionValue="Id"
+              placeholder="Click to select genres"
+              styleClass="multiselect w-full md:w-80"
+            />
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('genres')?.touched &&
+              comicForm.get('genres')?.hasError('required')
+            "
+          >
+            Select at least one genre.
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="status" class="form-label text-dark ms-5 mt-4"
+              >Status</label
+            >
+            <select
+              class="text-dark ms-5 mt-3"
+              name="status"
+              id="status"
+              formControlName="status"
+            >
+              <option class="text-dark" [value]="comicStatus.Ongoing">
+                Ongoing
+              </option>
+              <option class="text-dark" [value]="comicStatus.Completed">
+                Completed
+              </option>
+            </select>
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="link" class="form-label text-dark ms-5 mt-4"
+              >Link</label
+            >
+            <input
+              type="text"
+              class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+              id="link"
+              placeholder="Link to manga reader"
+              formControlName="link"
+              required
+            />
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('link')?.touched &&
+              comicForm.get('link')?.hasError('required')
+            "
+          >
+            Link is required.
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="summary" class="form-label text-dark ms-5 mt-4"
+              >Summary</label
+            >
+            <textarea
+              class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+              id="summary"
+              formControlName="summary"
+              rows="3"
+            ></textarea>
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('summary')?.touched &&
+              comicForm.get('summary')?.hasError('required')
+            "
+          >
+            Summary is required.
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="authorName" class="form-label text-dark ms-5 mt-4"
+              >Author</label
+            >
+            <input
+              type="text"
+              class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+              id="authorName"
+              formControlName="authorName"
+              required
+            />
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('authorName')?.touched &&
+              comicForm.get('authorName')?.hasError('required')
+            "
+          >
+            Author is required.
+          </div>
+          <div class="mb-3 d-flex">
+            <label for="cover" class="form-label text-dark ms-5 mt-4"
+              >Cover Image URL</label
+            >
+            <input
+              type="text"
+              class="form-control w-50 bg-transparent border-0 border-bottom ms-5 mt-2"
+              id="cover"
+              formControlName="cover"
+            />
+          </div>
+          <div
+            class="text-danger ms-5"
+            *ngIf="
+              comicForm.get('cover')?.touched &&
+              comicForm.get('cover')?.hasError('required')
+            "
+          >
+            Cover Image is required.
+          </div>
+          <button
+            type="button"
+            class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-3 mt-2 mb-4"
+            type="submit"
+          >
+            Add Comic ＋
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
 <button
   class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
   title="Add new comic"

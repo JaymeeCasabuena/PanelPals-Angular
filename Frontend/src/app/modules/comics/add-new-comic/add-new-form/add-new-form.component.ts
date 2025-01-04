@@ -68,7 +68,8 @@ export class AddNewFormComponent {
         },
       });
     } else {
-      console.log('Form is invalid');
+      console.log('Form is invalid', this.comicForm);
+      this.comicForm.markAllAsTouched();
     }
   }
 
