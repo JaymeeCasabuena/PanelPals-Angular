@@ -6,6 +6,8 @@ import { CommentService } from '../services/comment-service/comment.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { ModalService } from '../../../shared/services/modal-service/modal.service';
+import { AlertModalComponent } from '../../../shared/components/alert-modal/alert-modal.component';
 
 import {
   FormBuilder,
@@ -40,6 +42,7 @@ export class DiscussionDetailsComponent {
   constructor(
     private discussionService: DiscussionService,
     private commentService: CommentService,
+    private modalService: ModalService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
@@ -60,6 +63,7 @@ export class DiscussionDetailsComponent {
     if (discussionId) {
       this.fetchDiscussionById(Number(discussionId));
     }
+    console.log(this.currentUser, this.discussion);
   }
 
   fetchDiscussionById(id: number): void {
@@ -67,6 +71,7 @@ export class DiscussionDetailsComponent {
       next: (response) => {
         this.discussion = response.discussion;
         this.comments = response.comments;
+        console.log(this.discussion);
       },
       error: (error) => console.error('Error fetching comic', error),
       complete: () => console.log('Fetching comic complete'),
@@ -80,11 +85,28 @@ export class DiscussionDetailsComponent {
       commentData.userId = this.currentUser.Id;
 
       this.commentService.addComment(commentData).subscribe({
-        next: () => this.commentForm.reset(),
-        error: (error) => console.error('Error adding comment', error),
+        next: () => {
+          this.commentForm.reset(), this.reloadPage();
+        },
+        error: (error) => {
+          console.error('Error adding comment', error),
+            this.openErrorModal(`Error adding comment. ${error.error.error}`);
+        },
       });
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  openErrorModal(message: string) {
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Error',
+      message: message,
+    };
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 }

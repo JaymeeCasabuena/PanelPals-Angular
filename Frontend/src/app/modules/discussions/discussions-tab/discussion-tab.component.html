@@ -35,10 +35,7 @@
               >
                 <ng-template #header>
                   <div class="d-flex gap-2">
-                    <p-avatar
-                      image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-                      shape="circle"
-                    />
+                    <p-avatar [image]="discussion.Avatar" shape="circle" />
                     <span class="font-bold text-black fs-5">
                       {{ discussion.Username }}
                     </span>
@@ -84,7 +81,6 @@
           <p-paginator
             [rows]="10"
             [totalRecords]="discussions?.length"
-            [rowsPerPageOptions]="[5, 10, 20]"
             (onPageChange)="onPageChange($event)"
           ></p-paginator>
         </div>

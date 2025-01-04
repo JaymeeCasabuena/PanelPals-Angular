@@ -10,6 +10,10 @@
   background: #cd908b !important;
 }
 
+:host ::ng-deep .p-paginator {
+  border-radius: 3rem;
+}
+
 .discussion-cont {
   height: 70vh;
 }
