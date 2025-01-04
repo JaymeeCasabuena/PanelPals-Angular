@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ComicService } from '../../../shared/services/comic-services/comic.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
@@ -9,35 +15,48 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
 import { FormsModule } from '@angular/forms';
 import { ReviewService } from '../services/review.service';
 import { Review } from '../interfaces/review';
+import { AccordionModule } from 'primeng/accordion';
+import { Avatar } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule,
     SideBarComponent,
     SearchBarComponent,
     StarRatingComponent,
     AvatarComponent,
+    Avatar,
     FormsModule,
+    AccordionModule,
+    BadgeModule,
   ],
   templateUrl: './comic-details.component.html',
   styleUrl: './comic-details.component.css',
 })
 export class ComicDetailsComponent {
+  reviewForm: FormGroup;
   comic: any;
   currentUser: any;
-  reviewText: string = '';
   rating: number = 0;
   reviews: Review[] = [];
   formattedGenres: string = '';
 
   constructor(
+    private fb: FormBuilder,
     private comicService: ComicService,
     private route: ActivatedRoute,
     private reviewService: ReviewService
-  ) {}
+  ) {
+    this.reviewForm = this.fb.group({
+      rating: [null, Validators.required],
+      reviewText: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.route.data.subscribe({
@@ -74,32 +93,35 @@ export class ComicDetailsComponent {
     });
   }
 
-  onRatingChange(newRating: number): void {
-    this.rating = newRating;
+  onRatingChange(value: number): void {
+    this.reviewForm.get('rating')?.setValue(value);
+    this.reviewForm.get('rating')?.markAsTouched();
   }
 
-  submitReview(): void {
-    if (this.reviewText.trim() === '' || this.rating === 0) {
-      alert('Please provide a rating and a review.');
-      return;
+  onSubmit(): void {
+    if (this.reviewForm.valid) {
+      const reviewData = {
+        ReviewText: this.reviewForm.get('reviewText')?.value,
+        Rating: this.reviewForm.get('rating')?.value,
+        ComicId: this.comic?.Id,
+        UserId: this.currentUser.Id,
+      };
+
+      this.reviewService.addReview(reviewData).subscribe({
+        next: () => {
+          this.reviewForm.reset(), this.reloadPage();
+        },
+        error: (error) => {
+          console.error('Error adding comic', error);
+        },
+      });
+    } else {
+      console.log('Form is invalid', this.reviewForm);
+      this.reviewForm.markAllAsTouched();
     }
+  }
 
-    console.log(this.currentUser);
-    const newReview: Review = {
-      ComicId: this.comic.Id,
-      UserId: this.currentUser.Id,
-      ReviewText: this.reviewText,
-      Rating: this.rating,
-    };
-
-    this.reviewService.addReview(newReview).subscribe({
-      next: (response) => {
-        console.log('Review submitted successfully', response);
-        this.fetchComicById(this.comic.Id);
-        this.reviewText = '';
-        this.rating = 0;
-      },
-      error: (error) => console.error('Error submitting review', error),
-    });
+  reloadPage() {
+    window.location.reload();
   }
 }

@@ -49,19 +49,13 @@ img {
 
 .sub-details {
   position: relative;
-  height: 40vh;
   z-index: 0;
+  height: 40vh;
 }
 
-.reviews {
-  height: 35vh;
-  overflow-y: auto;
-  direction: rtl;
-  text-align: left;
-}
-
-.rating {
-  direction: ltr;
+.summary,
+.review-text {
+  text-align: justify;
 }
 
 .highlight {
@@ -77,4 +71,12 @@ img {
 
 .btn:hover {
   text-decoration: underline;
+}
+
+textarea {
+  width: 60%;
+}
+
+:host ::ng-deep .p-badge-warn {
+  background: gold !important;
 }
