@@ -28,7 +28,7 @@ export class ExplorePageComponent {
   comics: Comic[] = [];
   visibleComics: Comic[] = [];
   first = 0;
-  rows = 18;
+  rows = 12;
 
   constructor(
     private comicService: ComicService,
