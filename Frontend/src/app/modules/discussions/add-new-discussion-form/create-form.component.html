@@ -37,6 +37,15 @@
             required
           />
         </div>
+        <div
+          class="text-danger ms-5"
+          *ngIf="
+            discussionForm.get('title')?.touched &&
+            discussionForm.get('title')?.hasError('required')
+          "
+        >
+          Title is required.
+        </div>
 
         <div class="mb-3 d-flex">
           <label for="content" class="form-label text-dark ms-5 mt-4"
@@ -48,6 +57,15 @@
             formControlName="content"
             rows="3"
           ></textarea>
+        </div>
+        <div
+          class="text-danger ms-5"
+          *ngIf="
+            discussionForm.get('content')?.touched &&
+            discussionForm.get('content')?.hasError('required')
+          "
+        >
+          Content is required.
         </div>
         <button
           class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-4 mt-2"

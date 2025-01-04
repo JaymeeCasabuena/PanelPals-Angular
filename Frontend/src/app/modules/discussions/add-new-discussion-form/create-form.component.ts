@@ -47,7 +47,8 @@ export class CreateFormComponent {
         },
       });
     } else {
-      console.log('Form is invalid');
+      console.log('Form is invalid', this.discussionForm);
+      this.discussionForm.markAllAsTouched();
     }
   }
 
