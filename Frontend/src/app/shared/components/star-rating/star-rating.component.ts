@@ -21,6 +21,7 @@ export class StarRatingComponent {
   @Output() ratingChange = new EventEmitter<number>();
 
   stars: boolean[] = [];
+  ratingTouched = false;
 
   ngOnInit() {
     this.updateStars();
@@ -43,13 +44,17 @@ export class StarRatingComponent {
     if (!this.readOnly) {
       this.rating = index + 1;
       this.updateStars();
+      this.ratingTouched = true;
       this.ratingChange.emit(this.rating);
     }
   }
 
   clearRating() {
-    this.rating = 0;
-    this.updateStars();
-    this.ratingChange.emit(this.rating);
+    if (!this.readOnly) {
+      this.rating = 0;
+      this.ratingChange.emit(this.rating);
+      this.ratingTouched = false;
+      this.updateStars();
+    }
   }
 }

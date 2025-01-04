@@ -37,7 +37,7 @@ const discussionModel = {
     try {
       const query = `
           SELECT Discussion.Id, Discussion.Title, Discussion.Content, Discussion.DateCreated,
-                 User.Username, COUNT(Comment.Id) AS ResponseCount
+                 User.Username, User.Avatar, COUNT(Comment.Id) AS ResponseCount
           FROM Discussion
           LEFT JOIN User ON Discussion.UserId = User.Id
           LEFT JOIN Comment ON Discussion.Id = Comment.DiscussionId
@@ -48,7 +48,7 @@ const discussionModel = {
 
       const commentsQuery = `
           SELECT Comment.Id, Comment.CommentText, Comment.DateCreated, 
-                 User.Username
+                 User.Username, User.Avatar
           FROM Comment
           LEFT JOIN User ON Comment.UserId = User.Id
           WHERE Comment.DiscussionId = ?
@@ -98,7 +98,7 @@ const discussionModel = {
     try {
       const query = `
           SELECT Discussion.Id, Discussion.Title, Discussion.Content, Discussion.DateCreated, 
-                 User.Username
+                 User.Username, User.Avatar
           FROM Discussion
           LEFT JOIN User ON Discussion.UserId = User.Id
           ORDER BY Discussion.DateCreated DESC
@@ -116,7 +116,7 @@ const discussionModel = {
     try {
       const query = `
           SELECT Discussion.Id, Discussion.Title, Discussion.Content, Discussion.DateCreated, 
-                 User.Username, COUNT(Comment.Id) AS ResponseCount
+                 User.Username, User.Avatar, COUNT(Comment.Id) AS ResponseCount
           FROM Discussion
           LEFT JOIN User ON Discussion.UserId = User.Id
           LEFT JOIN Comment ON Discussion.Id = Comment.DiscussionId

@@ -29,17 +29,16 @@ body {
 
 ::-webkit-scrollbar {
   width: 0.5em;
-  cursor: pointer;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--bodyBackground);
+  background-color: transparent;
   border-radius: 0.1em;
-  box-shadow: inset 0px 0px 10px #cd908b;
+  box-shadow: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #3f4159;
+  background-color: transparent;
   border-radius: 0.1em;
 }
 
@@ -81,4 +80,13 @@ body {
 input::placeholder {
   color: gray;
   font-size: 14px;
+}
+
+.modal-content {
+  background-color: transparent;
+  border: none;
+}
+
+.text-danger {
+  font-size: 0.9em;
 }

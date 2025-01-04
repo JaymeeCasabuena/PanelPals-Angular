@@ -60,7 +60,7 @@ const reviewModel = {
     try {
       const query = `
         SELECT Review.Id, Review.ReviewText, Review.Rating, Review.DateCreated, 
-              User.Username, COUNT(Comment.Id) AS ResponseCount
+              User.Username, User.Avatar, COUNT(Comment.Id) AS ResponseCount
           FROM Review
           LEFT JOIN User ON Review.UserId = User.Id
           LEFT JOIN Comment ON Review.Id = Comment.ReviewId
