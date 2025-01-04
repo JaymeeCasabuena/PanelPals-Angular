@@ -167,12 +167,6 @@ label {
   text-align: center;
 }
 
-label span {
-  font-size: 12px;
-  color: #cfcfcf;
-  text-transform: uppercase;
-}
-
 input {
   display: block;
   width: 100%;
