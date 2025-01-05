@@ -102,7 +102,7 @@ const discussionModel = {
           FROM Discussion
           LEFT JOIN User ON Discussion.UserId = User.Id
           ORDER BY Discussion.DateCreated DESC
-          LIMIT 10;
+          LIMIT 5;
         `;
       const discussions = await dbHelpers.getAllQuery(query);
       return discussions;
@@ -122,7 +122,7 @@ const discussionModel = {
           LEFT JOIN Comment ON Discussion.Id = Comment.DiscussionId
           GROUP BY Discussion.Id
           ORDER BY ResponseCount DESC
-          LIMIT 10;
+          LIMIT 5;
         `;
       const discussions = await dbHelpers.getAllQuery(query);
       return discussions;

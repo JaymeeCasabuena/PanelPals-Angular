@@ -1,5 +1,6 @@
 :host ::ng-deep .p-fieldset {
   background: white !important;
+  height: 7em;
 }
 
 :host ::ng-deep .p-fieldset-legend {

@@ -29,6 +29,9 @@ import { PaginatorModule } from 'primeng/paginator';
 export class DiscussionTabComponent {
   discussions: any;
   currentUser: any;
+  visibleDiscussions: any[] = [];
+  first = 0;
+  items = 5;
 
   constructor(
     private discussionService: DiscussionService,
@@ -49,14 +52,25 @@ export class DiscussionTabComponent {
 
   fetchAllDiscussions(): void {
     this.discussionService.getAllDiscussions().subscribe({
-      next: (response) => (this.discussions = response),
+      next: (response) => {
+        this.discussions = response;
+        this.updateVisibleDiscussions();
+      },
       error: (error) => console.error('Error fetching discussions', error),
       complete: () => console.log('Fetching discussions complete'),
     });
   }
 
-  onPageChange(event: any) {
-    console.log('Page changed:', event);
+  updateVisibleDiscussions(): void {
+    this.visibleDiscussions = this.discussions.slice(
+      this.first,
+      this.first + this.items
+    );
+  }
+
+  onPageChange(event: any): void {
+    this.first = event.first;
+    this.updateVisibleDiscussions();
   }
 
   navigateToDetails(discussionId: number): void {
