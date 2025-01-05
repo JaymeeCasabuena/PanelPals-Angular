@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../shared/services/modal-service/modal.service';
+import { AlertModalComponent } from '../../../shared/components/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,7 +49,11 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.authService.loginUser(email, password).subscribe({
         next: () => this.router.navigate(['home']),
-        error: (error) => console.error('Login failed', error),
+        error: (error) => {
+          console.error('Login failed', error),
+            this.openErrorModal(`Login Failed. ${error.error.error}`);
+          console.log(error);
+        },
         complete: () => console.log('Login request complete'),
       });
     }
@@ -58,7 +64,10 @@ export class LoginComponent {
       const { userName, regEmail, regPassword } = this.signUpForm.value;
       this.authService.registerUser(userName, regEmail, regPassword).subscribe({
         next: () => this.toggleSignup(),
-        error: (error) => console.error('Registration failed', error),
+        error: (error) => {
+          console.error('Registration failed', error),
+            this.openErrorModal(`Registration failed. ${error.error.error}`);
+        },
         complete: () => console.log('Registration request complete'),
       });
     }
@@ -67,5 +76,13 @@ export class LoginComponent {
   toggleSignup() {
     const container = document.querySelector('.cont');
     container?.classList.toggle('s--signup');
+  }
+
+  openErrorModal(message: string) {
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Error',
+      message: message,
+    };
   }
 }
