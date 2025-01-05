@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel");
+const authMiddleware = require("../middlewares/authMiddleware");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -41,27 +42,20 @@ const userController = {
     }
   },
 
-  getCurrentUser: async (req, res) => {
-    const token = req.headers.authorization?.split(" ")[1];
-
-    if (!token) {
-      return res
-        .status(401)
-        .json({ error: "Authorization token is required." });
-    }
-
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      const userId = decoded.userId;
-      const user = await userModel.getUserById(userId);
-      res.status(200).json({
-        message: "Current user retrieved successfully.",
-        data: user,
-      });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  },
+  getCurrentUser: [
+    authMiddleware,
+    async (req, res) => {
+      try {
+        const user = await userModel.getUserById(req.user.userId);
+        res.status(200).json({
+          message: "Current user retrieved successfully.",
+          data: user,
+        });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    },
+  ],
 
   deleteUser: async (req, res) => {
     const userId = req.params.id;
@@ -81,22 +75,6 @@ const userController = {
     try {
       const result = await userModel.editUserDetails(userId, updateData);
       res.status(200).json({ message: result.message });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  },
-
-  getUserById: async (req, res) => {
-    const userId = req.params.id;
-    if (!userId) {
-      return res.status(400).json({ error: "User ID is required." });
-    }
-
-    try {
-      const user = await userModel.getUserById(userId);
-      res
-        .status(200)
-        .json({ message: "User retrieved successfully.", data: user });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

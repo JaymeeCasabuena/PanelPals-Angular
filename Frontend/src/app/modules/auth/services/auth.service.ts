@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface UserResponse {
   message: string;
@@ -14,11 +15,9 @@ interface UserResponse {
   providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private apiUrl = environment.apiUrl;
-
 
   registerUser(
     username: string,
@@ -42,16 +41,8 @@ export class AuthService {
       );
   }
 
-  getCurrentUser(): Observable<UserResponse> {
-    const token = localStorage.getItem('auth_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<UserResponse>(`${this.apiUrl}/users/current`, {
-      headers,
-    });
-  }
-
   signOut(): void {
     localStorage.removeItem('auth_token');
+    this.router.navigate(['/login']);
   }
 }

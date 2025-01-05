@@ -44,7 +44,7 @@ const UserModel = {
       const token = jwt.sign(
         { userId: user.Id, role: user.Role },
         process.env.JWT_SECRET_KEY,
-        { expiresIn: "1h" }
+        { expiresIn: "8hr" }
       );
 
       return { token, user };
