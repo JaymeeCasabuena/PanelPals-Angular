@@ -93,6 +93,29 @@ const comicModel = {
     }
   },
 
+  getPopularComics: async () => {
+    const query = `
+      SELECT 
+        Comic.Id, 
+        Comic.Title, 
+        Author.Name AS AuthorName,
+        Comic.Cover,
+        AVG(Review.Rating) AS AverageRating
+      FROM Comic
+      JOIN Author ON Comic.AuthorId = Author.Id
+      LEFT JOIN Review ON Comic.Id = Review.ComicId
+      GROUP BY Comic.Id
+      ORDER BY AverageRating DESC
+      LIMIT 10;
+    `;
+    try {
+      const rows = await dbHelpers.getAllQuery(query, []);
+      return rows;
+    } catch (err) {
+      throw new Error("An error occurred while fetching popular comics.");
+    }
+  },
+
   getComicById: async (id) => {
     const selectComicByIdQuery = `
       SELECT 

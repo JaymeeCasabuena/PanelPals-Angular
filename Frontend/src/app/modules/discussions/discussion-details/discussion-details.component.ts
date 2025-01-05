@@ -63,7 +63,6 @@ export class DiscussionDetailsComponent {
     if (discussionId) {
       this.fetchDiscussionById(Number(discussionId));
     }
-    console.log(this.currentUser, this.discussion);
   }
 
   fetchDiscussionById(id: number): void {

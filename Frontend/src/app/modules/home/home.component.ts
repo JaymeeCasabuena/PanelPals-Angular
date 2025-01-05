@@ -54,13 +54,13 @@ export class HomeComponent implements OnInit {
       error: (error) => console.error('Error resolving current user', error),
     });
 
-    this.fetchAllComics();
+    this.fetchPopularComics();
     this.fetchNewDiscussions();
     this.fetchTrendingDiscussions();
   }
 
-  fetchAllComics(): void {
-    this.comicService.getAllComics().subscribe({
+  fetchPopularComics(): void {
+    this.comicService.getPopularComics().subscribe({
       next: (response) => (this.comics = response),
       error: (error) => console.error('Error fetching comics', error),
       complete: () => console.log('Fetching comics complete'),

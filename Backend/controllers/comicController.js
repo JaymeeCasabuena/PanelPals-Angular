@@ -54,6 +54,15 @@ const comicController = {
     }
   },
 
+  getPopularComics: async (req, res) => {
+    try {
+      const comics = await comicModel.getPopularComics();
+      res.status(200).json(comics);
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Internal server error" });
+    }
+  },
+
   getAllGenres: async (req, res) => {
     try {
       const genres = await comicModel.getAllGenres();

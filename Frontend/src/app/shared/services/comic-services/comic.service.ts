@@ -33,6 +33,10 @@ export class ComicService {
     return this.http.get<Comic[]>(`${this.apiUrl}/comics/getAll`);
   }
 
+  getPopularComics(): Observable<Comic[]> {
+    return this.http.get<Comic[]>(`${this.apiUrl}/comics/getPopular`);
+  }
+
   getAllGenres(): Observable<Genre[]> {
     return this.http.get<Genre[]>(`${this.apiUrl}/comics/genres`);
   }
