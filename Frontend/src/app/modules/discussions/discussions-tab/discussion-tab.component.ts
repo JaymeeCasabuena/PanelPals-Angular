@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ModalService } from '../../../shared/services/modal-service/modal.service';
 import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
@@ -19,7 +20,6 @@ import { PaginatorModule } from 'primeng/paginator';
     Avatar,
     Fieldset,
     PaginatorModule,
-    CreateFormComponent,
     CommonModule,
     AvatarComponent,
   ],
@@ -35,6 +35,7 @@ export class DiscussionTabComponent {
 
   constructor(
     private discussionService: DiscussionService,
+    private modalService: ModalService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -45,6 +46,10 @@ export class DiscussionTabComponent {
         this.currentUser = data['currentUser']['data'];
       },
       error: (error) => console.error('Error resolving current user', error),
+    });
+
+    this.discussionService.discussions$.subscribe((data) => {
+      this.discussions = data;
     });
 
     this.fetchAllDiscussions();
@@ -66,6 +71,15 @@ export class DiscussionTabComponent {
       this.first,
       this.first + this.items
     );
+  }
+
+  openModal() {
+    const modalRef = this.modalService.openModal(CreateFormComponent);
+    modalRef.componentInstance.currentUser = this.currentUser;
+
+    modalRef.componentInstance.modalClosed.subscribe(() => {
+      this.fetchAllDiscussions();
+    });
   }
 
   onPageChange(event: any): void {

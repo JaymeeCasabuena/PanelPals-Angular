@@ -1,41 +1,50 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Discussion } from '../../interfaces/discussion';
-import { DiscussionDetails } from '../../interfaces/discussion';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DiscussionService {
-  constructor(private http: HttpClient) {}
-
   private apiUrl = environment.apiUrl;
+  private discussionsSubject = new BehaviorSubject<Discussion[]>([]);
+  discussions$ = this.discussionsSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
 
   createDiscussion(discussionData: {
     userId: number;
     title: string;
     content: string;
-  }): Observable<Discussion[]> {
+  }): Observable<Discussion> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Discussion[]>(
-      `${this.apiUrl}/discussions/`,
-      discussionData,
-      {
+    return this.http
+      .post<Discussion>(`${this.apiUrl}/discussions/`, discussionData, {
         headers,
-      }
-    );
+      })
+      .pipe(
+        tap((newDiscussion) => {
+          const currentDiscussions = this.discussionsSubject.value;
+          this.discussionsSubject.next([...currentDiscussions, newDiscussion]);
+        })
+      );
   }
 
-  getAllDiscussions(): Observable<DiscussionDetails[]> {
-    return this.http.get<DiscussionDetails[]>(
-      `${this.apiUrl}/discussions/getAll`
-    );
+  getAllDiscussions(): Observable<Discussion[]> {
+    return this.http
+      .get<Discussion[]>(`${this.apiUrl}/discussions/getAll`)
+      .pipe(
+        tap((discussions) => {
+          this.discussionsSubject.next(discussions);
+        })
+      );
   }
 
-  getDiscussionById(id: number): Observable<DiscussionDetails> {
-    return this.http.get<DiscussionDetails>(`${this.apiUrl}/discussions/${id}`);
+  getDiscussionById(id: number): Observable<Discussion> {
+    return this.http.get<Discussion>(`${this.apiUrl}/discussions/${id}`);
   }
 
   getTrendingDiscussions(): Observable<Discussion[]> {
@@ -50,14 +59,30 @@ export class DiscussionService {
     discussionId: number,
     userId: number,
     content: string
-  ): Observable<any> {
+  ): Observable<Discussion> {
     const body = { userId, content };
-    return this.http.put(`${this.apiUrl}/discussions/${discussionId}`, body);
+    return this.http
+      .put<Discussion>(`${this.apiUrl}/discussions/${discussionId}`, body)
+      .pipe(
+        tap((updatedDiscussion) => {
+          const currentDiscussions = this.discussionsSubject.value.map((d) =>
+            d.discussion.discussionId === discussionId ? updatedDiscussion : d
+          );
+          this.discussionsSubject.next(currentDiscussions);
+        })
+      );
   }
 
   deleteDiscussion(discussionId: number, userId: number): Observable<any> {
-    return this.http.delete(
-      `${this.apiUrl}/discussions/${discussionId}?userId=${userId}`
-    );
+    return this.http
+      .delete(`${this.apiUrl}/discussions/${discussionId}?userId=${userId}`)
+      .pipe(
+        tap(() => {
+          const updatedDiscussions = this.discussionsSubject.value.filter(
+            (d) => d.discussion.discussionId !== discussionId
+          );
+          this.discussionsSubject.next(updatedDiscussions);
+        })
+      );
   }
 }

@@ -93,8 +93,13 @@
       <!-- Add New Form -->
       <div class="row">
         <div class="col-6">
-          <app-create-form [currentUser]="currentUser"></app-create-form>
-        </div>
+          <button
+          class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
+          title="Add new discussion"
+          (click)="openModal()"
+        >
+          Start a new discussion ＋
+        </button>        </div>
       </div>
     </div>
   </div>
