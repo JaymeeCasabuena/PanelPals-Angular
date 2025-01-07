@@ -35,7 +35,7 @@ import { Fieldset } from 'primeng/fieldset';
 })
 export class DiscussionDetailsComponent {
   discussion: any;
-  comments: any[] = [];
+  comments?: any[] = [];
   commentForm: FormGroup;
   currentUser: any;
 
@@ -52,6 +52,10 @@ export class DiscussionDetailsComponent {
   }
 
   ngOnInit(): void {
+    this.commentService.comments$.subscribe((data) => {
+      this.comments = data;
+    });
+
     this.route.data.subscribe({
       next: (data) => {
         this.currentUser = data['currentUser']['data'];
@@ -70,7 +74,6 @@ export class DiscussionDetailsComponent {
       next: (response) => {
         this.discussion = response.discussion;
         this.comments = response.comments;
-        console.log(this.discussion);
       },
       error: (error) => console.error('Error fetching comic', error),
       complete: () => console.log('Fetching comic complete'),
@@ -85,7 +88,8 @@ export class DiscussionDetailsComponent {
 
       this.commentService.addComment(commentData).subscribe({
         next: () => {
-          this.commentForm.reset(), this.reloadPage();
+          this.commentForm.reset();
+          this.fetchDiscussionById(this.discussion.Id);
         },
         error: (error) => {
           console.error('Error adding comment', error),
@@ -103,9 +107,5 @@ export class DiscussionDetailsComponent {
       title: 'Error',
       message: message,
     };
-  }
-
-  reloadPage() {
-    window.location.reload();
   }
 }

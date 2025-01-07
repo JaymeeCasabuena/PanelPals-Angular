@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs';
 import { Comic } from '../../interfaces/comic';
 import { Genre } from '../../interfaces/genre';
 
@@ -10,6 +11,9 @@ import { Genre } from '../../interfaces/genre';
 })
 export class ComicService {
   private apiUrl = environment.apiUrl;
+
+  private comicsSubject = new BehaviorSubject<Comic[]>([]);
+  comics$ = this.comicsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -22,15 +26,24 @@ export class ComicService {
     summary: string;
     authorName: string;
     cover: string;
-  }): Observable<Comic[]> {
+  }): Observable<Comic> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Comic[]>(`${this.apiUrl}/comics/`, comicData, {
-      headers,
-    });
+    return this.http
+      .post<Comic>(`${this.apiUrl}/comics/`, comicData, {
+        headers,
+      })
+      .pipe(
+        tap((newComic) => {
+          const currentComics = this.comicsSubject.value;
+          this.comicsSubject.next([...currentComics, newComic]);
+        })
+      );
   }
 
   getAllComics(): Observable<Comic[]> {
-    return this.http.get<Comic[]>(`${this.apiUrl}/comics/getAll`);
+    return this.http
+      .get<Comic[]>(`${this.apiUrl}/comics/getAll`)
+      .pipe(tap((comics) => this.comicsSubject.next(comics)));
   }
 
   getPopularComics(): Observable<Comic[]> {
