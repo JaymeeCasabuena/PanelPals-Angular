@@ -1,4 +1,5 @@
 export interface Review {
+  ReviewId?: number;
   ComicId: number;
   UserId: number;
   Username?: string;

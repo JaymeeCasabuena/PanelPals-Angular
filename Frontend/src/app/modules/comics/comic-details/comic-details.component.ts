@@ -66,6 +66,10 @@ export class ComicDetailsComponent {
       error: (error) => console.error('Error resolving current user', error),
     });
 
+    this.reviewService.reviews$.subscribe((data) => {
+      this.reviews = data;
+    });
+
     const comicId = this.route.snapshot.paramMap.get('id');
     if (comicId) {
       this.fetchComicById(Number(comicId));
@@ -109,7 +113,7 @@ export class ComicDetailsComponent {
 
       this.reviewService.addReview(reviewData).subscribe({
         next: () => {
-          this.reviewForm.reset(), this.reloadPage();
+          this.reviewForm.reset(), this.fetchReviewsByComicId(this.comic.Id);
         },
         error: (error) => {
           console.error('Error adding comic', error);
