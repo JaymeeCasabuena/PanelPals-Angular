@@ -78,11 +78,14 @@ const comicModel = {
         Author.Name AS AuthorName,
         Comic.Cover,
         Comic.IsApproved,
+        AVG(Review.Rating) AS AverageRating,
+        COUNT(DISTINCT Review.Id) AS TotalReviews,
         GROUP_CONCAT(Genre.Name, ', ') AS Genres
       FROM Comic
       JOIN Author ON Comic.AuthorId = Author.Id
       LEFT JOIN ComicGenre ON Comic.Id = ComicGenre.ComicId
       LEFT JOIN Genre ON ComicGenre.GenreId = Genre.Id
+      LEFT JOIN Review ON Comic.Id = Review.ComicId
       GROUP BY Comic.Id;
     `;
     try {
@@ -128,9 +131,12 @@ const comicModel = {
         Author.Name AS AuthorName,
         Comic.Cover,
         Comic.IsApproved,
-        GROUP_CONCAT(Genre.Name) AS Genres
+        AVG(Review.Rating) AS AverageRating,
+        COUNT(DISTINCT Review.Id) AS TotalReviews,
+        GROUP_CONCAT(DISTINCT Genre.Name) AS Genres
       FROM Comic
       JOIN Author ON Comic.AuthorId = Author.Id
+      LEFT JOIN Review ON Comic.Id = Review.ComicId
       LEFT JOIN ComicGenre ON Comic.Id = ComicGenre.ComicId
       LEFT JOIN Genre ON ComicGenre.GenreId = Genre.Id
       WHERE Comic.Id = ?

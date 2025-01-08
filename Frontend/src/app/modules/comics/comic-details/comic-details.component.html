@@ -115,7 +115,18 @@
             </p>
           </div>
           <div class="reviews mt-5">
-            <p class="text-dark fw-bold">Reviews</p>
+            <div class="d-flex align-items-center">
+              <p class="text-dark fw-bold mt-1">Reviews</p>
+              <div class="d-flex ms-2">
+                <app-star-rating
+                  [readOnly]="true"
+                  [rating]="comic.AverageRating"
+                ></app-star-rating>
+                <p class="text-muted text-sm mt-2 ms-1">
+                  ({{ comic.TotalReviews }})
+                </p>
+              </div>
+            </div>
             <div *ngIf="reviews?.length === 0" class="text-muted fst-italic">
               No reviews yet.
             </div>
