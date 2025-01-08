@@ -41,15 +41,15 @@ const commentController = {
   },
 
   deleteComment: async (req, res) => {
-    const { commentId } = req.params.id;
-    const { userId } = req.query.userId;
+    const { id } = req.params;
+    const { userId } = req.query;
 
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
     try {
-      const result = await commentModel.deleteComment(commentId, userId);
+      const result = await commentModel.deleteComment(id, userId);
       if (result.success) {
         res.status(200).json({ message: "Comment deleted successfully." });
       } else {

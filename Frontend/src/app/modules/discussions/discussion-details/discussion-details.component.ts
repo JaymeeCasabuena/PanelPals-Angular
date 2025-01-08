@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { CommentService } from '../services/comment-service/comment.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
@@ -40,6 +41,7 @@ export class DiscussionDetailsComponent {
   currentUser: any;
 
   constructor(
+    private router: Router,
     private discussionService: DiscussionService,
     private commentService: CommentService,
     private modalService: ModalService,
@@ -99,6 +101,56 @@ export class DiscussionDetailsComponent {
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  deleteComment(commentId: number) {
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Delete',
+      message: 'Are you sure you want to delete this comment?',
+    };
+    modalRef.closed.subscribe((result) => {
+      if (result === 'confirm') {
+        this.commentService
+          .deleteComment(commentId, this.currentUser.Id)
+          .subscribe({
+            next: () => {
+              this.fetchDiscussionById(this.discussion.Id);
+            },
+            error: (error) => {
+              console.error('Error deleting comment', error),
+                this.openErrorModal(
+                  `Error deleting comment. ${error.error.error}`
+                );
+            },
+          });
+      }
+    });
+  }
+
+  deleteDiscussion() {
+    const modalRef = this.modalService.openModal(AlertModalComponent);
+    modalRef.componentInstance.data = {
+      title: 'Delete',
+      message: 'Are you sure you want to delete this discussion?',
+    };
+    modalRef.closed.subscribe((result) => {
+      if (result === 'confirm') {
+        this.discussionService
+          .deleteDiscussion(this.discussion.Id, this.currentUser.Id)
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/discussions']);
+            },
+            error: (error) => {
+              console.error('Error deleting discussion', error),
+                this.openErrorModal(
+                  `Error deleting discussion. ${error.error.error}`
+                );
+            },
+          });
+      }
+    });
   }
 
   openErrorModal(message: string) {
