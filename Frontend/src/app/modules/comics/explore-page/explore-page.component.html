@@ -26,23 +26,28 @@
         <!-- Browse Comics -->
         <div class="col-11">
           <h2 class="text-black ms-4 mb-5">Find your next comic</h2>
-          <div class="row comics-container mb-5">
+          <div class="row comics-container mb-5 ms-5">
             <div
               *ngFor="let comic of visibleComics"
-              class="col-2 d-flex flex-column align-items-center"
+              class="col-3 d-flex flex-column align-items-center"
             >
-              <div class="d-flex flex-column align-items-center w-100">
+              <div class="d-flex book-card align-items-start w-100">
                 <div
                   class="book-cell bg-transparent p-3 pb-0"
                   (click)="navigateToDetails(comic.Id)"
                 >
                   <img [src]="comic?.Cover" class="book-photo" />
                 </div>
-                <div class="mt-3 overflow-hidden w-75">
+                <div class="mt-5 overflow-hidden">
                   <p class="text-black fw-semi-bold text-truncate text-center">
                     {{ comic?.Title }}
                   </p>
-                  <p class="text-black fw-semi-bold text-truncate"></p>
+                  <p class="text-black fw-semi-bold text-truncate">
+                    {{ comic.AuthorName }}
+                  </p>
+                  <p class="text-black fw-semi-bold text-truncate">
+                    {{ comic.YearPublished }}
+                  </p>
                 </div>
               </div>
             </div>
