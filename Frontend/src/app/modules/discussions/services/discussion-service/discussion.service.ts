@@ -56,17 +56,22 @@ export class DiscussionService {
   }
 
   editDiscussion(
-    discussionId: number,
-    userId: number,
-    content: string
+    discussionData: {
+      userId: number;
+      title: string;
+      content: string;
+    },
+    discussionId: number
   ): Observable<Discussion> {
-    const body = { userId, content };
     return this.http
-      .put<Discussion>(`${this.apiUrl}/discussions/${discussionId}`, body)
+      .put<Discussion>(
+        `${this.apiUrl}/discussions/${discussionId}`,
+        discussionData
+      )
       .pipe(
         tap((updatedDiscussion) => {
           const currentDiscussions = this.discussionsSubject.value.map((d) =>
-            d.discussion.discussionId === discussionId ? updatedDiscussion : d
+            d.discussionId === discussionId ? updatedDiscussion : d
           );
           this.discussionsSubject.next(currentDiscussions);
         })

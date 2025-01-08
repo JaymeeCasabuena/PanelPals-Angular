@@ -9,6 +9,7 @@ import { SearchBarComponent } from '../../../shared/components/search-bar/search
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { ModalService } from '../../../shared/services/modal-service/modal.service';
 import { AlertModalComponent } from '../../../shared/components/alert-modal/alert-modal.component';
+import { CreateFormComponent } from '../add-new-discussion-form/create-form.component';
 
 import {
   FormBuilder,
@@ -150,6 +151,16 @@ export class DiscussionDetailsComponent {
             },
           });
       }
+    });
+  }
+
+  openEditDiscussionModal(discussion: any) {
+    const modalRef = this.modalService.openModal(CreateFormComponent);
+    modalRef.componentInstance.discussionToEdit = discussion;
+    modalRef.componentInstance.currentUser = this.currentUser;
+
+    modalRef.componentInstance.modalClosed.subscribe(() => {
+      this.fetchDiscussionById(discussion.Id);
     });
   }
 

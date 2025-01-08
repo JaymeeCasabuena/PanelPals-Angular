@@ -65,18 +65,24 @@ const discussionModel = {
     }
   },
 
-  editDiscussion: async (userId, id, content) => {
+  editDiscussion: async (id, userId, content, title) => {
     try {
       const query = `
         UPDATE Discussion
-        SET Content = ?
+        SET Title = ?, Content = ?
         WHERE Id = ? AND UserId = ?;
       `;
-      const result = await dbHelpers.runQuery(query, [content, id, userId]);
+      const result = await dbHelpers.runQuery(query, [
+        title,
+        content,
+        id,
+        userId,
+      ]);
+
       if (result.changes === 0) {
         throw new Error("Unauthorized or no changes made.");
       }
-      return { discussionId: id, content: content };
+      return result.changes > 0 ? { success: true } : { success: false };
     } catch (err) {
       console.error("Error editing discussion:", err.message);
       throw new Error("An error occurred while editing the discussion.");

@@ -46,13 +46,16 @@ const discussionController = {
 
   editDiscussion: async (req, res) => {
     try {
-      const { discussionId } = req.params.id;
-      const { userId, content } = req.body;
+      const { id } = req.params;
+      const { userId, content, title } = req.body;
+
       const result = await discussionModel.editDiscussion(
-        discussionId,
+        id,
         userId,
-        content
+        content,
+        title
       );
+
       if (result.success) {
         res.status(200).json({ message: "Discussion edited successfully." });
       } else {

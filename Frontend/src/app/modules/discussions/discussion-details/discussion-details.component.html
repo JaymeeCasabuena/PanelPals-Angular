@@ -44,7 +44,7 @@
                     *ngIf="currentUser.Username === discussion.Username"
                     class="d-flex"
                   >
-                    <div class="">
+                    <div (click)="openEditDiscussionModal(discussion)">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="18"
@@ -112,7 +112,7 @@
                           *ngIf="currentUser.Username === comment.Username"
                           class="d-flex"
                         >
-                          <div class="">
+                          <div>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"

@@ -20,6 +20,7 @@ import { AlertModalComponent } from '../../../shared/components/alert-modal/aler
 })
 export class CreateFormComponent {
   @Input() currentUser: any;
+  @Input() discussionToEdit: any;
   @Output() modalClosed = new EventEmitter<void>();
   discussionForm: FormGroup;
 
@@ -35,20 +36,43 @@ export class CreateFormComponent {
     });
   }
 
+  ngOnInit() {
+    if (this.discussionToEdit) {
+      this.discussionForm.patchValue({
+        title: this.discussionToEdit.Title,
+        content: this.discussionToEdit.Content,
+      });
+    }
+  }
+
   onSubmit(): void {
     if (this.discussionForm.valid) {
       const discussionData = this.discussionForm.value;
       discussionData.userId = this.currentUser.Id;
 
-      this.discussionService.createDiscussion(discussionData).subscribe({
-        next: () => {
-          this.discussionForm.reset(), this.openSuccessModal();
-        },
-        error: (error) => {
-          console.error('Error creating discussion', error),
+      if (this.discussionToEdit) {
+        this.discussionService
+          .editDiscussion(discussionData, this.discussionToEdit.Id)
+          .subscribe({
+            next: () => {
+              this.openSuccessModal();
+            },
+            error: (error) => {
+              console.error('Error updating discussion', error);
+              this.openErrorModal();
+            },
+          });
+      } else {
+        this.discussionService.createDiscussion(discussionData).subscribe({
+          next: () => {
+            this.openSuccessModal();
+          },
+          error: (error) => {
+            console.error('Error creating discussion', error);
             this.openErrorModal();
-        },
-      });
+          },
+        });
+      }
     } else {
       console.log('Form is invalid', this.discussionForm);
       this.discussionForm.markAllAsTouched();
