@@ -8,4 +8,6 @@ export interface Comic {
   Summary: string;
   AuthorName: string;
   Cover: string;
+  AverageRating: number;
+  TotalReviews: number;
 }

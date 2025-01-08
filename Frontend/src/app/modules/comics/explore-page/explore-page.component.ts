@@ -8,6 +8,7 @@ import { ComicService } from '../../../shared/services/comic-services/comic.serv
 import { Comic } from '../../../shared/interfaces/comic';
 import { PaginatorModule } from 'primeng/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-explore-page',
@@ -19,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     SideBarComponent,
     PaginatorModule,
     MatPaginatorModule,
+    StarRatingComponent
   ],
   templateUrl: './explore-page.component.html',
   styleUrl: './explore-page.component.css',

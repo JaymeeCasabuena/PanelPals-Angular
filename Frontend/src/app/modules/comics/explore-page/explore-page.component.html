@@ -31,21 +31,32 @@
               *ngFor="let comic of visibleComics"
               class="col-3 d-flex flex-column align-items-center"
             >
-              <div class="d-flex book-card align-items-start w-100">
+              <div
+                class="d-flex bg-white border border-dark align-items-start w-100"
+              >
                 <div
-                  class="book-cell bg-transparent p-3 pb-0"
+                  class="book-cell bg-transparent p-3"
                   (click)="navigateToDetails(comic.Id)"
                 >
                   <img [src]="comic?.Cover" class="book-photo" />
                 </div>
-                <div class="mt-5 overflow-hidden">
-                  <p class="text-black fw-semi-bold text-truncate text-center">
+                <div class="mt-4 overflow-hidden">
+                  <p class="text-black fw-semi-bold text-truncate text-md mb-1">
                     {{ comic?.Title }}
                   </p>
-                  <p class="text-black fw-semi-bold text-truncate">
+                  <p class="text-muted fw-semi-bold text-truncate text-sm mb-1">
                     {{ comic.AuthorName }}
                   </p>
-                  <p class="text-black fw-semi-bold text-truncate">
+                  <div class="d-flex">
+                    <app-star-rating
+                      [readOnly]="true"
+                      [rating]="comic.AverageRating"
+                    ></app-star-rating>
+                    <p class="text-muted text-sm mt-2 ms-1">
+                      ({{ comic.TotalReviews }})
+                    </p>
+                  </div>
+                  <p class="text-muted fw-semi-bold text-truncate text-sm">
                     {{ comic.YearPublished }}
                   </p>
                 </div>
@@ -62,47 +73,6 @@
             ></p-paginator>
           </div>
         </div>
-        <!-- Moderator's Choice -->
-        <!-- <div class="col-5">
-          <div class="d-flex flex-column mod-choice me-5 mt-5 border">
-            <div class="d-flex justify-content-between ms-3 mt-5 mb-5">
-              <h2 class="text-black">Moderator's Choice</h2>
-              <div class="flex-shrink-0 me-md-4">
-                <img
-                  [src]="
-                    'https://n06.mbmyj.org/thumb/W600/ampi/1a0/1a041290327cd5a92397b7a7dc7b4148f0c06c5b_400_600_54864.jpeg'
-                  "
-                  alt="Book Image"
-                  class="feature-comic img-fluid ms-5"
-                />
-              </div>
-            </div>
-            <div class="d-flex justify-content-between mt-5">
-              <div class="d-flex flex-column ms-3 w-30">
-                <h3 class="text-black">
-                  No heeda<span class="ms-2 text-muted fs-6">Author</span>
-                </h3>
-                <button
-                  class="mt-3 btn btn-dark text-white rounded-pill p-2 px-3"
-                  title="View Comic"
-                >
-                  Read Reviews ↗
-                </button>
-              </div>
-              <div class="ms-5 me-3 w-50">
-                <p class="text-dark summary">
-                  The spunky Lady Dillion didn't realize she was the villain of
-                  a romance novel until she encounters Marquess Cedric. Seeing
-                  him jogs a dormant memory of the novel's plot, in which her
-                  beloved younger sister dies in childbirth after marrying
-                  Cedric. Determined to prevent this, Dillion marries him
-                  herself, but what fate awaits her when she knows he's meant to
-                  fall in love with the real female lead later?
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
