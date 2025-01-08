@@ -79,7 +79,7 @@ export class DiscussionService {
       .pipe(
         tap(() => {
           const updatedDiscussions = this.discussionsSubject.value.filter(
-            (d) => d.discussion.discussionId !== discussionId
+            (d) => d.discussionId !== discussionId
           );
           this.discussionsSubject.next(updatedDiscussions);
         })

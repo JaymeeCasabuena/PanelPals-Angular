@@ -58,7 +58,7 @@
                         />
                       </svg>
                     </div>
-                    <div class="ms-3">
+                    <div class="ms-3" (click)="deleteDiscussion()">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="18"
@@ -126,7 +126,7 @@
                               />
                             </svg>
                           </div>
-                          <div class="ms-3">
+                          <div class="ms-3" (click)="deleteComment(comment.Id)">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"

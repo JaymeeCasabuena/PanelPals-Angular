@@ -65,13 +65,10 @@ const discussionController = {
 
   deleteDiscussion: async (req, res) => {
     try {
-      const { discussionId } = req.params.id;
-      const { userId } = req.query.userId;
+      const { id } = req.params;
+      const { userId } = req.query;
 
-      const result = await discussionModel.deleteDiscussion(
-        userId,
-        discussionId
-      );
+      const result = await discussionModel.deleteDiscussion(userId, id);
       if (result.success) {
         res.status(200).json({ message: "Discussion deleted successfully." });
       } else {
