@@ -23,16 +23,16 @@
       <div class="d-flex justify-content-center ms-5">
         <div class="row align-items-center mt-3">
           <div class="col-6">
-            <h1 class="welcome-text text-black">Happy Reading,</h1>
-            <h1 class="text-black">{{ currentUser?.Username }}</h1>
-            <p class="subtext text-black mt-4">
+            <h1 class="welcome-text text-black ms-5">Happy Reading,</h1>
+            <h1 class="text-black ms-5">{{ currentUser?.Username }}</h1>
+            <p class="subtext text-black mt-4 ms-5">
               Discover your next favorite manga/manhwa/webtoon and share your
               thoughts with fellow readers
             </p>
             <button
               [routerLink]="['/explore']"
               type="button"
-              class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 me-auto"
+              class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 me-auto ms-5"
             >
               Explore ↗
             </button>
@@ -41,7 +41,7 @@
           <!-- Popular Comics -->
           <div class="row mt-5">
             <div class="col-12">
-              <h5 class="welcome-text text-black">Popular Now</h5>
+              <h5 class="welcome-text text-black ms-5">Popular Now</h5>
               <p-carousel
                 [value]="comics"
                 [numVisible]="4"
@@ -71,7 +71,7 @@
           </div>
 
           <!-- Add New Form -->
-          <div class="row mt-5">
+          <div class="row mt-5 ms-4">
             <div class="col-6">
               <app-add-new-form></app-add-new-form>
             </div>
