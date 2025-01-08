@@ -40,6 +40,7 @@ export class DiscussionDetailsComponent {
   comments?: any[] = [];
   commentForm: FormGroup;
   currentUser: any;
+  editingCommentId: number | null = null;
 
   constructor(
     private router: Router,
@@ -89,16 +90,38 @@ export class DiscussionDetailsComponent {
       commentData.discussionId = this.discussion.Id;
       commentData.userId = this.currentUser.Id;
 
-      this.commentService.addComment(commentData).subscribe({
-        next: () => {
-          this.commentForm.reset();
-          this.fetchDiscussionById(this.discussion.Id);
-        },
-        error: (error) => {
-          console.error('Error adding comment', error),
-            this.openErrorModal(`Error adding comment. ${error.error.error}`);
-        },
-      });
+      if (this.editingCommentId) {
+        this.commentService
+          .editComment(commentData, this.editingCommentId)
+          .subscribe({
+            next: () => {
+              this.commentForm.reset();
+              this.openModal('Success', 'Successfully edited comment');
+              this.fetchDiscussionById(this.discussion.Id);
+            },
+            error: (error) => {
+              console.error('Error editing comment', error),
+                this.openModal(
+                  'Error',
+                  `Error editing comment. ${error.error.error}`
+                );
+            },
+          });
+      } else {
+        this.commentService.addComment(commentData).subscribe({
+          next: () => {
+            this.commentForm.reset();
+            this.fetchDiscussionById(this.discussion.Id);
+          },
+          error: (error) => {
+            console.error('Error adding comment', error),
+              this.openModal(
+                'Error',
+                `Error adding comment. ${error.error.error}`
+              );
+          },
+        });
+      }
     } else {
       console.log('Form is invalid');
     }
@@ -120,7 +143,8 @@ export class DiscussionDetailsComponent {
             },
             error: (error) => {
               console.error('Error deleting comment', error),
-                this.openErrorModal(
+                this.openModal(
+                  'Error',
                   `Error deleting comment. ${error.error.error}`
                 );
             },
@@ -145,7 +169,8 @@ export class DiscussionDetailsComponent {
             },
             error: (error) => {
               console.error('Error deleting discussion', error),
-                this.openErrorModal(
+                this.openModal(
+                  'Error',
                   `Error deleting discussion. ${error.error.error}`
                 );
             },
@@ -164,10 +189,17 @@ export class DiscussionDetailsComponent {
     });
   }
 
-  openErrorModal(message: string) {
+  editComment(comment: any): void {
+    this.commentForm.patchValue({
+      commentText: comment.CommentText,
+    });
+    this.editingCommentId = comment.Id;
+  }
+
+  openModal(title: string, message: string) {
     const modalRef = this.modalService.openModal(AlertModalComponent);
     modalRef.componentInstance.data = {
-      title: 'Error',
+      title: title,
       message: message,
     };
   }

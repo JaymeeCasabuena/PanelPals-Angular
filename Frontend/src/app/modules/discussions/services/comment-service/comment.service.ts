@@ -33,13 +33,14 @@ export class CommentService {
   }
 
   editComment(
-    commentId: number,
-    userId: number,
-    commentText: string
+    commentData: {
+      userId: number;
+      commentText: string;
+    },
+    commentId: number
   ): Observable<Comment> {
-    const body = { userId, commentText };
     return this.http
-      .put<Comment>(`${this.apiUrl}/comments/${commentId}`, body)
+      .put<Comment>(`${this.apiUrl}/comments/${commentId}`, commentData)
       .pipe(
         tap((updatedComment) => {
           const currentComments = this.commentsSubject.value.map((c) =>

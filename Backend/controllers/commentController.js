@@ -20,7 +20,7 @@ const commentController = {
   },
 
   editComment: async (req, res) => {
-    const { commentId } = req.params.id;
+    const { id } = req.params;
     const { userId, commentText } = req.body;
 
     if (!commentText) {
@@ -29,7 +29,7 @@ const commentController = {
 
     try {
       const updatedComment = await commentModel.editComment(
-        commentId,
+        id,
         userId,
         commentText
       );

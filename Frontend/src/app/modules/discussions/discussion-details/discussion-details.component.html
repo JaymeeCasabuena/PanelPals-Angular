@@ -32,16 +32,16 @@
                   class="d-flex justify-content-between align-items-center gap-2"
                 >
                   <div class="d-flex align-items-center">
-                    <p-avatar [image]="discussion.Avatar" shape="circle" />
+                    <p-avatar [image]="discussion?.Avatar" shape="circle" />
                     <span class="text-black fs-4 ms-3">
-                      {{ discussion.Username }}
+                      {{ discussion?.Username }}
                     </span>
                     <span class="text-black fs-6 ms-4 mt-1">
-                      {{ discussion.DateCreated }}
+                      {{ discussion?.DateCreated }}
                     </span>
                   </div>
                   <div
-                    *ngIf="currentUser.Username === discussion.Username"
+                    *ngIf="currentUser?.Username === discussion?.Username"
                     class="d-flex"
                   >
                     <div (click)="openEditDiscussionModal(discussion)">
@@ -78,11 +78,11 @@
               <div>
                 <div class="d-flex justify-content-between">
                   <h5 class="text-black fs-4 mt-3 ms-3 fw-bold">
-                    {{ discussion.Title }}
+                    {{ discussion?.Title }}
                   </h5>
                 </div>
                 <p class="text-black fs-5 ms-3 mt-3">
-                  {{ discussion.Content }}
+                  {{ discussion?.Content }}
                 </p>
               </div>
             </p-fieldset>
@@ -100,19 +100,19 @@
                         class="d-flex justify-content-between align-items-center gap-2"
                       >
                         <div class="d-flex align-items-center">
-                          <p-avatar [image]="comment.Avatar" shape="circle" />
+                          <p-avatar [image]="comment?.Avatar" shape="circle" />
                           <span class="text-black fs-5 ms-3">
-                            {{ comment.Username }}
+                            {{ comment?.Username }}
                           </span>
                           <span class="text-black fs-6 ms-4 mt-1">
-                            {{ comment.DateCreated }}
+                            {{ comment?.DateCreated }}
                           </span>
                         </div>
                         <div
                           *ngIf="currentUser.Username === comment.Username"
                           class="d-flex"
                         >
-                          <div>
+                          <div (click)="editComment(comment)">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
