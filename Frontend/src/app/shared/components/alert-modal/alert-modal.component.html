@@ -38,6 +38,21 @@
   </div>
   <div class="modal-footer justify-content-center">
     <button
+      *ngIf="data.title === 'Delete'"
+      class="btn btn-dark rounded-pill p-2 px-5 me-2"
+      (click)="closeModal()"
+    >
+      Cancel
+    </button>
+    <button
+      *ngIf="data.title === 'Delete'"
+      class="btn btn-success rounded-pill p-2 px-5 me-2"
+      (click)="confirmAction()"
+    >
+      Confirm
+    </button>
+    <button
+      *ngIf="data.title !== 'Delete'"
       class="btn btn-dark align-self-end text-white rounded-pill p-2 px-5 me-4 mt-2"
       (click)="closeModal()"
     >

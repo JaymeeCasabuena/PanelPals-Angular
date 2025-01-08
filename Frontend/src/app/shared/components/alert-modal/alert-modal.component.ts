@@ -17,4 +17,8 @@ export class AlertModalComponent {
   closeModal(): void {
     this.activeModal.dismiss();
   }
+
+  confirmAction(): void {
+    this.activeModal.close('confirm');
+  }
 }
