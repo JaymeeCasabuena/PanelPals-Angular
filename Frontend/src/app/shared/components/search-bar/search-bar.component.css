@@ -10,3 +10,12 @@
 .search::placeholder {
   color: gray;
 }
+
+.search-result {
+  position: absolute;
+  max-height: 15em;
+}
+
+.title:hover {
+  text-decoration: underline;
+}
