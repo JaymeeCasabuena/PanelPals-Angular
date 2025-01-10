@@ -9,15 +9,11 @@
     <div class="col-11">
       <!-- Top Bar -->
       <div class="row">
-        <div
-          class="d-flex align-items-center justify-content-between mt-2 w-100"
-        >
-          <!-- Centered search bar -->
-          <div class="d-flex justify-content-center flex-grow-1">
-            <app-search-bar></app-search-bar>
-          </div>
+        <div class="d-flex align-items-center justify-content-end mt-2 w-100">
           <!-- Avatar aligned to the far right -->
-          <app-avatar [currentUser]="currentUser"></app-avatar>
+          <div>
+            <app-avatar [currentUser]="currentUser"></app-avatar>
+          </div>
         </div>
       </div>
 

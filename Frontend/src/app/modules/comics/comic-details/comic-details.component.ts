@@ -9,7 +9,6 @@ import {
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ComicService } from '../../../shared/services/comic-services/comic.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
-import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +26,6 @@ import { BadgeModule } from 'primeng/badge';
     ReactiveFormsModule,
     RouterModule,
     SideBarComponent,
-    SearchBarComponent,
     StarRatingComponent,
     AvatarComponent,
     Avatar,

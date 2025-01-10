@@ -31,9 +31,7 @@
               *ngFor="let comic of visibleComics"
               class="col-3 d-flex flex-column align-items-center"
             >
-              <div
-                class="d-flex bg-white border border-dark align-items-start w-100"
-              >
+              <div class="d-flex book-card bg-white align-items-start w-100">
                 <div
                   class="book-cell bg-transparent p-3"
                   (click)="navigateToDetails(comic.Id)"

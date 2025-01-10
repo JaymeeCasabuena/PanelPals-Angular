@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalService } from '../../../shared/services/modal-service/modal.service';
 import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
-import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { CreateFormComponent } from '../add-new-discussion-form/create-form.component';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { Avatar } from 'primeng/avatar';
@@ -16,7 +15,6 @@ import { PaginatorModule } from 'primeng/paginator';
   standalone: true,
   imports: [
     SideBarComponent,
-    SearchBarComponent,
     Avatar,
     Fieldset,
     PaginatorModule,

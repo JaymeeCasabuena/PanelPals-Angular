@@ -7,6 +7,11 @@ img {
   display: inline-block;
 }
 
+.book-photo {
+  width: 220px;
+  height: 320px;
+}
+
 .book-card-img {
   width: 220px;
   height: 320px;

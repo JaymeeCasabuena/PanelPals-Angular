@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { DiscussionService } from '../services/discussion-service/discussion.service';
 import { CommentService } from '../services/comment-service/comment.service';
 import { SideBarComponent } from '../../../shared/components/side-bar/side-bar.component';
-import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { ModalService } from '../../../shared/services/modal-service/modal.service';
 import { AlertModalComponent } from '../../../shared/components/alert-modal/alert-modal.component';
@@ -25,7 +24,6 @@ import { Fieldset } from 'primeng/fieldset';
   standalone: true,
   imports: [
     SideBarComponent,
-    SearchBarComponent,
     Avatar,
     Fieldset,
     CommonModule,
