@@ -1,5 +1,4 @@
 const userModel = require("../models/userModel");
-const authMiddleware = require("../middlewares/authMiddleware");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -42,20 +41,17 @@ const userController = {
     }
   },
 
-  getCurrentUser: [
-    authMiddleware,
-    async (req, res) => {
-      try {
-        const user = await userModel.getUserById(req.user.userId);
-        res.status(200).json({
-          message: "Current user retrieved successfully.",
-          data: user,
-        });
-      } catch (err) {
-        res.status(500).json({ error: err.message });
-      }
-    },
-  ],
+  getCurrentUser: async (req, res) => {
+    try {
+      const user = await userModel.getUserById(req.user.userId);
+      res.status(200).json({
+        message: "Current user retrieved successfully.",
+        data: user,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
 
   deleteUser: async (req, res) => {
     const userId = req.params.id;
