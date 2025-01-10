@@ -85,6 +85,22 @@ const comicController = {
       res.status(500).json({ error: err.message || "Internal server error" });
     }
   },
+
+  searchComics: async (req, res) => {
+    const searchTerm = req.query.q;
+    if (!searchTerm) {
+      return res.status(400).json({ error: "Search term is required." });
+    }
+    try {
+      const comics = await comicModel.searchComics(searchTerm);
+      if (comics.length === 0) {
+        return res.status(404).json({ error: "No results found." });
+      }
+      res.status(200).json(comics);
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Internal server error." });
+    }
+  },
 };
 
 module.exports = comicController;

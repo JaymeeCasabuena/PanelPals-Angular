@@ -6,6 +6,7 @@ router.post("/", comicController.addComic);
 router.get("/getAll", comicController.getAllComics);
 router.get("/getPopular", comicController.getPopularComics);
 router.get("/genres", comicController.getAllGenres);
+router.get("/search", comicController.searchComics);
 router.get("/:id", comicController.getComicById);
 
 module.exports = router;

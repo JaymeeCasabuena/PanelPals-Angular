@@ -161,6 +161,36 @@ const comicModel = {
       throw new Error("An error occurred while fetching genres.");
     }
   },
+
+  searchComics: async (searchTerm) => {
+    const query = `
+      SELECT 
+        Comic.Id, 
+        Comic.Title, 
+        Author.Name AS AuthorName,
+        GROUP_CONCAT(DISTINCT Genre.Name) AS Genres
+      FROM Comic
+      INNER JOIN Author ON Comic.AuthorId = Author.Id
+      LEFT JOIN ComicGenre ON Comic.Id = ComicGenre.ComicId
+      LEFT JOIN Genre ON ComicGenre.GenreId = Genre.Id
+      WHERE 
+        Comic.Title LIKE ? 
+        OR Author.Name LIKE ? 
+        OR Genre.Name LIKE ?
+      GROUP BY Comic.Id;
+    `;
+    try {
+      const rows = await dbHelpers.getAllQuery(query, [
+        `%${searchTerm}%`,
+        `%${searchTerm}%`,
+        `%${searchTerm}%`,
+      ]);
+      return rows;
+    } catch (err) {
+      console.error("Database query error:", err);
+      throw new Error("An error occurred while searching comics.");
+    }
+  },
 };
 
 module.exports = comicModel;
