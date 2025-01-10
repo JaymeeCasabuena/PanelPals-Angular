@@ -57,4 +57,10 @@ export class ComicService {
   getComicById(id: number): Observable<Comic> {
     return this.http.get<Comic>(`${this.apiUrl}/comics/${id}`);
   }
+
+  searchComics(query: string): Observable<Comic[]> {
+    return this.http.get<Comic[]>(`${this.apiUrl}/comics/search`, {
+      params: { q: query },
+    });
+  }
 }
