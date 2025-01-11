@@ -1,11 +1,13 @@
-<div class="logo mt-2 ms-2 d-flex">
+<div id="fullBg"></div>
+
+<div class="logo mt-2 ms-1">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    width="80"
+    width="70"
     zoomAndPan="magnify"
     viewBox="0 0 375 374.999991"
-    height="80"
+    height="70"
     preserveAspectRatio="xMidYMid meet"
     version="1.0"
   >
@@ -74,179 +76,146 @@
       </g>
     </g>
   </svg>
-  <p class="logo-text fw-bold ms-3 mt-2">PanelPals</p>
 </div>
 
-<div
-  class="cont overflow-hidden position-relative"
-  [ngClass]="{ 's--signup': isSignUpActive }"
+<button
+  class="d-none d-md-block btn btn-success signup-btn"
+  (click)="toggleForm()"
 >
-  <form [formGroup]="loginForm" (ngSubmit)="onLogIn()">
-    <div class="form position-relative h-100 pt-5 mt-5 sign-in">
-      <h2>Welcome Back</h2>
-      <label for="email">
-        <span>Email</span>
-        <input id="email" formControlName="email" type="email" />
-      </label>
-      <div
-        *ngIf="
-          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
-        "
-      >
-        <small
-          class="error d-block text-center text-danger mt-1"
-          *ngIf="loginForm.get('email')?.errors?.['required']"
-          >Email is required</small
-        >
-        <small
-          class="error d-block text-center text-danger mt-1"
-          *ngIf="loginForm.get('email')?.errors?.['email']"
-          >Invalid email format</small
-        >
-      </div>
-      <label for="password">
-        <span>Password</span>
-        <input id="password" formControlName="password" type="password" />
-      </label>
-      <div
-        *ngIf="
-          loginForm.get('password')?.invalid &&
-          loginForm.get('password')?.touched
-        "
-      >
-        <small
-          class="error d-block text-center text-danger mt-1"
-          *ngIf="loginForm.get('password')?.errors?.['required']"
-          >Password is required</small
-        >
-        <small
-          class="error d-block text-center text-danger mt-1"
-          *ngIf="loginForm.get('password')?.errors?.['minlength']"
-          >Password must be at least 8 characters</small
-        >
-      </div>
-      <p class="forgot-pass">Forgot password?</p>
-      <button
-        type="submit"
-        [disabled]="loginForm.invalid"
-        class="btn btn-dark text-white rounded-pill p-2 px-3 mt-5 me-auto"
-      >
-        Sign In
-      </button>
-    </div>
-  </form>
-  <div class="sub-cont position-absolute overflow-hidden">
-    <div class="img h-100 position-absolute overflow-hidden">
-      <div class="img__text m--up mt-4 w-100 px-2 text-center text-white">
-        <h2>New here?</h2>
-        <p>Sign up and discover great amount of new opportunities!</p>
-      </div>
-      <div class="img__text m--in mt-2 w-100 px-2 text-center text-white">
-        <h2>One of us?</h2>
-        <p>If you already has an account, just sign in. We've missed you!</p>
-      </div>
-      <div
-        class="img__btn overflow-hidden position-relative text-white bg-transparent text-uppercase cursor-pointer"
-        (click)="toggleSignup()"
-      >
-        <span class="m--up">Sign Up</span>
-        <span class="m--in">Sign In</span>
-      </div>
-    </div>
-    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <div class="form sign-up h-100 pt-5 mt-2">
-        <h2>Let's get you started</h2>
-        <label for="userName">
-          <span>User Name</span>
-          <input
-            id="userName"
-            formControlName="userName"
-            clas="border-0 bg-transparent"
-            type="text"
-          />
-        </label>
+  {{ !isSignUpActive ? "Sign Up" : "Login" }}
+</button>
+
+<ng-template [ngIf]="!isSignUpActive">
+  <div class="container">
+    <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onLogIn()">
+      <div class="d-flex flex-column align-items-center">
+        <h1 class="heading mb-3 mb-md-5">PanelPals</h1>
         <div
+          class="bg-danger text-white mb-3 p-3 rounded text-center"
+          *ngIf="isSubmitted && loginForm.get('email')?.hasError('required')"
+        >
+          You do have to fill this form, you know.
+        </div>
+        <div
+          class="bg-danger text-white mb-3 p-3 rounded text-center"
           *ngIf="
-            signUpForm.get('userName')?.invalid &&
-            signUpForm.get('userName')?.touched
+            isSubmitted &&
+            loginForm.get('password')?.hasError('required') &&
+            !loginForm.get('email')?.hasError('required')
           "
         >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('userName')?.errors?.['required']"
-            >User name is required</small
-          >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('userName')?.errors?.['maxlength']"
-            >User name length shouldn't exceed 15 characters</small
-          >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('userName')?.errors?.['pattern']"
-            >Invalid characters</small
-          >
+          You forgot your password
         </div>
-        <label for="regEmail">
-          <span>Email</span>
+        <div class="input-group-lg mb-2">
           <input
-            id="regEmail"
-            formControlName="regEmail"
-            clas="border-0 bg-transparent"
-            type="email"
+            id="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Email Address"
+            (focus)="resetSubmitFlag()"
           />
-        </label>
-        <div
-          *ngIf="
-            signUpForm.get('regEmail')?.invalid &&
-            signUpForm.get('regEmail')?.touched
-          "
-        >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('regEmail')?.errors?.['required']"
-            >Email is required</small
-          >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('regEmail')?.errors?.['email']"
-            >Invalid email format</small
-          >
         </div>
-        <label for="regPassword">
-          <span>Password</span>
+        <div class="input-group-lg mb-2">
           <input
-            id="regPassword"
-            formControlName="regPassword"
-            clas="border-0 bg-transparent"
             type="password"
+            id="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Password"
+            (focus)="resetSubmitFlag()"
           />
-        </label>
-        <div
-          *ngIf="
-            signUpForm.get('regPassword')?.invalid &&
-            signUpForm.get('regPassword')?.touched
-          "
-        >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('regPassword')?.errors?.['required']"
-            >Password is required</small
-          >
-          <small
-            class="error d-block text-center text-danger mt-1"
-            *ngIf="signUpForm.get('regPassword')?.errors?.['minlength']"
-            >Password must be at least 8 characters</small
-          >
         </div>
-        <button
-          type="submit"
-          [disabled]="signUpForm.invalid"
-          class="btn btn-dark text-white rounded-pill p-2 px-3 mt-5 me-auto"
-        >
-          Sign Up
+        <p class="text-xsm mt-3">
+          By clicking log in, or continuing with the other options below, you
+          agree to PanelPals' Terms of Service and have read the Privacy Policy
+        </p>
+
+        <button class="btn btn-lg btn-info btn-login mt-3" type="submit">
+          Log in
         </button>
       </div>
     </form>
   </div>
-</div>
+</ng-template>
+
+<ng-template [ngIf]="isSignUpActive">
+  <div class="container">
+    <form class="form-signin" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <div class="d-flex flex-column align-items-center">
+        <h1 class="heading mb-3 mb-md-5">PanelPals</h1>
+        <div
+          class="bg-danger text-white mb-3 p-3 rounded text-center"
+          *ngIf="
+            isSubmitted &&
+            (signUpForm.get('regEmail')?.hasError('required') ||
+              signUpForm.get('userName')?.hasError('required'))
+          "
+        >
+          You do have to fill this form, you know.
+        </div>
+        <div
+          class="bg-danger text-white mb-3 p-3 rounded text-center"
+          *ngIf="
+            isSubmitted &&
+            signUpForm.get('regPassword')?.hasError('required') &&
+            !signUpForm.get('regEmail')?.hasError('required') &&
+            !signUpForm.get('userName')?.hasError('required')
+          "
+        >
+          You forgot your password
+        </div>
+        <div class="input-group-lg mb-2">
+          <input
+            id="userName"
+            class="form-control"
+            formControlName="userName"
+            placeholder="User Name"
+            (focus)="resetSubmitFlag()"
+          />
+        </div>
+        <div class="input-group-lg mb-2">
+          <input
+            id="regEmail"
+            class="form-control"
+            formControlName="regEmail"
+            placeholder="Email Address"
+            (focus)="resetSubmitFlag()"
+          />
+        </div>
+        <div class="input-group-lg mb-2">
+          <input
+            id="regPassword"
+            type="password"
+            class="form-control"
+            formControlName="regPassword"
+            placeholder="Password"
+            (focus)="resetSubmitFlag()"
+          />
+        </div>
+        <button class="btn btn-lg btn-info btn-login mt-3" type="submit">
+          Sign up
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<p class="text-center d-block d-md-none mt-3" (click)="toggleForm()">
+  {{
+    !isSignUpActive
+      ? "Sign up for a new account"
+      : "Already have an account? Login"
+  }}
+</p>
+
+<footer>
+  <div class="footer-left">
+    <a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">Connect</a> |
+    <a href="#">Support</a>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.tumblr.com/thevintagepostbox/"
+      >Illustration by thevintagepostbox</a
+    >
+  </div>
+</footer>

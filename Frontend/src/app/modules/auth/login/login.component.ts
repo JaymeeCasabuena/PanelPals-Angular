@@ -18,6 +18,7 @@ export class LoginComponent {
   isSignUpActive: boolean = false;
   loginForm: FormGroup;
   signUpForm: FormGroup;
+  isSubmitted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +46,7 @@ export class LoginComponent {
   }
 
   onLogIn(): void {
+    this.isSubmitted = true;
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.loginUser(email, password).subscribe({
@@ -60,10 +62,11 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    this.isSubmitted = true;
     if (this.signUpForm.valid) {
       const { userName, regEmail, regPassword } = this.signUpForm.value;
       this.authService.registerUser(userName, regEmail, regPassword).subscribe({
-        next: () => this.toggleSignup(),
+        next: () => this.toggleForm(),
         error: (error) => {
           console.error('Registration failed', error),
             this.openErrorModal(`Registration failed. ${error.error.error}`);
@@ -73,9 +76,12 @@ export class LoginComponent {
     }
   }
 
-  toggleSignup() {
-    const container = document.querySelector('.cont');
-    container?.classList.toggle('s--signup');
+  toggleForm(): void {
+    this.isSignUpActive = !this.isSignUpActive;
+  }
+
+  resetSubmitFlag() {
+    this.isSubmitted = false;
   }
 
   openErrorModal(message: string) {
