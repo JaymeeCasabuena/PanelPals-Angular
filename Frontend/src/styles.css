@@ -15,14 +15,11 @@
 
 html,
 body {
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
   font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: normal;
   overflow: hidden;
 }
 
@@ -43,6 +40,10 @@ body {
 
 ::-webkit-scrollbar-thumb:vertical {
   height: 3em;
+}
+
+.container-fluid {
+  background: #f2f3d9;
 }
 
 .book-photo {

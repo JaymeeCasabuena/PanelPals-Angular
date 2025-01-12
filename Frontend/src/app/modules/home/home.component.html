@@ -1,28 +1,25 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-lg-1">
+    <div class="col-md-1 col-lg-1">
       <app-side-bar></app-side-bar>
     </div>
 
     <!-- Main Content -->
-    <div class="col-11">
-      <div class="row">
-        <div
-          class="d-flex align-items-center justify-content-between mt-2 w-100"
-        >
-          <!-- Centered search bar -->
-          <div class="d-flex justify-content-center flex-grow-1">
-            <app-search-bar></app-search-bar>
-          </div>
-          <!-- Avatar aligned to the far right -->
-          <app-avatar [currentUser]="currentUser"></app-avatar>
+    <div class="col-12 col-md-11 col-lg-11">
+      <div class="d-flex align-items-center justify-content-between mt-2 w-100">
+        <!-- Centered search bar -->
+        <div class="d-flex justify-content-center flex-grow-1">
+          <app-search-bar></app-search-bar>
         </div>
+        <!-- Avatar aligned to the far right -->
+        <app-avatar [currentUser]="currentUser"></app-avatar>
       </div>
 
-      <div class="d-flex justify-content-center ms-5">
-        <div class="row align-items-center mt-3">
-          <div class="col-6">
+      <div class="row mt-4">
+        <!-- Welcome Header and Popular Comics -->
+        <div class="col-12 col-md-6 col-lg-7">
+          <div class="col-12 col-md-12 col-lg-8">
             <h1 class="welcome-text text-black ms-5">Happy Reading,</h1>
             <h1 class="text-black ms-5">{{ currentUser?.Username }}</h1>
             <p class="subtext text-black mt-4 ms-5">
@@ -32,55 +29,47 @@
             <button
               [routerLink]="['/explore']"
               type="button"
-              class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 me-auto ms-5"
+              class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 ms-5"
             >
               Explore ↗
             </button>
           </div>
 
           <!-- Popular Comics -->
-          <div class="row mt-5">
-            <div class="col-12">
-              <h5 class="welcome-text text-black ms-5">Popular Now</h5>
-              <p-carousel
-                [value]="comics"
-                [numVisible]="4"
-                [numScroll]="3"
-                autoplayInterval="3000"
-              >
-                <ng-template let-comic #item>
-                  <div class="book-card">
-                    <div
-                      class="book-cell bg-transparent p-3 mt-5"
-                      (click)="navigateToDetails(comic?.Id)"
-                    >
-                      <img [src]="comic?.Cover" class="book-photo" />
-                    </div>
-                    <div class="mt-4 overflow-hidden">
-                      <p class="text-black fw-semi-bold text-truncate">
-                        {{ comic?.Title }}
-                      </p>
-                      <p class="text-black text-truncate">
-                        by {{ comic?.AuthorName }}
-                      </p>
-                    </div>
+          <div class="mt-5">
+            <h5 class="welcome-text text-black ms-5">Popular Now</h5>
+            <p-carousel
+              [value]="comics"
+              [numVisible]="4"
+              [numScroll]="3"
+              autoplayInterval="3000"
+            >
+              <ng-template let-comic #item>
+                <div class="book-card">
+                  <div
+                    class="book-cell bg-transparent p-3 mt-5"
+                    (click)="navigateToDetails(comic?.Id)"
+                  >
+                    <img [src]="comic?.Cover" class="book-photo" />
                   </div>
-                </ng-template>
-              </p-carousel>
-            </div>
-          </div>
-
-          <!-- Add New Form -->
-          <div class="row mt-5 ms-4">
-            <div class="col-6">
-              <app-add-new-form></app-add-new-form>
-            </div>
+                  <div class="mt-4 overflow-hidden">
+                    <p class="text-black fw-semi-bold text-truncate">
+                      {{ comic?.Title }}
+                    </p>
+                    <p class="text-black text-truncate">
+                      by {{ comic?.AuthorName }}
+                    </p>
+                  </div>
+                </div>
+              </ng-template>
+            </p-carousel>
           </div>
         </div>
 
-        <div class="col-lg-5 mt-2 ms-4">
-          <h4 class="welcome-text text-black mt-5 pt-5">Discussions</h4>
-          <p class="subtext text-black mt-4">
+        <!-- Right Column: Discussions Tab -->
+        <div class="col-12 col-md-6 col-lg-4 mt-5">
+          <h4 class="welcome-text text-black mt-4">Discussions</h4>
+          <p class="subtext text-black mt-3">
             Engage with the community and find trending or new topics to
             discuss.
           </p>

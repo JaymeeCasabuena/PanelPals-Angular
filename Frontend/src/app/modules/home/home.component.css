@@ -1,3 +1,14 @@
+.main-content {
+  overflow: auto;
+  height: 100vh;
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    margin-bottom: 60px; /* Leave space for the bottom nav */
+  }
+}
+
 .book-card {
   max-width: 190px;
 }
