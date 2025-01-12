@@ -15,11 +15,13 @@
 
 html,
 body {
-  height: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
   width: 100%;
   font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: normal;
   overflow: hidden;
 }
 
@@ -74,37 +76,6 @@ body {
 
 .text-lg {
   font-size: 2em;
-}
-
-.p-carousel-item-list {
-  width: 1000px !important;
-}
-
-.p-tablist-tab-list,
-.p-tabpanels {
-  background: transparent !important;
-}
-
-.p-tab-active,
-.p-button-text {
-  color: #cd908b !important;
-}
-
-.p-tablist-active-bar,
-.p-carousel-indicator-active .p-carousel-indicator-button {
-  background: #cd908b !important;
-}
-
-.p-tablist-tab-list {
-  width: 500px !important;
-}
-
-.p-tab {
-  width: 250px !important;
-}
-
-.p-tabpanels {
-  width: 530px !important;
 }
 
 input::placeholder {

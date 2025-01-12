@@ -9,7 +9,7 @@
     <div class="col-12 col-md-11 col-lg-11">
       <div class="d-flex align-items-center justify-content-between mt-2 w-100">
         <!-- Centered search bar -->
-        <div class="d-flex justify-content-center flex-grow-1">
+        <div class="d-none d-md-flex justify-content-center flex-grow-1">
           <app-search-bar></app-search-bar>
         </div>
         <!-- Avatar aligned to the far right -->
@@ -18,56 +18,94 @@
 
       <div class="row mt-4">
         <!-- Welcome Header and Popular Comics -->
-        <div class="col-12 col-md-6 col-lg-7">
-          <div class="col-12 col-md-12 col-lg-8">
-            <h1 class="welcome-text text-black ms-5">Happy Reading,</h1>
-            <h1 class="text-black ms-5">{{ currentUser?.Username }}</h1>
-            <p class="subtext text-black mt-4 ms-5">
+        <div class="col-12 col-xl-7">
+          <div class="col-12 col-xl-8">
+            <h1 class="header-text text-black ms-5">Happy Reading,</h1>
+            <h1 class="header-text text-black ms-5">
+              {{ currentUser?.Username }}
+            </h1>
+            <p class="sub-text text-black mt-3 mt-sm-4 ms-5">
               Discover your next favorite manga/manhwa/webtoon and share your
               thoughts with fellow readers
             </p>
             <button
               [routerLink]="['/explore']"
               type="button"
-              class="btn btn-dark text-white rounded-pill p-2 px-3 mt-1 ms-5"
+              class="btn btn-dark text-white text-center rounded-pill p-1 p-sm-2 px-3 mt-0 mt-sm-1 ms-5"
             >
               Explore ↗
             </button>
           </div>
 
           <!-- Popular Comics -->
-          <div class="mt-5">
-            <h5 class="welcome-text text-black ms-5">Popular Now</h5>
-            <p-carousel
-              [value]="comics"
-              [numVisible]="4"
-              [numScroll]="3"
-              autoplayInterval="3000"
-            >
-              <ng-template let-comic #item>
-                <div class="book-card">
-                  <div
-                    class="book-cell bg-transparent p-3 mt-5"
-                    (click)="navigateToDetails(comic?.Id)"
-                  >
-                    <img [src]="comic?.Cover" class="book-photo" />
+          <div class="carousel mt-4 mt-sm-5">
+            <h5 class="header-text text-black ms-5">Popular Now</h5>
+            <!-- mobile carousel -->
+            <div class="d-sm-none">
+              <p-carousel
+                [value]="comics"
+                [numVisible]="2"
+                [numScroll]="2"
+                autoplayInterval="3000"
+              >
+                <ng-template let-comic #item>
+                  <div class="book-card">
+                    <div
+                      class="book-cell bg-transparent p-3 mt-5"
+                      (click)="navigateToDetails(comic?.Id)"
+                    >
+                      <img [src]="comic?.Cover" class="book-photo" />
+                    </div>
+                    <div class="mt-4 ms-3 w-100 overflow-hidden">
+                      <p
+                        class="comic-details text-black fw-semi-bold text-truncate"
+                      >
+                        {{ comic?.Title }}
+                      </p>
+                      <p class="comic-details text-black text-truncate">
+                        by {{ comic?.AuthorName }}
+                      </p>
+                    </div>
                   </div>
-                  <div class="mt-4 overflow-hidden">
-                    <p class="text-black fw-semi-bold text-truncate">
-                      {{ comic?.Title }}
-                    </p>
-                    <p class="text-black text-truncate">
-                      by {{ comic?.AuthorName }}
-                    </p>
+                </ng-template>
+              </p-carousel>
+            </div>
+            <div class="d-none d-sm-block">
+              <p-carousel
+                [value]="comics"
+                [numVisible]="5"
+                [numScroll]="3"
+                autoplayInterval="3000"
+              >
+                <ng-template let-comic #item>
+                  <div class="book-card">
+                    <div
+                      class="book-cell bg-transparent p-3 mt-5"
+                      (click)="navigateToDetails(comic?.Id)"
+                    >
+                      <img [src]="comic?.Cover" class="book-photo" />
+                    </div>
+                    <div class="mt-4 ms-2 overflow-hidden">
+                      <p class="text-black text-sm fw-semi-bold text-truncate">
+                        {{ comic?.Title }}
+                      </p>
+                      <p class="text-black text-sm text-truncate">
+                        by {{ comic?.AuthorName }}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </ng-template>
-            </p-carousel>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </div>
+          <!-- Add New Form -->
+          <div class="d-none d-xxl-block mt-5 ms-5">
+            <app-add-new-form></app-add-new-form>
           </div>
         </div>
 
-        <!-- Right Column: Discussions Tab -->
-        <div class="col-12 col-md-6 col-lg-4 mt-5">
+        <!-- Discussions Tab -->
+        <div class="d-none d-xl-block col-xl-4 mt-4 mt-xl-5 ms-5">
           <h4 class="welcome-text text-black mt-4">Discussions</h4>
           <p class="subtext text-black mt-3">
             Engage with the community and find trending or new topics to
@@ -89,19 +127,16 @@
             <p-tabpanels>
               <!-- New Discussions Tab -->
               <p-tabpanel value="0">
-                <div
-                  *ngFor="let discussion of newDiscussions"
-                  class="p-1 border-bottom"
-                >
+                <div *ngFor="let discussion of newDiscussions" class="p-1">
                   <div class="d-flex align-items-center">
                     <img
                       [src]="discussion.Avatar"
                       alt="Avatar"
                       class="discussion-avatar"
                     />
-                    <div class="ms-3">
+                    <div class="w-100 border-bottom ms-3">
                       <p
-                        class="text-dark"
+                        class="text-dark text-truncate"
                         (click)="openDiscussion(discussion.Id)"
                       >
                         {{ discussion.Title }}
@@ -113,19 +148,16 @@
 
               <!-- Trending Discussions Tab -->
               <p-tabpanel value="1">
-                <div
-                  *ngFor="let discussion of trendingDiscussions"
-                  class="p-1 border-bottom"
-                >
+                <div *ngFor="let discussion of trendingDiscussions" class="p-1">
                   <div class="d-flex align-items-center">
                     <img
                       [src]="discussion.Avatar"
                       alt="Avatar"
                       class="discussion-avatar"
                     />
-                    <div class="ms-3">
+                    <div class="w-100 border-bottom ms-3">
                       <p
-                        class="text-dark"
+                        class="text-dark text-truncate"
                         (click)="openDiscussion(discussion.Id)"
                       >
                         {{ discussion.Title }}

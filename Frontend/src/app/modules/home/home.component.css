@@ -1,16 +1,5 @@
-.main-content {
-  overflow: auto;
-  height: 100vh;
-}
-
-@media (max-width: 767px) {
-  .main-content {
-    margin-bottom: 60px; /* Leave space for the bottom nav */
-  }
-}
-
 .book-card {
-  max-width: 190px;
+  width: 9em;
 }
 
 .btn:hover {
@@ -18,7 +7,83 @@
 }
 
 .discussion-avatar {
-  width: 50px;
-  height: 50px;
+  width: 3.13em;
+  height: 3.13em;
   border-radius: 50%;
+}
+
+/* discussion tabs  */
+
+:host ::ng-deep .p-tablist-tab-list {
+  width: 31.25em !important;
+}
+
+:host ::ng-deep .p-tab {
+  width: 15.63em !important;
+}
+
+:host ::ng-deep .p-tabpanels {
+  width: 28.75em !important;
+}
+
+:host ::ng-deep .p-tablist-tab-list,
+.p-tabpanels {
+  background: transparent !important;
+}
+
+:host ::ng-deep .p-tab-active,
+.p-button-text {
+  color: #cd908b !important;
+}
+
+:host ::ng-deep .p-tablist-active-bar {
+  background: #cd908b !important;
+}
+
+@media (max-width: 1500px) {
+  :host ::ng-deep .p-tablist-tab-list {
+    width: 24em !important;
+  }
+
+  :host ::ng-deep .p-tab {
+    width: 12em !important;
+  }
+
+  :host ::ng-deep .p-tabpanels {
+    width: 20em !important;
+  }
+}
+
+/* carousel */
+
+:host ::ng-deep .p-carousel-item-list {
+  width: 100% !important;
+}
+
+:host ::ng-deep .p-carousel-indicator-active .p-carousel-indicator-button {
+  background: #cd908b !important;
+}
+
+@media (max-width: 576px) {
+  .carousel {
+    margin-bottom: 10em;
+  }
+  .sub-text,
+  .comic-details {
+    font-size: .9em;
+  }
+
+  .btn {
+    width: 8em;
+    height: 2em;
+    font-size: 0.9em;
+  }
+
+  .header-text {
+    font-size: 1.5em;
+  }
+
+  .book-card {
+    width: 7em;
+  }
 }
