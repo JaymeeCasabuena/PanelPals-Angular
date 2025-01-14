@@ -45,7 +45,8 @@ body {
 }
 
 .container-fluid {
-  background: #f2f3d9;
+  background: #f6eee3;
+  height: 100%;
 }
 
 .book-photo {
