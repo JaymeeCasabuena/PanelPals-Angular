@@ -8,7 +8,8 @@ import { CreateFormComponent } from '../add-new-discussion-form/create-form.comp
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { Avatar } from 'primeng/avatar';
 import { Fieldset } from 'primeng/fieldset';
-import { PaginatorModule } from 'primeng/paginator';
+import { PaginatorComponent } from '../../../shared/components/paginator/paginator.component';
+import { Discussion } from '../interfaces/discussion';
 
 @Component({
   selector: 'app-discussion-tab',
@@ -17,7 +18,7 @@ import { PaginatorModule } from 'primeng/paginator';
     SideBarComponent,
     Avatar,
     Fieldset,
-    PaginatorModule,
+    PaginatorComponent,
     CommonModule,
     AvatarComponent,
   ],
@@ -29,7 +30,7 @@ export class DiscussionTabComponent {
   currentUser: any;
   visibleDiscussions: any[] = [];
   first = 0;
-  items = 5;
+  rows = 5;
 
   constructor(
     private discussionService: DiscussionService,
@@ -57,18 +58,15 @@ export class DiscussionTabComponent {
     this.discussionService.getAllDiscussions().subscribe({
       next: (response) => {
         this.discussions = response;
-        this.updateVisibleDiscussions();
+        this.updateVisibleDiscussions(this.discussions.slice(0, this.rows));
       },
       error: (error) => console.error('Error fetching discussions', error),
       complete: () => console.log('Fetching discussions complete'),
     });
   }
 
-  updateVisibleDiscussions(): void {
-    this.visibleDiscussions = this.discussions.slice(
-      this.first,
-      this.first + this.items
-    );
+  updateVisibleDiscussions(visible: Discussion[]): void {
+    this.visibleDiscussions = visible;
   }
 
   openModal() {
@@ -78,11 +76,6 @@ export class DiscussionTabComponent {
     modalRef.componentInstance.modalClosed.subscribe(() => {
       this.fetchAllDiscussions();
     });
-  }
-
-  onPageChange(event: any): void {
-    this.first = event.first;
-    this.updateVisibleDiscussions();
   }
 
   navigateToDetails(discussionId: number): void {

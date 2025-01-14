@@ -1,15 +1,15 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-lg-1">
+    <div class="col-md-1">
       <app-side-bar></app-side-bar>
     </div>
 
     <!-- Main Content -->
-    <div class="col-11">
+    <div class="col-12 col-md-11">
       <!-- Top Bar -->
       <div class="row">
-        <div class="d-flex align-items-center justify-content-end mt-2 w-100">
+        <div class="d-flex align-items-center justify-content-start justify-content-md-end mt-2 w-100">
           <!-- Avatar aligned to the far right -->
           <div>
             <app-avatar [currentUser]="currentUser"></app-avatar>
@@ -17,11 +17,24 @@
         </div>
       </div>
 
-      <!-- Discussions Section -->
+      <!-- Add New Form -->
       <div class="row mt-5">
+        <div class="col-12 col-md-6">
+          <button
+            class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
+            title="Add new discussion"
+            (click)="openModal()"
+          >
+            Start a new discussion ＋
+          </button>
+        </div>
+      </div>
+
+      <!-- Discussions Section -->
+      <div class="row mt-3">
         <div class="col-12">
           <!-- Check if there are discussions -->
-          <div class="discussion-cont">
+          <div class="discussion-cont overflow-y-scroll mb-5">
             <ng-container
               *ngIf="discussions && discussions?.length > 0; else emptyState"
             >
@@ -66,36 +79,22 @@
                 </p-fieldset>
               </div>
             </ng-container>
+            <!-- Paginator -->
+
+            <div class="d-flex justify-content-start">
+              <app-paginator
+                [first]="first"
+                [rows]="rows"
+                [data]="discussions"
+                (visibleContentChange)="updateVisibleDiscussions($event)"
+              ></app-paginator>
+            </div>
           </div>
 
           <!-- Empty State -->
           <ng-template #emptyState>
             <p class="text-center text-muted mt-5">No discussions yet.</p>
           </ng-template>
-        </div>
-      </div>
-
-      <!-- Paginator -->
-      <div class="row mt-4">
-        <div class="col-12 d-flex justify-content-center">
-          <p-paginator
-            [rows]="items"
-            [totalRecords]="discussions?.length"
-            (onPageChange)="onPageChange($event)"
-          ></p-paginator>
-        </div>
-      </div>
-
-      <!-- Add New Form -->
-      <div class="row">
-        <div class="col-6">
-          <button
-            class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
-            title="Add new discussion"
-            (click)="openModal()"
-          >
-            Start a new discussion ＋
-          </button>
         </div>
       </div>
     </div>
