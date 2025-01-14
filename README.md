@@ -25,29 +25,29 @@ Welcome to **Panel Pals**, the perfect place to share your thoughts on the lates
 ## Screenshots
 
 1. **Login**
-   ![Login Page](public/login.png)
+   ![Login Page](Public/login.png)
 
 2. **Home**
-   ![Home Page](public/home.png)
+   ![Home Page](Public/home.png)
 
 3. **Comic Details**
-   ![Comic Details Page](public/comic-details.png)
+   ![Comic Details Page](Public/comic-details.png)
 
 4. **Reviews**
-   ![Reviews](public/reviews.png)
+   ![Reviews](Public/reviews.png)
 
 5. **Browse/Explore**
-   ![Explore Page](public/explore.png)
+   ![Explore Page](Public/explore.png)
 
 6. **Discussions**
-   ![Discussions Page](public/Discussions.png)
+   ![Discussions Page](Public/Discussions.png)
 
 7. **Discussion Details**
-   ![Discussion Details Page](public/Discussion-details.png)
+   ![Discussion Details Page](Public/Discussion-details.png)
 
 8. **Form and Modals**
-   ![Form and Modals](public/modals-2.png)
-   ![Form and Modals](public/modals.png)
+   ![Form and Modals](Public/modals-2.png)
+   ![Form and Modals](Public/modals.png)
 
 ## Upcoming
 
