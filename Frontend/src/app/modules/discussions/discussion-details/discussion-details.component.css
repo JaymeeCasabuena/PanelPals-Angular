@@ -10,6 +10,16 @@
   background: #cd908b !important;
 }
 
+.discussion-details {
+  height: 66vh;
+}
+
 .comment-cont {
   height: 50vh;
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    padding-bottom: 12em;
+  }
 }

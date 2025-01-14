@@ -11,15 +11,11 @@
   background: #cd908b !important;
 }
 
-:host ::ng-deep .p-paginator {
-  border-radius: 3rem;
-}
-
 .discussion-cont {
   height: 80vh;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   .discussion-cont {
     padding-bottom: 5em;
   }

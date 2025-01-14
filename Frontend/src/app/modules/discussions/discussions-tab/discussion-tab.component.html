@@ -9,7 +9,9 @@
     <div class="col-12 col-md-11">
       <!-- Top Bar -->
       <div class="row">
-        <div class="d-flex align-items-center justify-content-start justify-content-md-end mt-2 w-100">
+        <div
+          class="d-flex align-items-center justify-content-start justify-content-md-end mt-2 w-100"
+        >
           <!-- Avatar aligned to the far right -->
           <div>
             <app-avatar [currentUser]="currentUser"></app-avatar>
@@ -18,7 +20,7 @@
       </div>
 
       <!-- Add New Form -->
-      <div class="row mt-5">
+      <div class="row mt-4">
         <div class="col-12 col-md-6">
           <button
             class="add-btn btn btn-dark text-white rounded-pill p-2 px-3"
@@ -46,24 +48,24 @@
                   <ng-template #header>
                     <div class="d-flex gap-2">
                       <p-avatar [image]="discussion.Avatar" shape="circle" />
-                      <span class="font-bold text-black fs-5">
+                      <span class="fw-bold text-black text-xsm">
                         {{ discussion.Username }}
                       </span>
-                      <span class="font-bold text-black fs-6 ms-2 mt-1">
+                      <span class="text-black text-xxsm ms-2 mt-1">
                         {{ discussion.DateCreated }}
                       </span>
                     </div>
                   </ng-template>
                   <div>
                     <div class="d-flex justify-content-between">
-                      <h5 class="text-black fs-5 ms-3">
+                      <h5 class="text-black text-md ms-3 w-75 text-truncate">
                         {{ discussion.Title }}
                       </h5>
-                      <p class="text-black fs-5">
+                      <p class="text-black text-md">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="18"
+                          width="14"
+                          height="14"
                           fill="black"
                           class="bi bi-chat-square-text-fill"
                           viewBox="0 0 16 16"

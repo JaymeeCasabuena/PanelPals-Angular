@@ -28,7 +28,7 @@
           <div
             class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-3 mb-md-5"
           >
-            <h2 class="text-black ms-4">Find your next comic</h2>
+            <h2 class="fw-bold text-black ms-4 ms-md-5">Browse</h2>
             <div class="ms-4 ms-md-0 mt-3 mt-md-0">
               <app-add-new-form></app-add-new-form>
             </div>
@@ -36,7 +36,7 @@
               <app-search-bar></app-search-bar>
             </div>
           </div>
-          <div class="row comics-container ms-2 ms-md-5 overflow-y-scroll">
+          <div class="row comics-container ms-2 ms-md-4 overflow-y-scroll">
             <div
               *ngFor="let comic of visibleComics"
               class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-column align-items-center mb-5"
