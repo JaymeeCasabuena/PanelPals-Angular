@@ -79,7 +79,7 @@
 </div>
 
 <button
-  class="d-none d-md-block btn btn-success signup-btn"
+  class="d-none d-md-block btn btn-dark signup-btn"
   (click)="toggleForm()"
 >
   {{ !isSignUpActive ? "Sign Up" : "Login" }}
@@ -130,9 +130,7 @@
           agree to PanelPals' Terms of Service and have read the Privacy Policy
         </p>
 
-        <button class="btn btn-lg btn-info btn-login mt-3" type="submit">
-          Log in
-        </button>
+        <button class="btn btn-lg btn-login mt-3" type="submit">Log in</button>
       </div>
     </form>
   </div>
@@ -192,9 +190,7 @@
             (focus)="resetSubmitFlag()"
           />
         </div>
-        <button class="btn btn-lg btn-info btn-login mt-3" type="submit">
-          Sign up
-        </button>
+        <button class="btn btn-lg btn-login mt-3" type="submit">Sign up</button>
       </div>
     </form>
   </div>
@@ -208,7 +204,7 @@
   }}
 </p>
 
-<footer>
+<footer class="d-flex flex-column flex-md-row">
   <div class="footer-left">
     <a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">Connect</a> |
     <a href="#">Support</a>

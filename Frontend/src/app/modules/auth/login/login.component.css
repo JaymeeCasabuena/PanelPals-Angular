@@ -91,6 +91,10 @@ input,
   }
 }
 
+.btn-login {
+  background-color: #cd908b;
+}
+
 footer {
   position: fixed;
   bottom: 0;
