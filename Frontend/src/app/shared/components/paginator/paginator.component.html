@@ -1,0 +1,27 @@
+<nav>
+  <ul class="pagination custom-pagination">
+    <li class="page-item" [class.disabled]="first === 0">
+      <button class="page-link" (click)="prevPage()" [disabled]="first === 0">
+        Previous
+      </button>
+    </li>
+    <li
+      *ngFor="let page of totalPages; let i = index"
+      class="page-item"
+      [class.active]="first / rows === i"
+    >
+      <button class="page-link" (click)="goToPage(i)">
+        {{ i + 1 }}
+      </button>
+    </li>
+    <li class="page-item" [class.disabled]="first + rows >= data.length">
+      <button
+        class="page-link"
+        (click)="nextPage()"
+        [disabled]="first + rows >= data.length"
+      >
+        Next
+      </button>
+    </li>
+  </ul>
+</nav>
