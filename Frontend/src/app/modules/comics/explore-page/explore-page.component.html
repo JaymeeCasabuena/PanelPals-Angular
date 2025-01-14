@@ -1,19 +1,19 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-lg-1">
+    <div class="col-md-1">
       <app-side-bar></app-side-bar>
     </div>
 
     <!-- Main Content -->
-    <div class="col-11">
+    <div class="col-12 col-md-11">
       <!-- Top Bar -->
       <div class="row">
         <div
           class="d-flex align-items-center justify-content-between mt-2 w-100"
         >
           <!-- Centered search bar -->
-          <div class="d-flex justify-content-center flex-grow-1">
+          <div class="d-none d-md-flex justify-content-center flex-grow-1">
             <app-search-bar></app-search-bar>
           </div>
           <!-- Avatar aligned to the far right -->
@@ -22,14 +22,24 @@
       </div>
 
       <!-- Comics Section -->
-      <div class="row mt-3">
+      <div class="row mt-5">
         <!-- Browse Comics -->
-        <div class="col-11">
-          <h2 class="text-black ms-4 mb-5">Find your next comic</h2>
-          <div class="row comics-container mb-5 ms-5">
+        <div class="col-12 col-xl-11">
+          <div
+            class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-3 mb-md-5"
+          >
+            <h2 class="text-black ms-4">Find your next comic</h2>
+            <div class="ms-4 ms-md-0 mt-3 mt-md-0">
+              <app-add-new-form></app-add-new-form>
+            </div>
+            <div class="d-block d-md-none ms-2 mt-4">
+              <app-search-bar></app-search-bar>
+            </div>
+          </div>
+          <div class="row comics-container ms-2 ms-md-5 overflow-y-scroll">
             <div
               *ngFor="let comic of visibleComics"
-              class="col-3 d-flex flex-column align-items-center"
+              class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-column align-items-center mb-5"
             >
               <div class="d-flex book-card bg-white align-items-start w-100">
                 <div
@@ -60,15 +70,14 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-12 d-flex justify-content-center">
-            <p-paginator
-              [rows]="rows"
-              [totalRecords]="comics.length"
-              (onPageChange)="onPageChange($event)"
-            ></p-paginator>
+            <div class="d-flex justify-content-start">
+              <app-paginator
+                [first]="first"
+                [rows]="rows"
+                [data]="comics"
+                (visibleContentChange)="updateVisibleComics($event)"
+              ></app-paginator>
+            </div>
           </div>
         </div>
       </div>

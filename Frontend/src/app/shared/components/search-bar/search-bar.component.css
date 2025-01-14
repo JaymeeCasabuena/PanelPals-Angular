@@ -1,10 +1,10 @@
 .container {
-  left: 6.25em;
+  left: 10rem;
 }
 
 .search {
   background-color: transparent;
-  width: 16em;
+  width: 200px;
 }
 
 .search::placeholder {
