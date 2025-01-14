@@ -2,13 +2,15 @@
 
 Welcome to **Panel Pals**, the perfect place to share your thoughts on the latest manhwa/manga/webtoon you've read and engage in insightful conversations with fellow enthusiasts!
 
-
 ## Table of Contents
 
 - [Features](#features)
+- [Screenshots](#screenshots)
+- [Upcoming Features](#upcoming)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [Learnings and Best Practices Applied](#learnings-and-best-practices-applied)
 - [License](#license)
 - [Contact](#contact)
 
@@ -20,38 +22,72 @@ Welcome to **Panel Pals**, the perfect place to share your thoughts on the lates
 - **Engage with the Community**: Write reviews, create posts, and comment on any conversation. Share your insights and learn from others.
 - **Moderation Tools**: Special features for moderators to approve new comics and manage community content.
 
+## Screenshots
+
+1. **Login**
+   ![Login Page](public/Screenshots/login.png)
+
+2. **Home**
+   ![Home Page](public/Screenshots/home.png)
+
+3. **Comic Details**
+   ![Comic Details Page](public/Screenshots/comic-details.png)
+
+4. **Reviews**
+   ![Reviews](public/Screenshots/reviews.png)
+
+5. **Browse/Explore**
+   ![Explore Page](public/Screenshots/explore.png)
+
+6. **Discussions**
+   ![Discussions Page](public/Screenshots/Discussions.png)
+
+7. **Discussion Details**
+   ![Discussion Details Page](public/Screenshots/Discussion-details.png)
+
+8. **Form and Modals**
+   ![Form and Modals](public/Screenshots/modals-2.png)
+   ![Form and Modals](public/Screenshots/modals.png)
+
+## Upcoming
+
+- **Third-Party Authentication**
+- **Moderator/Admin Profile**
+- **Detailed User Profile**
+- **Detailed User Profile**
+
 ## Installation
 
 To get a local copy up and running, follow these simple steps:
 
 1. **Clone the repository**:
 
-    ```bash
-    git clone https://github.com/JaymeeCasabuena/PanelPals-Angular.git
-    cd PanelPals-Angular
-    ```
+   ```bash
+   git clone https://github.com/JaymeeCasabuena/PanelPals-Angular.git
+   cd PanelPals-Angular
+   ```
 
 2. **Install dependencies**:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. **Set up the SQLite database**:
 
-    Ensure you have SQLite installed. Run the following script to create the necessary tables:
+   Ensure you have SQLite installed. Run the following script to create the necessary tables:
 
-    ```bash
-    nodemon app.js
-    ```
+   ```bash
+   nodemon app.js
+   ```
 
 4. **Start the server**:
 
-    ```bash
+   ```bash
    nodemon app.js
-    ```
+   ```
 
-    The server will start on `http://localhost:3000`.
+   The server will start on `http://localhost:3000`.
 
 ## Usage
 
@@ -69,10 +105,19 @@ We welcome contributions to **Panel Pals**! To contribute, please:
 4. Push to the branch (`git push origin feature-branch`).
 5. Open a pull request.
 
+## Learnings and Best Practices Applied
+
+- Followed a **feature-based project structure** to organize code and maintain scalability.
+- Utilized **Angular Reactive Forms** for user input handling, ensuring a robust and dynamic experience.
+- Leveraged **standalone components** and other **Angular 18+ features** to improve modularity and performance.
+- Incorporated **RxJS Subjects and BehaviorSubjects** for effective state management.
+- Created **reusable components** to maintain a DRY (Don't Repeat Yourself) approach throughout the project.
+- Applied the **Single Responsibility Principle (SRP)** to keep components, services, and logic focused and maintainable.
+- Enhanced understanding of modern Angular features and best practices to deliver a seamless user experience.
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 
 ## Contact
 
